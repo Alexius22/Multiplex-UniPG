@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cinema_app/theme/dark_style.dart';
 import 'package:cinema_app/theme/light_style.dart';
-import 'package:cinema_app/navbar.dart';
+import 'package:cinema_app/tabbar.dart';
 import 'package:cinema_app/routes.dart';
 
 void main() => runApp(CinemaApp());

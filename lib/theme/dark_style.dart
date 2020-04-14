@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 
 ThemeData appDarkTheme() {
-  return ThemeData(
+  return ThemeData (
     brightness: Brightness.dark,
+    backgroundColor: Colors.grey[900],
+    bottomAppBarColor: Colors.grey[900],
+    highlightColor: Colors.deepOrange[900],
   );
 }

@@ -5,9 +5,11 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
 
 import 'screens/dashboard.dart';
+/*
 import 'screens/tickets.dart';
 import 'screens/profile.dart';
 import 'screens/settings.dart';
+*/
 
 
 class BubbleTabBar extends StatefulWidget {
@@ -23,14 +25,6 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
   @override
   void initState() {
-    //Declare some buttons for our tab bar
-    _navBarItems = [
-      NavBarItemData("Dashboard", OMIcons.home, 135, Color(0xff01b87d)),
-      NavBarItemData("Biglietti", OMIcons.tv, 120, Color(0xff594ccf)),
-      NavBarItemData("Profilo", OMIcons.person, 110, Color(0xff09a8d9)),
-      NavBarItemData("Impostazioni", OMIcons.settingsApplications, 150, Color(0xffcf4c7a)),
-    ];
-
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
       Dashboard(),
@@ -43,7 +37,17 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = _navBarItems[_selectedNavIndex].selectedColor;
+    var accentColor = Theme.of(context).highlightColor;
+
+    //Declare some buttons for our tab bar
+    _navBarItems = [
+      NavBarItemData("Home", OMIcons.home, 110, accentColor),
+      NavBarItemData("Biglietti", OMIcons.creditCard, 120, accentColor),
+      NavBarItemData("Profilo", OMIcons.person, 110, accentColor),
+      NavBarItemData("Impostazioni", OMIcons.settings, 150, accentColor),
+    ];
+
+    //var accentColor = _navBarItems[_selectedNavIndex].selectedColor;
 
     //Create custom navBar, pass in a list of buttons, and listen for tap event
     var navBar = NavBar(
@@ -55,7 +59,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     var contentView = _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
     //Wrap our custom navbar + contentView with the app Scaffold
     return Scaffold(
-      backgroundColor: Color(0xffE6E6E6),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Container(
           width: double.infinity,
