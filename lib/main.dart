@@ -1,24 +1,23 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
+import 'package:cinema_app/theme/dark_style.dart';
+import 'package:cinema_app/theme/light_style.dart';
+import 'package:cinema_app/routes.dart';
+// import './theme/style.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(CinemaApp());
 
-class MyApp extends StatelessWidget {
+class CinemaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
-        ),
-        body: Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      title: 'Cinema App',
+      debugShowCheckedModeBanner: false,
+      theme: appLightTheme(),
+      //darkTheme: appDarkTheme(),
+      initialRoute: '/home',
+      routes: routes,
     );
   }
 }
