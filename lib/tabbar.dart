@@ -5,8 +5,8 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
 
 import 'screens/dashboard.dart';
-/*
 import 'screens/tickets.dart';
+/*
 import 'screens/profile.dart';
 import 'screens/settings.dart';
 */
@@ -28,7 +28,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
       Dashboard(),
-      Dashboard(),
+      Tickets(),
       Dashboard(),
       Dashboard(),
     ];
@@ -47,8 +47,6 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
       NavBarItemData("Impostazioni", OMIcons.settings, 150, accentColor),
     ];
 
-    //var accentColor = _navBarItems[_selectedNavIndex].selectedColor;
-
     //Create custom navBar, pass in a list of buttons, and listen for tap event
     var navBar = NavBar(
       items: _navBarItems,
@@ -60,6 +58,15 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     //Wrap our custom navbar + contentView with the app Scaffold
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
+      appBar: AppBar(
+        title: Text('Cinema App'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           width: double.infinity,

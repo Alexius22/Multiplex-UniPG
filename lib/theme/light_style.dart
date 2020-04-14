@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 ThemeData appLightTheme() {
   return ThemeData(
     brightness: Brightness.light,
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.white,
     bottomAppBarColor: Colors.white,
     highlightColor: Colors.blue,
   );
