@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
 
-import 'screens/dashboard.dart';
-import 'screens/tickets.dart';
+import 'screens/dashboard/dashboard.dart';
+import 'screens/tickets/tickets.dart';
 /*
 import 'screens/profile.dart';
 import 'screens/settings.dart';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 ThemeData appLightTheme() {
   return ThemeData(
+    fontFamily: 'Montserrat',
     brightness: Brightness.light,
     backgroundColor: Colors.white,
     bottomAppBarColor: Colors.white,

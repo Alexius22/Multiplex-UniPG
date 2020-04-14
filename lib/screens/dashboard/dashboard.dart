@@ -1,25 +1,18 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-
-/*
-class Dashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-    );
-  }
-}
-*/
+import './components/topimage.dart';
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
-        "Ciao",
+      child: Column(
+        children: [
+          TopImage(),
+          Text("TODO"),
+        ],
       ),
     );
-  } 
+  }
 }
