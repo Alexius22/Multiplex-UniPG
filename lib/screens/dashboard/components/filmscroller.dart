@@ -37,6 +37,7 @@ class _State extends State<FilmScroller> {
     return Container(
       height: height,
       child: ListView.separated(
+        physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(left: 25, right: 25, top: 10),
         itemCount: entries.length,
