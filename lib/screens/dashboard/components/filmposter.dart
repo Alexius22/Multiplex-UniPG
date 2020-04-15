@@ -2,41 +2,47 @@
 
 import 'package:flutter/material.dart';
 
-class TopImage extends StatelessWidget {
+class FilmPoster extends StatelessWidget {
   final String imagePath;
   final String imageText;
   final double imageHeight;
+  final double imageWidth;
 
-  TopImage({
-    this.imagePath = 'images/avengers.jpg',
-    this.imageText = "AVENGERS: ENDGAME",
-    this.imageHeight = 180,
+  FilmPoster({
+    this.imagePath = 'images/spiderman.jpg',
+    this.imageText = "The Amazing Spiderman",
+    this.imageWidth = 150,
+    this.imageHeight = 250,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("Container clicked (TODO)");
+        print("Locandina $imagePath");
       },
       child: Stack(
         children: <Widget>[
           // Image
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: this.imageWidth,
             height: this.imageHeight,
-            child: Image.asset(
-              this.imagePath,
-              fit: BoxFit.fitWidth,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: this.imageHeight + 1,
+            width: this.imageWidth,
+            height: this.imageHeight,
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
               color: Colors.white,
               gradient: LinearGradient(
-                begin: FractionalOffset(0.0, 0.4),
+                begin: FractionalOffset(0.0, 0.5),
                 end: FractionalOffset(0.0, 1.0),
                 colors: [
                   Colors.black.withOpacity(0.0),
@@ -48,16 +54,16 @@ class TopImage extends StatelessWidget {
           ),
           // Text
           Container(
-            width: MediaQuery.of(context).size.width,
+            alignment: Alignment.bottomLeft,
+            width: this.imageWidth,
             height: this.imageHeight,
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 15),
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 15),
             child: Text(
               this.imageText,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 30,
+                fontSize: 18,
               ),
             ),
           ),

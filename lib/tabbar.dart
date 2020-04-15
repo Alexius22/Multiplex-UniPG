@@ -6,10 +6,8 @@ import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
 
 import 'screens/dashboard/dashboard.dart';
 import 'screens/tickets/tickets.dart';
-/*
-import 'screens/profile.dart';
-import 'screens/settings.dart';
-*/
+import 'screens/profile/profile.dart';
+import 'screens/settings/settings.dart';
 
 
 class BubbleTabBar extends StatefulWidget {
@@ -29,8 +27,8 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     _viewsByIndex = <Widget>[
       Dashboard(),
       Tickets(),
-      Dashboard(),
-      Dashboard(),
+      Profile(),
+      Settings(),
     ];
     super.initState();
   }
