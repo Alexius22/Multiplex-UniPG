@@ -31,14 +31,22 @@ class _State extends State<FilmScroller> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height / 2.3;
+    final double textSize = MediaQuery.of(context).size.height / 38;
+
     return Container(
-      height: 270,
+      height: height,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(left: 25, right: 25, top: 10),
         itemCount: entries.length,
         itemBuilder: (BuildContext context, int index) {
-          return FilmPoster(imagePath: entries[index], imageText: entriesText[index]);
+          return FilmPoster(
+            imagePath: entries[index],
+            imageText: entriesText[index],
+            textSize: textSize,
+            imageHeight: height,
+          );
         },
         separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 20),
       ),

@@ -29,6 +29,13 @@ flutter:
     - images/
 
   fonts:
-    - family: Montserrat
+    - family: OpenSans
       fonts:
-        - asset: fonts/Montserrat-SemiBold.ttf
+        - asset: fonts/OpenSans-Regular.ttf
+        - asset: fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: fonts/OpenSans-SemiBold.ttf
+          weight: 600
+    - family: Oswald
+      fonts:
+        - asset: fonts/Oswald-Regular.ttf

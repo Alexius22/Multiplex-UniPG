@@ -1,7 +1,5 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import './components/topimage.dart';
 import './components/datemenu.dart';
@@ -18,7 +16,7 @@ class _State extends State<Dashboard> {
     return Container(
       child: Column(
         children: [
-          TopImage(),
+          TopImage(imageHeight: MediaQuery.of(context).size.height / 4.1),
           DateMenu(),
           FilmScroller(),
         ],

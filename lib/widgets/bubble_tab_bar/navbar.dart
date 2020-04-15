@@ -35,7 +35,7 @@ class NavBar extends StatelessWidget {
         ],
       ),
       alignment: Alignment.center,
-      height: 80,
+      height: 65,
       //Clip the row of widgets, to suppress any overflow errors that might occur during animation
       child: ClippedView(
         child: Row(

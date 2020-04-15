@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class FilmPoster extends StatelessWidget {
   final String imagePath;
   final String imageText;
+  final double textSize;
   final double imageHeight;
   final double imageWidth;
 
@@ -13,6 +14,7 @@ class FilmPoster extends StatelessWidget {
     this.imageText = "The Amazing Spiderman",
     this.imageWidth = 150,
     this.imageHeight = 250,
+    this.textSize = 18,
   });
 
   @override
@@ -59,11 +61,12 @@ class FilmPoster extends StatelessWidget {
             height: this.imageHeight,
             padding: EdgeInsets.only(left: 10, right: 10, bottom: 15),
             child: Text(
-              this.imageText,
+              this.imageText.toUpperCase(),
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: this.textSize,
+                letterSpacing: 1,
               ),
             ),
           ),
