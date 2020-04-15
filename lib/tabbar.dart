@@ -9,7 +9,6 @@ import 'screens/tickets/tickets.dart';
 import 'screens/profile/profile.dart';
 import 'screens/settings/settings.dart';
 
-
 class BubbleTabBar extends StatefulWidget {
   @override
   _BubbleTabBarState createState() => _BubbleTabBarState();
@@ -52,19 +51,12 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
       currentIndex: _selectedNavIndex,
     );
     //Display the correct child view for the current index
-    var contentView = _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
+    var contentView =
+        _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
     //Wrap our custom navbar + contentView with the app Scaffold
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text('Cinema App'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: buildAppBar(),
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -89,5 +81,38 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
       //This will be passed into the NavBar and change it's selected state, also controls the active content page
       _selectedNavIndex = index;
     });
+  }
+
+  Widget buildAppBar() {
+    Color backgroundColor = Theme.of(context).bottomAppBarColor;
+    Color appBarIconsColor = Colors.white70;
+
+    return AppBar(
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 18.0),
+          child: Icon(Icons.more_horiz, color: appBarIconsColor, size: 28),
+        )
+      ],
+      brightness: Brightness.dark,
+      backgroundColor: backgroundColor,
+      elevation: 0,
+      title: Container(
+        width: double.infinity,
+        alignment: Alignment.centerLeft,
+        child: Text(
+          'Cinema App'.toUpperCase(),
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 18,
+            letterSpacing: 0.5,
+            color: appBarIconsColor,
+            fontFamily: 'OpenSans',
+            fontWeight: FontWeight.bold,
+            package: 'cinema_app',
+          ),
+        ),
+      ),
+    );
   }
 }

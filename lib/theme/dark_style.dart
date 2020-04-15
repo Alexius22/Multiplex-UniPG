@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 ThemeData appDarkTheme() {
   return ThemeData(
-    fontFamily: 'Montserrat',
+    fontFamily: 'Oswald',
     brightness: Brightness.dark,
     backgroundColor: Colors.black,
     bottomAppBarColor: Colors.grey[900],

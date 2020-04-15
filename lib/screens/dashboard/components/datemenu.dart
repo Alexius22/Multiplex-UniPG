@@ -62,6 +62,7 @@ class _State extends State<DateMenu> {
                 );
               },
             );
+            print(selectedDate);
           },
           child: Text(
             "Scegli data",

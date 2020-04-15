@@ -42,7 +42,7 @@ class FilmPoster extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
               gradient: LinearGradient(
-                begin: FractionalOffset(0.0, 0.5),
+                begin: FractionalOffset(0.0, 0.3),
                 end: FractionalOffset(0.0, 1.0),
                 colors: [
                   Colors.black.withOpacity(0.0),
