@@ -8,12 +8,12 @@ import './components/films_scroller.dart';
 
 import 'package:cinema_app/data/films.dart';
 
-class Dashboard extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
   _State createState() => new _State();
 }
 
-class _State extends State<Dashboard> {
+class _State extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // Get Films data

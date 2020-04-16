@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
 
-import 'screens/dashboard/dashboard.dart';
+import 'screens/home/home.dart';
 import 'screens/tickets/tickets.dart';
 import 'screens/profile/profile.dart';
 import 'screens/settings/settings.dart';
@@ -24,10 +24,10 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
   void initState() {
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
-      Dashboard(),
-      Tickets(),
-      Profile(),
-      Settings(),
+      HomeScreen(),
+      TicketScreen(),
+      ProfileScreen(),
+      SettingScreen(),
     ];
     super.initState();
   }
