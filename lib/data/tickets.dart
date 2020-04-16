@@ -1,7 +1,7 @@
 import 'dart:math';
 
 /// Utility class that contains info about a single ticket.
-class Ticket {
+class TicketData {
   final int idCity;
 
   final int idFilm;
@@ -11,7 +11,7 @@ class Ticket {
   final int row;
   final int seat;
 
-  Ticket({
+  TicketData({
     this.idCity,
     this.idFilm,
     this.filmDateTime,
@@ -25,13 +25,13 @@ class Ticket {
 class TicketsData {
   static final _possibleMinutes = [0, 15, 30, 45];
 
-  final _tickets = List<Ticket>.generate(
+  final _tickets = List<TicketData>.generate(
     8,
     (i) {
       final _random = Random();
-      return Ticket(
-        idCity: _random.nextInt(3),
-        idFilm: _random.nextInt(9),
+      return TicketData(
+        idCity: _random.nextInt(4),
+        idFilm: _random.nextInt(8),
         filmDateTime: DateTime(
           2020,
           4 + _random.nextInt(3),
