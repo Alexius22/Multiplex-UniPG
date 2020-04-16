@@ -13,31 +13,14 @@ class _State extends State<ProfileScreen> {
     return Container(
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 3.1, top: 5),
-                child: Text(
-                  "Account",
-                  style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontWeight: FontWeight.w600,
-                    fontSize: MediaQuery.of(context).size.height / 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
           SizedBox(
             height: MediaQuery.of(context).size.height / 40,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 5,
-                    bottom: MediaQuery.of(context).size.width / 30),
+              Align(
+                alignment: Alignment.centerRight,
                 child: Container(
                   width: MediaQuery.of(context).size.height / 7,
                   height: MediaQuery.of(context).size.height / 7,
@@ -52,21 +35,25 @@ class _State extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              SizedBox(width: MediaQuery.of(context).size.height / 35),
-              Expanded(
+              SizedBox(width: 15),
+              Align(
+                alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Mario Verdi",
+                      "Oswald Green",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height / 35,
+                        letterSpacing: 1,
+                        fontSize: MediaQuery.of(context).size.height / 25,
                       ),
                     ),
                     Text(
                       "Perugia (PG)",
                       style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height / 42,
+                        letterSpacing: 1,
                         color: Colors.grey.shade400,
                       ),
                     ),
@@ -75,6 +62,7 @@ class _State extends State<ProfileScreen> {
               ),
             ],
           ),
+          SizedBox(height: 10),
           ListTile(
             title: Text(
               "Password",

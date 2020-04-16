@@ -13,21 +13,6 @@ class _State extends State<SettingScreen> {
     return Container(
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 15, top: 5),
-                child: Text(
-                  "Impostazioni",
-                  style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontWeight: FontWeight.w600,
-                    fontSize: MediaQuery.of(context).size.height / 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
           SizedBox(
             height: MediaQuery.of(context).size.height / 100,
           ),

@@ -60,7 +60,7 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
         //Label
         Text(
           widget.data.title,
-          style: TextStyle(color: Colors.white, fontFamily: "OpenSans", package: "cinema_app"),
+          style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "OpenSans", package: "cinema_app"),
         ),
       ],
     );
@@ -77,11 +77,11 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
           //Determine target width, selected item is wider
           width: widget.isSelected ? widget.data.width : 56,
           curve: Curves.easeOutCubic,
-          padding: EdgeInsets.all(12),
-          duration: Duration(milliseconds: (700 / _animScale).round()),
+          padding: EdgeInsets.only(left: 12, right: 12),
+          duration: Duration(milliseconds: (600 / _animScale).round()),
           //Use BoxDecoration top create a rounded container
           decoration: BoxDecoration(
-            color: widget.isSelected ? widget.data.selectedColor : Theme.of(context).bottomAppBarColor,
+            color: widget.isSelected ? widget.data.selectedColor : Colors.black,
             borderRadius: BorderRadius.all(Radius.circular(24)),
           ),
           //Wrap the row in a ClippedView to suppress any overflow errors if we momentarily exceed the screen size

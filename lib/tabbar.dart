@@ -38,10 +38,10 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
     //Declare some buttons for our tab bar
     _navBarItems = [
-      NavBarItemData("Home", OMIcons.home, 110, accentColor),
-      NavBarItemData("Biglietti", OMIcons.receipt, 120, accentColor),
-      NavBarItemData("Profilo", OMIcons.person, 110, accentColor),
-      NavBarItemData("Impostazioni", OMIcons.settings, 150, accentColor),
+      NavBarItemData("Home", OMIcons.home, 120, accentColor),
+      NavBarItemData("Biglietti", OMIcons.receipt, 130, accentColor),
+      NavBarItemData("Profilo", OMIcons.person, 120, accentColor),
+      NavBarItemData("Impostazioni", OMIcons.settings, 180, accentColor),
     ];
 
     //Create custom navBar, pass in a list of buttons, and listen for tap event
@@ -84,7 +84,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
   }
 
   Widget buildAppBar() {
-    Color backgroundColor = Theme.of(context).bottomAppBarColor;
+    Color backgroundColor = Colors.black;
     Color appBarIconsColor = Colors.white70;
 
     return AppBar(
@@ -101,7 +101,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
         width: double.infinity,
         alignment: Alignment.centerLeft,
         child: Text(
-          'Cinema App'.toUpperCase(),
+          'Multiplex UniPG'.toUpperCase(),
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: 18,

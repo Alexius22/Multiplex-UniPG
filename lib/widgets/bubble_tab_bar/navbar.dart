@@ -27,11 +27,11 @@ class NavBar extends StatelessWidget {
     //Create a container with a row, and add our btn widgets into the row
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Colors.black,
         //Add some drop-shadow to our navbar, use 2 for a slightly nicer effect
         boxShadow: [
-          BoxShadow(blurRadius: 16, color: Colors.black12),
-          BoxShadow(blurRadius: 24, color: Colors.black12),
+          BoxShadow(blurRadius: 15, color: Color(0xff181818)),
+          BoxShadow(blurRadius: 15, color: Color(0xff181818)),
         ],
       ),
       alignment: Alignment.center,
