@@ -39,7 +39,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     //Declare some buttons for our tab bar
     _navBarItems = [
       NavBarItemData("Home", OMIcons.home, 110, accentColor),
-      NavBarItemData("Biglietti", OMIcons.creditCard, 120, accentColor),
+      NavBarItemData("Biglietti", OMIcons.receipt, 120, accentColor),
       NavBarItemData("Profilo", OMIcons.person, 110, accentColor),
       NavBarItemData("Impostazioni", OMIcons.settings, 150, accentColor),
     ];

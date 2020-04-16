@@ -1,9 +1,12 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import './components/topimage.dart';
+
+import './components/film_featured.dart';
 import './components/datemenu.dart';
-import './components/filmscroller.dart';
+import './components/films_scroller.dart';
+
+import 'package:cinema_app/data/films.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -13,12 +16,24 @@ class Dashboard extends StatefulWidget {
 class _State extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    // Get Films data
+    var filmsData = FilmsData();
+    final filmFeaturedID = 0;
+    final filmFeatured = filmsData.getAll.removeAt(filmFeaturedID);
+
     return Container(
       child: Column(
         children: [
-          TopImage(imageHeight: MediaQuery.of(context).size.height / 4.1),
+          FeaturedFilm(
+            film: filmFeatured,
+            imageHeight: MediaQuery.of(context).size.height / 4.1,
+          ),
           DateMenu(),
-          FilmScroller(),
+          FilmScroller(
+            films: filmsData.getAll,
+            imageHeight: MediaQuery.of(context).size.height / 2.3,
+            textSize: MediaQuery.of(context).size.height / 38,
+          ),
         ],
       ),
     );

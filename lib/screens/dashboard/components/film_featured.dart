@@ -1,16 +1,15 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
+import 'package:cinema_app/data/films.dart';
 
-class TopImage extends StatelessWidget {
-  final String imagePath;
-  final String imageText;
+class FeaturedFilm extends StatelessWidget {
+  final Film film;
   final double imageHeight;
   final double textSize;
 
-  TopImage({
-    this.imagePath = 'images/avengers.jpg',
-    this.imageText = "Avengers: Endgame",
+  FeaturedFilm({
+    this.film,
     this.imageHeight = 180,
     this.textSize = 30,
   });
@@ -19,7 +18,7 @@ class TopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("Container clicked (TODO)");
+        print("Featured Film clicked");
       },
       child: Stack(
         children: <Widget>[
@@ -28,7 +27,7 @@ class TopImage extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: this.imageHeight,
             child: Image.asset(
-              this.imagePath,
+              this.film.imagePath,
               fit: BoxFit.fitWidth,
             ),
           ),
@@ -73,7 +72,7 @@ class TopImage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             padding: EdgeInsets.only(bottom: 15),
             child: Text(
-              this.imageText.toUpperCase(),
+              this.film.title.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

@@ -1,3 +1,5 @@
+// Copyright 2020 Amatucci & Strippoli. All rights reserved.
+
 import 'package:flutter/material.dart';
 
 class DateMenu extends StatefulWidget {
@@ -29,7 +31,6 @@ class _State extends State<DateMenu> {
       firstDate: minDate.subtract(new Duration(days: 1)),
       lastDate: minDate.add(new Duration(days: 13)),
       builder: (BuildContext context, Widget child) {
-        print(ThemeData.dark().toString());
         return Theme(
           data: ThemeData.dark().copyWith(
             backgroundColor: Colors.grey[800],
