@@ -7,7 +7,8 @@ ThemeData appDarkTheme() {
     fontFamily: 'Oswald',
     brightness: Brightness.dark,
     backgroundColor: Colors.black,
-    bottomAppBarColor: Colors.grey[900],
+    bottomAppBarColor: Colors.black,
     highlightColor: Colors.deepOrange[900],
+    canvasColor: Colors.black87,
   );
 }

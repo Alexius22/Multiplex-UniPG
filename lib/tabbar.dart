@@ -9,19 +9,32 @@ import 'screens/tickets/tickets.dart';
 import 'screens/profile/profile.dart';
 import 'screens/settings/settings.dart';
 
+import 'package:cinema_app/data/cities.dart';
+
 class BubbleTabBar extends StatefulWidget {
   @override
   _BubbleTabBarState createState() => _BubbleTabBarState();
 }
 
 class _BubbleTabBarState extends State<BubbleTabBar> {
+  // Extract cities data
+  List<String> _cities = [];
+  String dropdownValue;
+
+  // Working variables
   List<NavBarItemData> _navBarItems;
   int _selectedNavIndex = 0;
-
   List<Widget> _viewsByIndex;
 
   @override
   void initState() {
+    // Extract cities data
+    final _citiesData = CitiesData();
+    dropdownValue = _citiesData.getCity(0).name; // Defaults to 'Perugia'
+    _citiesData.getAll.forEach((City city) {
+      _cities.add(city.name);
+    });
+
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
       HomeScreen(),
@@ -53,6 +66,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     //Display the correct child view for the current index
     var contentView =
         _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
+
     //Wrap our custom navbar + contentView with the app Scaffold
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -89,10 +103,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
     return AppBar(
       actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 18.0),
-          child: Icon(Icons.more_horiz, color: appBarIconsColor, size: 28),
-        )
+        Align(alignment: Alignment.centerRight, child: _buildDropDownMenu()),
       ],
       brightness: Brightness.dark,
       backgroundColor: backgroundColor,
@@ -113,6 +124,32 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
           ),
         ),
       ),
+    );
+  }
+
+  _buildDropDownMenu() {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 24,
+      style: TextStyle(
+        fontFamily: 'OpenSans',
+        color: Colors.white70,
+      ),
+      underline: Container(
+        height: 0,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: _cities.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

@@ -32,7 +32,7 @@ class CitiesData {
 
   get getAll => _cities;
 
-  getCity(int index) {
+  City getCity(int index) {
     return _cities.elementAt(index);
   }
 }
