@@ -8,7 +8,7 @@ class TicketData {
   final DateTime filmDateTime;
 
   final int room;
-  final int row;
+  final String row;
   final int seat;
 
   TicketData({
@@ -40,7 +40,7 @@ class TicketsData {
           _possibleMinutes[_random.nextInt(_possibleMinutes.length)],
         ),
         room: 1 + _random.nextInt(6),
-        row: 1 + _random.nextInt(20),
+        row: String.fromCharCode(65 + _random.nextInt(20)),
         seat: 1 + _random.nextInt(20),
       );
     },

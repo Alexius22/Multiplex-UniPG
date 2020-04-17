@@ -194,7 +194,7 @@ class _TicketFrontState extends State<TicketFront> {
             Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                ticketData.row.toString(),
+                ticketData.row,
                 style: textStyle,
               ),
             ),

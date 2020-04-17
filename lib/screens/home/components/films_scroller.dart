@@ -45,8 +45,7 @@ class _State extends State<FilmScroller> {
         itemCount: films.length,
         itemBuilder: (BuildContext context, int index) {
           return FilmPoster(
-            imagePath: films[index].imagePath,
-            imageText: films[index].title.toUpperCase(),
+            film: films[index],
             textSize: textSize,
             imageHeight: this.imageHeight,
           );

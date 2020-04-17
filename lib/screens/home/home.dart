@@ -26,7 +26,7 @@ class _State extends State<HomeScreen> {
         children: [
           FeaturedFilm(
             film: filmFeatured,
-            imageHeight: MediaQuery.of(context).size.height / 4.1,
+            imageHeight: MediaQuery.of(context).size.height / 4.05,
           ),
           DateMenu(),
           FilmScroller(

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:cinema_app/data/films.dart';
+import './film_details.dart';
+import './blank_page_route.dart';
 
 class FeaturedFilm extends StatelessWidget {
   final Film film;
@@ -18,32 +20,40 @@ class FeaturedFilm extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("Featured Film clicked");
+        var detailPage = FilmDetails(film: film);
+        Navigator.push(context, BlankPageRoute(enterPage: detailPage));
       },
       child: Stack(
         children: <Widget>[
-          // Image
+          // Image with gradient
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: double.infinity,
             height: this.imageHeight,
-            child: Image.asset(
-              this.film.imagePath,
+            child: Ink.image(
+              alignment: Alignment.center,
+              image: AssetImage(
+                film.imagePath,
+              ),
               fit: BoxFit.fitWidth,
+              child: InkWell(
+                highlightColor: Colors.black38,
+                splashColor: Colors.black38,
+                onTap: () {
+                  var detailPage = FilmDetails(film: film);
+                  Navigator.push(
+                      context, BlankPageRoute(enterPage: detailPage));
+                },
+              ),
             ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: this.imageHeight + 1,
             decoration: BoxDecoration(
-              color: Colors.white,
               gradient: LinearGradient(
-                begin: FractionalOffset(0.0, 0.3),
-                end: FractionalOffset(0.0, 1.0),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
                 colors: [
                   Colors.black.withOpacity(0.0),
                   Colors.black,
                 ],
-                stops: [0.0, 1.0],
+                stops: [0.2, 1.0],
               ),
             ),
           ),
