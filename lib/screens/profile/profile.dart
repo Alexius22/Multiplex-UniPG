@@ -25,7 +25,6 @@ class _State extends State<ProfileScreen> {
                   width: MediaQuery.of(context).size.height / 7,
                   height: MediaQuery.of(context).size.height / 7,
                   decoration: BoxDecoration(
-                    color: Colors.deepOrange[900],
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: AssetImage('images/profile.jpg'),
