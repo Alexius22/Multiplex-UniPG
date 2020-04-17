@@ -16,7 +16,7 @@ class LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _iconAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     _iconAnimation = CurvedAnimation(
       parent: _iconAnimationController,
       curve: Curves.bounceOut,
@@ -33,8 +33,8 @@ class LoginScreenState extends State<LoginScreen>
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 15,
-                  bottom: MediaQuery.of(context).size.height / 15),
+                  top: MediaQuery.of(context).size.height / 40,
+                  bottom: MediaQuery.of(context).size.height / 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

@@ -35,7 +35,12 @@ class _State extends State<FilmDetails> {
           Column(
             children: <Widget>[
               // Build trailer, title
-              _buildHead(),
+              Stack(
+                children: <Widget>[
+                  _buildBackButton(context),
+                  _buildHead(),
+                ],
+              ),
               _buildInfo(),
             ],
           ),
@@ -68,87 +73,87 @@ class _State extends State<FilmDetails> {
       if (await canLaunch(url)) await launch(url);
     }
 
-    return Stack(
-      children: <Widget>[
-        // Back button
-        _buildBackButton(context),
-        // Image with gradient
-        Stack(
-          children: <Widget>[
-            Hero(
-              tag: "film-image" + film.id.toString(),
-              child: Container(
-                width: double.infinity,
-                height: this.trailerHeight,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    alignment: Alignment.topCenter,
-                    image: AssetImage(film.imagePath),
-                    fit: BoxFit.cover,
-                  ),
+    return Container(
+      width: double.infinity,
+      height: this.trailerHeight,
+      child: Stack(
+        children: <Widget>[
+          // Image with gradient
+          Hero(
+            tag: "film-image" + film.id.toString(),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  image: AssetImage(film.imagePath),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            Hero(
-              tag: "film-shadow" + film.id.toString(),
-              child: Container(
-                width: double.infinity,
-                height: this.trailerHeight,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.0),
-                      Colors.black,
-                    ],
-                    stops: [0.4, 1.0],
-                  ),
+          ),
+          // Shadow
+          Hero(
+            tag: "film-shadow" + film.id.toString(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.0),
+                    Colors.black,
+                  ],
+                  stops: [0.4, 1.0],
                 ),
               ),
             ),
-            Hero(
-              tag: "film-title" + film.id.toString(),
-              child: Material(
-                type: MaterialType.transparency,
-                child: Container(
-                  width: double.infinity,
-                  height: this.trailerHeight,
-                  padding: EdgeInsets.only(left: 30, right: 30),
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text(
-                        film.title.toUpperCase(),
-                        style: TextStyle(
-                          fontFamily: 'Oswald',
-                          fontSize: 30,
-                          letterSpacing: 3,
-                        ),
-                      ),
+          ),
+          // Film Title
+          Hero(
+            tag: "film-title" + film.id.toString(),
+            child: Material(
+              type: MaterialType.transparency,
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    film.title.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      fontSize: 30,
+                      letterSpacing: 3,
                     ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
-        // Icon
-        Container(
-          width: double.infinity,
-          height: trailerHeight,
-          child: Align(
-            alignment: Alignment.center,
-            child: Icon(
-              Icons.play_circle_filled,
-              size: 50,
-              color: Colors.white70,
+          ),
+          // Play button
+          Container(
+            width: double.infinity,
+            height: trailerHeight,
+            child: Align(
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.play_circle_filled,
+                size: 50,
+                color: Colors.white70,
+              ),
             ),
           ),
-        ),
-      ],
+          // Bleah
+          Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              highlightColor: Colors.black26,
+              splashColor: Colors.black38,
+              onTap: _trailerOpen,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
