@@ -6,7 +6,7 @@ import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
 
 import 'screens/home/home.dart';
 import 'screens/tickets/tickets.dart';
-import 'screens/profile/login.dart';
+import 'screens/profile/profile.dart';
 import 'screens/settings/settings.dart';
 
 import 'package:cinema_app/data/cities.dart';
@@ -39,7 +39,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     _viewsByIndex = <Widget>[
       HomeScreen(),
       TicketScreen(),
-      LoginScreen(),
+      ProfileScreen(),
       SettingScreen(),
     ];
     super.initState();

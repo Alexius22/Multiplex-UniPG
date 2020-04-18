@@ -3,14 +3,20 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
+  final ValueChanged<bool> onLogin;
+  const LoginScreen({this.onLogin});
+
   @override
-  State createState() => new LoginScreenState();
+  State createState() => new LoginScreenState(onLogin: onLogin);
 }
 
 class LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   Animation<double> _iconAnimation;
   AnimationController _iconAnimationController;
+
+  final ValueChanged<bool> onLogin;
+  LoginScreenState({this.onLogin});
 
   @override
   void initState() {
@@ -27,6 +33,10 @@ class LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool _onLoginPressed() {
+      onLogin(true);
+    }
+
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -133,15 +143,20 @@ class LoginScreenState extends State<LoginScreen>
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(20.0),
               ),
-              height: MediaQuery.of(context).size.height / 15,
-              minWidth: MediaQuery.of(context).size.width / 3,
+              height: MediaQuery.of(context).size.height / 18,
+              minWidth: MediaQuery.of(context).size.width / 5,
               color: Colors.deepOrange[900],
               splashColor: Colors.deepOrange[300],
               textColor: Colors.white,
-              child: Text("LOGIN"),
-              onPressed: () {},
+              child: Text(
+                "LOGIN",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onPressed: _onLoginPressed,
             ),
-            FlatButton(
+            MaterialButton(
               onPressed: () => {},
               child: Text(
                 "Password dimenticata?",
@@ -152,46 +167,23 @@ class LoginScreenState extends State<LoginScreen>
             ),
             Container(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 25,
+                top: MediaQuery.of(context).size.height / 30,
                 right: MediaQuery.of(context).size.height / 20,
                 left: MediaQuery.of(context).size.height / 20,
               ),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: Image(
-                      width: MediaQuery.of(context).size.width / 15,
-                      height: MediaQuery.of(context).size.height / 15,
-                      image: AssetImage("images/social/facebook.png"),
-                    ),
-                  ),
-                   Expanded(
-                    child: Image(
-                      width: MediaQuery.of(context).size.width / 15,
-                      height: MediaQuery.of(context).size.height / 15,
-                      image: AssetImage("images/social/google.png"),
-                    ),
-                  ),
-                   Expanded(
-                    child: Image(
-                      width: MediaQuery.of(context).size.width / 15,
-                      height: MediaQuery.of(context).size.height / 15,
-                      image: AssetImage("images/social/linkedin.png"),
-                    ),
-                  ),
-                   Expanded(
-                    child: Image(
-                      width: MediaQuery.of(context).size.width / 15,
-                      height: MediaQuery.of(context).size.height / 15,
-                      image: AssetImage("images/social/twitter.png"),
-                    ),
-                  ),
+                  _buildSocialImg("images/social/facebook.png"),
+                  _buildSocialImg("images/social/google.png"),
+                  _buildSocialImg("images/social/linkedin.png"),
+                  _buildSocialImg("images/social/twitter.png"),
                 ],
               ),
             ),
-            FlatButton(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 15),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 24,
+            ),
+            MaterialButton(
               onPressed: () => {},
               child: Text(
                 "Non hai un account? Creane uno!",
@@ -200,9 +192,39 @@ class LoginScreenState extends State<LoginScreen>
                 ),
               ),
             ),
+            SizedBox(
+              height: 15,
+            ),
           ],
         ),
       ),
     );
+  }
+
+  _buildSocialImg(imgPath) {
+    return Expanded(
+      child: Material(
+        type: MaterialType.transparency,
+        child: Center(
+          child: Ink(
+            child: IconButton(
+              icon: Image.asset(imgPath),
+              iconSize: MediaQuery.of(context).size.height / 12,
+              padding: EdgeInsets.all(0),
+              onPressed: () {},
+            ),
+          ),
+        ),
+      ),
+    );
+    /*
+    return Expanded(
+      child: Image(
+        width: MediaQuery.of(context).size.width / 15,
+        height: MediaQuery.of(context).size.height / 15,
+        image: AssetImage(imgPath),
+      ),
+    );
+    */
   }
 }
