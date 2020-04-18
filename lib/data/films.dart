@@ -1,3 +1,5 @@
+// Copyright 2020 Amatucci & Strippoli. All rights reserved.
+
 /// Utility class that contains info about a single film.
 class Film {
   final int id;
@@ -9,6 +11,7 @@ class Film {
   final String plot;
   final String direction;
   final String cast;
+  final String genre;
 
   Film({
     this.id,
@@ -20,6 +23,7 @@ class Film {
     this.plot,
     this.direction,
     this.cast,
+    this.genre
   });
 }
 
@@ -29,7 +33,7 @@ class FilmsData {
     Film(
       id: 0,
       title: 'Avengers: End Game',
-      imagePath: 'images/avengers.jpg',
+      imagePath: 'images/posters/avengers.jpg',
       trailerURL: 'https://www.youtube.com/watch?v=TcMBFSGVi1c',
       releaseDate: DateTime(
         2019,
@@ -37,115 +41,170 @@ class FilmsData {
         22,
       ),
       duration: Duration(minutes: 181),
-      plot:
-          """In seguito alle azioni di Thanos nel precedente Avengers: Infinity War la popolazione dell'intero universo è stata dimezzata e tra i caduti c'è stato anche Nick Fury. Ma prima di morire questi è riuscito a lanciare un messaggio nello spazio alla potentissima Capitan Marvel, che tornata sulla Terra e di fronte a un gruppo di Avengers afflitto dalla sconfitta e dal lutto, vuole prendere le cose in mano. Quello che ha fatto Thanos però non si può risolvere con la semplice superforza e i colpi di energia...""",
+      plot: """Alla deriva nello spazio senza cibo o acqua, Tony Stark vede la propria scorta di ossigeno diminuire di minuto in minuto. 
+      Nel frattempo, i restanti Vendicatori affrontano un epico scontro con Thanos.""",
       direction: "Anthony Russo, Joe Russo",
-      cast: "Un po' di gente del cast...",
+      cast: """Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner, Don Cheadle, Paul Rudd,
+       Brie Larson, Karen Gillan, Danai Gurira, Josh Brolin""",
+      genre: "Azione, fantascienza, avventura",
     ),
     Film(
       id: 1,
       title: 'Captain Marvel',
-      imagePath: 'images/captainmarvel.jpg',
-      trailerURL: '',
+      imagePath: 'images/posters/captainmarvel.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=RPqT-lFQZHY',
       releaseDate: DateTime(
-        2020,
-        04,
-        16,
+        2019,
+        03,
+        08,
       ),
-      duration: Duration(minutes: 120),
-      plot: """Trama...""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 124),
+      plot: """Captain Marvel è una guerriera extraterrestre originario di Kree, che si ritrova coinvolta in una battaglia intergalattica tra 
+      il proprio popolo e quello degli Skrull. Giunta a vivere sulla Terra nel 1995 nei panni della pilota statunitense Carol Danvers, continua 
+      ad avere ricordi ricorrenti della sua vita precedente. Con l'aiuto di Nick Fury, la donna cerca di scoprire i segreti del proprio passato 
+      sfruttando i suoi speciali superpoteri per porre fine alla guerra con i malvagi Skrulls.""",
+      direction: "Anna Boden, Ryan Fleck",
+      cast: "Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Djimon Hounsou, Lee Pace, Lashana Lynch, Gemma Chan, Annette Bening, Clark Gregg, Jude Law",
+      genre: "Azione, fantascienza, avventura",
     ),
     Film(
       id: 2,
       title: 'Captain America: Civil War',
-      imagePath: 'images/civil.jpg',
-      trailerURL: '',
+      imagePath: 'images/posters/civil.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=NneB0jFJh78',
       releaseDate: DateTime(
-        2020,
-        04,
-        16,
+        2016,
+        05,
+        06,
       ),
-      duration: Duration(minutes: 120),
-      plot: """Trama...""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 147),
+      plot: """Le pressioni politiche sugli Avengers da parte del governo degli Stati Uniti creano crescenti dissapori tra Captain America e 
+      Iron Man. Quando la Terra si trova in pericolo, la Vedova Nera e Occhio di Falco devono scegliere da che parte stare.""",
+      direction: "Anthony e Joe Russo",
+      cast: """Chris Evans, Robert Downey Jr., Scarlett Johansson, Sebastian Stan, Anthony Mackie, Don Cheadle, Jeremy Renner, Chadwick Boseman,
+      Paul Bettany, Elizabeth Olsen, Paul Rudd, Emily VanCamp, Tom Holland, Frank Grillo, William Hurt, Daniel Brühl""",
+      genre: "Azione, fantascienza",
     ),
     Film(
       id: 3,
       title: 'Doctor Strange',
-      imagePath: 'images/doctorStrange.jpg',
-      trailerURL: '',
+      imagePath: 'images/posters/doctorStrange.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=p8plN5PVIzc',
       releaseDate: DateTime(
         2020,
-        04,
-        16,
+        10,
+        26,
       ),
-      duration: Duration(minutes: 120),
-      plot: """Trama...""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 115),
+      plot: """Un medico resta vittima di un tragico incidente, ma viene aiutato da uno stregone che lo inizia alle arti magiche, 
+      grazie alle quali egli riesce a redimersi e a combattere le forze oscure che minacciano l'umanità.""",
+      direction: "Scott Derrickson",
+      cast: "Benedict Cumberbatch, Chiwetel Ejiofor, Rachel McAdams, Benedict Wong, Michael Stuhlbarg, Benjamin Bratt, Scott Adkins, Mads Mikkelsen, Tilda Swinton",
+      genre: "Azione, fantastico, avventura",
     ),
     Film(
       id: 4,
       title: 'Guardiani della Galassia',
-      imagePath: 'images/guardiani.jpg',
-      trailerURL: '',
+      imagePath: 'images/posters/guardiani.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=VHS1Q2rNVjI',
       releaseDate: DateTime(
-        2020,
-        04,
-        16,
+        2014,
+        10,
+        22,
       ),
-      duration: Duration(minutes: 120),
-      plot: """Trama...""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 121),
+      plot: """Un avventuriero spaziale, Brash Peter Quill, diventa preda di alcuni cacciatori di taglie dopo aver rubato una sfera ambita 
+      dal potente Ronan. Per sfuggire alla morte, l'uomo si allea con quattro improbabili compagni di avventura.""",
+      direction: "James Gunn",
+      cast: "Chris Pratt, Zoe Saldana, Dave Bautista, Lee Pace, Michael Rooker, Karen Gillan, Djimon Hounsou, John C. Reilly, Glenn Close, Benicio del Toro",
+      genre: "Azione, fantascienza, avventura",
     ),
     Film(
       id: 5,
       title: 'Iron Man 3',
-      imagePath: 'images/ironman3.jpg',
-      trailerURL: '',
+      imagePath: 'images/posters/ironman3.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=wTAlWE4PAwc',
       releaseDate: DateTime(
-        2020,
+        2013,
         04,
-        16,
+        24,
       ),
-      duration: Duration(minutes: 120),
-      plot: """Trama...""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 130),
+      plot: """Dopo aver salvato New York dalla distruzione ed essere rimasto da allora insonne e preoccupato, Tony Stark rimasto senza armatura 
+      deve lottare contro le sue paure interiori per sconfiggere il suo nuovo nemico, il Mandarino.""",
+      direction: "Shane Black",
+      cast: "Robert Downey Jr., Gwyneth Paltrow, Don Cheadle, Guy Pearce, Rebecca Hall, Ty Simpkins, Stephanie Szostak, James Badge Dale, Jon Favreau, Ben Kingsley",
+      genre: "Azione, fantascienza",
     ),
     Film(
       id: 6,
-      title: 'The Amazing Spiderman',
-      imagePath: 'images/amazingSpiderman.jpg',
-      trailerURL: 'https://www.youtube.com/watch?v=__kA4B_ut0s',
+      title: 'Spider-Man: Homecoming',
+      imagePath: 'images/posters/spiderman.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=39udgGPyYMg',
       releaseDate: DateTime(
-        2020,
-        04,
-        16,
+        2017,
+        07,
+        06,
       ),
-      duration: Duration(minutes: 120),
-      plot: """È la storia di Peter Parker (Garfield), un liceale emarginato che è stato abbandonato da piccolo dai genitori e affidato allo zio Ben (Sheen) e alla zia May (Field). Come la maggior parte degli adolescenti, Peter cerca di capire chi è e come è diventato la persona che è adesso. Peter cerca la sua strada insieme alla ragazza per cui si è preso una cotta, Gwen Stacy (Stone), e insieme i due affronteranno l’amore, l’impegno e tanti segreti. Quando Peter scopre una misteriosa valigetta che apparteneva a suo padre, inizia una ricerca per capire il perché della scomparsa dei genitori – e questo lo porta direttamente a Oscorp e al laboratorio del Dr. Curt Connors (Ifans), il vecchio socio del padre. Quando, nei panni di Spider-Man, entrerà in rotta di collisione con l’alter ego di Connors, Lizard, Peter sceglie di usare i suoi poteri e diventare un eroe, anche se questo cambierà radicalmente la sua vita.""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 133),
+      plot: """L'Uomo Ragno decide di chiedere aiuto al proprio mentore: il miliardario Tony Stark, alias Iron Man. La situazione si complica quando 
+      il criminale noto come Avvoltoio comincia a seminare il panico in città.""",
+      direction: "Jon Watts",
+      cast: "Tom Holland, Michael Keaton, Jon Favreau, Zendaya: Michelle, Donald Glover, Tyne Daly, Marisa Tomei, Robert Downey Jr.",
+      genre: "Azione, avventura, fantascienza",
     ),
     Film(
       id: 7,
       title: 'Captain America: The Winter Soldier',
-      imagePath: 'images/wintersoldier.jpg',
-      trailerURL: '',
+      imagePath: 'images/posters/wintersoldier.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=7SlILk2WMTI',
       releaseDate: DateTime(
-        2020,
-        04,
-        16,
+        2014,
+        03,
+        26,
       ),
-      duration: Duration(minutes: 120),
-      plot: """Trama...""",
-      direction: "Registi...",
-      cast: "Un po' di gente del cast...",
+      duration: Duration(minutes: 136),
+      plot: """Capitan America, Vedova Nera e un nuovo alleato, Falcon, affrontano un nemico inaspettato mentre lottano per far emergere alla luce 
+      del sole un complotto che mette a rischio il mondo intero.""",
+      direction: "Anthony e Joe Russo",
+      cast: """Chris Evans, Scarlett Johansson, Sebastian Stan, Anthony Mackie, Cobie Smulders, Frank Grillo, Emily VanCamp, Hayley Atwell, 
+      Robert Redford, Samuel L. Jackson""",
+      genre: "Azione, fantascienza",
+    ),
+    Film(
+      id: 8,
+      title: 'Thor: Ragnarok',
+      imagePath: 'images/posters/ragnarok.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=D7UpZmPmwSo',
+      releaseDate: DateTime(
+        2017,
+        10,
+        25,
+      ),
+      duration: Duration(minutes: 130),
+      plot: """Thor viene imprigionato e, privato del proprio martello, si ritrova a dover combattere contro Hulk ed Hela. 
+      Inoltre deve riuscire a raggiungere Asgard e fermare Ragnarok, la distruzione del suo proprio mondo.""",
+      direction: "Taika Waititi",
+      cast: "Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Idris Elba, Jeff Goldblum, Tessa Thompson, Karl Urban, Mark Ruffalo, Anthony Hopkins",
+      genre: "Azione, fantastico, avventura, fantascienza",
+    ),
+    Film(
+      id: 9,
+      title: 'Black Panther',
+      imagePath: 'images/posters/blackpanther.jpg',
+      trailerURL: 'https://www.youtube.com/watch?v=WL_7EsTsQ08',
+      releaseDate: DateTime(
+        2018,
+        01,
+        29,
+      ),
+      duration: Duration(minutes: 134),
+      plot: """Il giovane principe T'Challa ritorna a casa, nella nazione tecnologicamente avanzata del Wakanda. Ben presto però è costretto a 
+      richiedere l'aiuto dell'agente della CIA Everett K. Ross per difendere il trono ed evitare una guerra civile.""",
+      direction: "Ryan Coogler",
+      cast: """Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o, Danai Gurira, Martin Freeman, Daniel Kaluuya, Letitia Wright, Winston Duke, 
+      Angela Bassett, Forest Whitaker, Andy Serkis""",
+      genre: "Azione, avventura, fantascienza",
     ),
   ];
 
