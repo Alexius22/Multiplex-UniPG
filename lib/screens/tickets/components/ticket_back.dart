@@ -29,8 +29,8 @@ class _TicketBackState extends State<TicketBack> {
   final secondaryTextColor = Colors.grey[500];
 
   // Timer configuration
-  Duration countDownCurrent = Duration(minutes: 1, seconds: 30);
-  Duration countDownCurrent2 = Duration(minutes: 50, seconds: 30);
+  Duration countDownCurrent = Duration(minutes: 50, seconds: 30);
+  Duration countDownCurrent2 = Duration(minutes: 1, seconds: 30);
 
   // Working variables
   Timer timer;

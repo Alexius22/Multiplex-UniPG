@@ -22,7 +22,7 @@ class _TicketState extends State<Ticket> {
   @override
   Widget build(BuildContext context) {
     return FlipCard(
-      direction: FlipDirection.VERTICAL,
+      direction: FlipDirection.HORIZONTAL,
       front: TicketFront(ticketData: ticketData),
       back: TicketBack(ticketData: ticketData),
     );

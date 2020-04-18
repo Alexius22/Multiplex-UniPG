@@ -3,13 +3,23 @@
 import 'package:flutter/material.dart';
 
 class LoggedInScreen extends StatefulWidget {
+  final ValueChanged<bool> onLogin;
+  const LoggedInScreen({this.onLogin});
+
   @override
-  _State createState() => new _State();
+  _State createState() => new _State(onLogin: onLogin);
 }
 
 class _State extends State<LoggedInScreen> {
+  final ValueChanged<bool> onLogin;
+  _State({this.onLogin});
+
   @override
   Widget build(BuildContext context) {
+    void _onLogoutPressed() {
+      onLogin(false);
+    }
+
     return Container(
       child: Column(
         children: <Widget>[
@@ -134,7 +144,7 @@ class _State extends State<LoggedInScreen> {
                 fontSize: MediaQuery.of(context).size.height / 40,
               ),
             ),
-            onTap: () {},
+            onTap: _onLogoutPressed,
           ),
         ],
       ),

@@ -33,7 +33,7 @@ class LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool _onLoginPressed() {
+    void _onLoginPressed() {
       onLogin(true);
     }
 
@@ -141,7 +141,7 @@ class LoginScreenState extends State<LoginScreen>
             ),
             MaterialButton(
               shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20.0),
               ),
               height: MediaQuery.of(context).size.height / 18,
               minWidth: MediaQuery.of(context).size.width / 5,

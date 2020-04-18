@@ -15,7 +15,7 @@ class _State extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     if(_loggedIn)
-      return LoggedInScreen();
+      return LoggedInScreen(onLogin: _onLogin);
     else
       return LoginScreen(onLogin: _onLogin);
   }

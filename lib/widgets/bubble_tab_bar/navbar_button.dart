@@ -20,12 +20,12 @@ class NavbarButton extends StatefulWidget {
 class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderStateMixin {
   AnimationController _iconAnimController;
   bool _wasSelected;
-  double _animScale = 1;
+  double _animScale = 1.0;
 
   @override
   void initState() {
     //Create a tween + controller which will drive the icon rotation
-    int duration = (350 / _animScale).round();
+    int duration = (700 / _animScale).round();
     _iconAnimController = AnimationController(
       duration: Duration(milliseconds: duration),
       vsync: this,

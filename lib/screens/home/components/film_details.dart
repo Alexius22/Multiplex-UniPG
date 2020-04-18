@@ -24,7 +24,7 @@ class _State extends State<FilmDetails> {
   });
 
   // Configuration
-  final trailerHeight = 250.0;
+  final trailerHeight = 300.0;
   final buyHeight = 50.0;
   final buyPadding = 30.0;
   final mainTextColor = Colors.white;

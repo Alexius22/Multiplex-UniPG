@@ -134,7 +134,7 @@ class _TicketFrontState extends State<TicketFront> {
           ),
         ),
         Text(
-          ticketDate.hour.toString() + " : " + ticketDate.minute.toString(),
+          DateFormat('HH : mm').format(ticketDate),
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: 18,
