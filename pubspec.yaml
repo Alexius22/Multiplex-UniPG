@@ -17,6 +17,7 @@ dependencies:
   
   url_launcher: ^5.4.2
   barcode_flutter: ^1.1.2
+  flip_card: ^0.4.4
   cupertino_icons: ^0.1.2
   outline_material_icons: ^0.1.0
 

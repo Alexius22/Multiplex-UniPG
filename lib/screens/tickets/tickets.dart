@@ -1,7 +1,5 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'package:cinema_app/data/tickets.dart';

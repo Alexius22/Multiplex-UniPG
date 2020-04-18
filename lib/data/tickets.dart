@@ -11,6 +11,8 @@ class TicketData {
   final String row;
   final int seat;
 
+  final List<Consumable> consumables;
+
   TicketData({
     this.idCity,
     this.idFilm,
@@ -18,6 +20,17 @@ class TicketData {
     this.room,
     this.row,
     this.seat,
+    this.consumables,
+  });
+}
+
+class Consumable {
+  final String label;
+  final int n;
+
+  Consumable({
+    this.label,
+    this.n,
   });
 }
 
@@ -42,6 +55,13 @@ class TicketsData {
         room: 1 + _random.nextInt(6),
         row: String.fromCharCode(65 + _random.nextInt(20)),
         seat: 1 + _random.nextInt(20),
+        consumables: <Consumable>[
+          Consumable(label: "PopCorn", n: _random.nextInt(6)),
+          Consumable(label: "Patatine", n: _random.nextInt(6)),
+          Consumable(label: "Coca-Cola", n: _random.nextInt(6)),
+          Consumable(label: "Acqua", n: _random.nextInt(6)),
+          Consumable(label: "Altro", n: _random.nextInt(6)),
+        ],
       );
     },
   );

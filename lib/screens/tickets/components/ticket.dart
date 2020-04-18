@@ -1,8 +1,11 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
+import 'package:flip_card/flip_card.dart';
+
 import 'package:cinema_app/data/tickets.dart';
 import './ticket_front.dart';
+import './ticket_back.dart';
 
 class Ticket extends StatefulWidget {
   final TicketData ticketData;
@@ -18,6 +21,10 @@ class _TicketState extends State<Ticket> {
 
   @override
   Widget build(BuildContext context) {
-    return TicketFront(ticketData: ticketData);
+    return FlipCard(
+      direction: FlipDirection.VERTICAL,
+      front: TicketFront(ticketData: ticketData),
+      back: TicketBack(ticketData: ticketData),
+    );
   }
 }
