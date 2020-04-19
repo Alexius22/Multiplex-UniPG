@@ -10,5 +10,6 @@ ThemeData appDarkTheme() {
     bottomAppBarColor: Colors.black,
     highlightColor: Colors.deepOrange[900],
     canvasColor: Colors.black87,
+    disabledColor: Colors.grey[800],
   );
 }

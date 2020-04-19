@@ -3,7 +3,7 @@ import 'package:cinema_app/data/films.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-import './blank_page_route.dart';
+import './slide_route.dart';
 import './buy_ticket.dart';
 
 class FilmDetails extends StatefulWidget {
@@ -36,7 +36,7 @@ class _State extends State<FilmDetails> {
   @override
   Widget build(BuildContext context) {
     void _onBuyPressed() {
-      Navigator.push(context, BlankPageRoute(enterPage: BuyTicket()));
+      Navigator.push(context, SlideTopRoute(page: BuyTicket()));
     }
 
     return Scaffold(
@@ -243,7 +243,7 @@ class _State extends State<FilmDetails> {
       height: MediaQuery.of(context).size.height -
           trailerHeight -
           buyHeight -
-          buyPadding/1.5,
+          buyPadding / 1.5,
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
