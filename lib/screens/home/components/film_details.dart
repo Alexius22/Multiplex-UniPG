@@ -14,18 +14,10 @@ class FilmDetails extends StatefulWidget {
   });
 
   @override
-  _State createState() => new _State(
-        film: this.film,
-      );
+  _State createState() => new _State();
 }
 
 class _State extends State<FilmDetails> {
-  final Film film;
-
-  _State({
-    this.film,
-  });
-
   // Configuration
   final trailerHeight = 300.0;
   final buyHeight = 50.0;
@@ -36,7 +28,7 @@ class _State extends State<FilmDetails> {
   @override
   Widget build(BuildContext context) {
     void _onBuyPressed() {
-      Navigator.push(context, SlideTopRoute(page: BuyTicket()));
+      Navigator.push(context, SlideTopRoute(page: BuyTicket(film: widget.film)));
     }
 
     return Scaffold(
@@ -144,7 +136,7 @@ class _State extends State<FilmDetails> {
 
   Widget _buildHead() {
     void _trailerOpen() async {
-      String url = this.film.trailerURL;
+      String url = widget.film.trailerURL;
       if (await canLaunch(url)) await launch(url);
     }
 
@@ -155,12 +147,12 @@ class _State extends State<FilmDetails> {
         children: <Widget>[
           // Image with gradient
           Hero(
-            tag: "film-image" + film.id.toString(),
+            tag: "film-image" + widget.film.id.toString(),
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
                   alignment: Alignment.topCenter,
-                  image: AssetImage(film.imagePath),
+                  image: AssetImage(widget.film.imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -168,7 +160,7 @@ class _State extends State<FilmDetails> {
           ),
           // Shadow
           Hero(
-            tag: "film-shadow" + film.id.toString(),
+            tag: "film-shadow" + widget.film.id.toString(),
             child: Container(
               decoration: BoxDecoration(
                 color: mainTextColor,
@@ -186,7 +178,7 @@ class _State extends State<FilmDetails> {
           ),
           // Film Title
           Hero(
-            tag: "film-title" + film.id.toString(),
+            tag: "film-title" + widget.film.id.toString(),
             child: Material(
               type: MaterialType.transparency,
               child: Padding(
@@ -194,7 +186,7 @@ class _State extends State<FilmDetails> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    film.title.toUpperCase(),
+                    widget.film.title.toUpperCase(),
                     style: TextStyle(
                       fontFamily: 'Oswald',
                       fontSize: 30,
@@ -235,7 +227,7 @@ class _State extends State<FilmDetails> {
   Widget _buildInfo() {
     // Build genre widgets
     List<Widget> _genres = [];
-    for (var genre in film.genre) {
+    for (var genre in widget.film.genre) {
       _genres.add(_buildGenre(genre));
     }
 
@@ -267,7 +259,7 @@ class _State extends State<FilmDetails> {
                 ),
                 SizedBox(width: 8),
                 Text(
-                  DateFormat('dd/MM/yyyy').format(film.releaseDate),
+                  DateFormat('dd/MM/yyyy').format(widget.film.releaseDate),
                   style: TextStyle(
                     fontSize: 17,
                     letterSpacing: 1,
@@ -286,7 +278,7 @@ class _State extends State<FilmDetails> {
                 ),
                 SizedBox(width: 8),
                 Text(
-                  film.duration.inMinutes.toString() + "'",
+                  widget.film.duration.inMinutes.toString() + "'",
                   style: TextStyle(
                     fontSize: 17,
                     letterSpacing: 1,
@@ -310,7 +302,7 @@ class _State extends State<FilmDetails> {
                   ),
                   SizedBox(height: 3),
                   Text(
-                    film.plot,
+                    widget.film.plot,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontFamily: 'OpenSans',
@@ -343,7 +335,7 @@ class _State extends State<FilmDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    film.direction,
+                    widget.film.direction,
                     style: TextStyle(
                       fontFamily: 'OpenSans',
                       fontSize: 17,
@@ -369,7 +361,7 @@ class _State extends State<FilmDetails> {
                   ),
                   SizedBox(height: 3),
                   Text(
-                    film.cast,
+                    widget.film.cast,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontFamily: 'OpenSans',

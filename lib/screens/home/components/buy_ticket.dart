@@ -2,36 +2,31 @@
 
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:cinema_app/data/films.dart';
 import './seat_checkbox.dart';
 
 class BuyTicket extends StatefulWidget {
+  final Film film;
+
+  BuyTicket({
+    this.film,
+  });
+
   @override
   _State createState() => new _State();
 }
 
-class MyPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = new Paint()
-      ..isAntiAlias = true
-      ..strokeWidth = 1.0
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke;
-    canvas.drawArc(
-        Rect.fromLTWH(-35.0, 10.0, size.width * 1.2, size.height * 1.5),
-        10,
-        2,
-        false,
-        paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter old) {
-    return false;
-  }
-}
-
 class _State extends State<BuyTicket> {
+  String _timePicked;
+  List<String> _hoursChoice;
+
+  @override
+  void initState() {
+    _hoursChoice = widget.film.hours;
+    _timePicked = _hoursChoice[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +48,15 @@ class _State extends State<BuyTicket> {
               Text("DIM TAB"),
               _dimTab(),
               */
-              Text("SELECTION POPUP"),
-              _selectPopup(),
+              SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  _datePicker(),
+                  _timePicker(),
+                ],
+              ),
             ],
           ),
         ],
@@ -82,11 +84,13 @@ class _State extends State<BuyTicket> {
   Widget _buildHead() {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: 10),
+        padding: EdgeInsets.only(top: 13),
         child: Center(
           child: Text(
             "Seleziona il posto",
             style: TextStyle(
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.bold,
               fontSize: 30,
             ),
           ),
@@ -176,26 +180,96 @@ class _State extends State<BuyTicket> {
     );
   }
 
-  Widget _selectPopup() => PopupMenuButton<int>(
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            value: 1,
-            child: Text("First"),
+  Widget _datePicker() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          children: [
+            Icon(Icons.calendar_today),
+            SizedBox(width: 4),
+            Text(
+              "Giorno",
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 16,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: <Widget>[
+            Text(
+              "19/04",
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            Icon(Icons.arrow_drop_down),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _timePicker() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          children: [
+            Icon(Icons.schedule),
+            SizedBox(width: 4),
+            Text(
+              "Orario",
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 16,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 5),
+        ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton<String>(
+            isDense: true,
+            value: _timePicked,
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 24,
+            underline: Container(
+              padding: EdgeInsets.all(0.0),
+              height: 0,
+            ),
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                _timePicked = newValue;
+              });
+            },
+            items: _hoursChoice.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
-          PopupMenuItem(
-            value: 2,
-            child: Text("Second"),
-          ),
-        ],
-        initialValue: 2,
-        onCanceled: () {
-          print("You have canceled the menu.");
-        },
-        onSelected: (value) {
-          print("value:$value");
-        },
-        icon: Icon(Icons.list),
-      );
+        ),
+      ],
+    );
+  }
 
   Widget _button(String text) {
     return FlatButton(
@@ -215,7 +289,7 @@ class _State extends State<BuyTicket> {
       },
     );
   }
-  
+
   Widget _dimTab() {
     return TabBar(
       unselectedLabelColor: Colors.white,
@@ -225,5 +299,27 @@ class _State extends State<BuyTicket> {
         Tab(text: "3D"),
       ],
     );
+  }
+}
+
+class MyPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = new Paint()
+      ..isAntiAlias = true
+      ..strokeWidth = 1.0
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke;
+    canvas.drawArc(
+        Rect.fromLTWH(-35.0, 10.0, size.width * 1.2, size.height * 1.5),
+        10,
+        2,
+        false,
+        paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return false;
   }
 }
