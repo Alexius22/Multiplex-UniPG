@@ -21,6 +21,32 @@ class _State extends State<BuyTicket> {
   String _timePicked;
   List<String> _hoursChoice;
 
+  String _selectedDate = 'GG/MM';
+  DateTime minDate = DateTime.now();
+
+  Future _selectDate() async {
+    DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: minDate,
+      firstDate: minDate,
+      lastDate: minDate.add(new Duration(days: 13)),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            backgroundColor: Colors.grey[800],
+            dialogBackgroundColor: Colors.grey[900],
+            accentColor: Colors.grey[700],
+          ),
+          child: child,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() => _selectedDate =
+          picked.day.toString() + "/" + picked.month.toString());
+    }
+  }
+
   @override
   void initState() {
     _hoursChoice = widget.film.hours;
@@ -57,7 +83,21 @@ class _State extends State<BuyTicket> {
                   _timePicker(),
                 ],
               ),
+              Text("Vuoi includere uno snack?", style: TextStyle(fontSize: 20)),
+              _foodSelection("Pop-corn"),
             ],
+          ),
+          // Footer
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _totalPrize(),
+                _buyButton(),
+              ],
+            ),
           ),
         ],
       ),
@@ -202,18 +242,43 @@ class _State extends State<BuyTicket> {
         SizedBox(height: 5),
         Row(
           children: <Widget>[
-            Text(
-              "19/04",
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+            MaterialButton(
+              padding: EdgeInsets.all(3.0),
+              height: 0.0,
+              minWidth: 10,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              splashColor: Colors.deepOrange[300],
+              textColor: Colors.white,
+              child: Text(
+                _selectedDate,
+                style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
+              onPressed: _selectDate,
             ),
-            Icon(Icons.arrow_drop_down),
+            Icon(Icons.keyboard_arrow_left),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _foodSelection(text) {
+    return SwitchListTile(
+      title: Text(text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: MediaQuery.of(context).size.height / 40,
+          )),
+      subtitle: Text("Piccolo: € 2.00",
+          style: TextStyle(
+            color: Colors.grey.shade400,
+          )),
+      value: false,
+      onChanged: (val) {},
     );
   }
 
@@ -271,22 +336,60 @@ class _State extends State<BuyTicket> {
     );
   }
 
-  Widget _button(String text) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(20.0),
+  Widget _totalPrize() {
+    return Row(
+      children: <Widget>[
+        Text(
+          "Totale:",
+          style: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 18,
+            letterSpacing: 1,
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(
+          "€ 12.40",
+          style: TextStyle(
+            fontFamily: 'OpenSans',
+            fontWeight: FontWeight.bold,
+            fontSize: 26,
+            letterSpacing: 1,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buyButton() {
+    return Container(
+      height: 50,
+      width: 180,
+      child: MaterialButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        color: Colors.deepOrange[900],
+        splashColor: Colors.deepOrange[300],
+        textColor: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 22,
+            ),
+            Text(
+              "Acquista",
+              style: TextStyle(
+                fontSize: 20,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+        onPressed: () {},
       ),
-      //color: pressedButtons[0] ? Colors.deepOrange[900] : Colors.black,
-      color: Colors.deepOrange[900],
-      splashColor: Colors.deepOrange[300],
-      textColor: Colors.white,
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 20.0),
-      ),
-      onPressed: () {
-        //_pressButton(0);
-      },
     );
   }
 
