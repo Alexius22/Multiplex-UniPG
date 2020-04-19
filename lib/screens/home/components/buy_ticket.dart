@@ -7,7 +7,7 @@ class BuyTicket extends StatefulWidget {
   _State createState() => new _State();
 }
 
-class MyPainter extends CustomPainter { 
+class MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = new Paint()
@@ -15,10 +15,9 @@ class MyPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..color = Colors.white
       ..style = PaintingStyle.stroke;
-    canvas.drawArc(new Rect.fromLTWH(0.0, 0.0, size.width, size.height/2.5),
-  10, 2, false, paint);
+    canvas.drawArc(new Rect.fromLTWH(0.0, 0.0, size.width, size.height*3), 10, 2,
+        false, paint);
   }
-
   @override
   bool shouldRepaint(CustomPainter old) {
     return false;
@@ -86,7 +85,7 @@ class _State extends State<BuyTicket> {
   Widget _buildScreen() {
     return Center(
       child: CustomPaint(
-        size: Size(300, 300),
+        size: Size(350, 70),
         painter: MyPainter(),
       ),
     );
@@ -94,12 +93,12 @@ class _State extends State<BuyTicket> {
 
   Widget _buildSeats({rows: 5, columns: 6}) {
     List<Widget> checkBoxColumns = [];
-    for(int i=0; i<columns; i++) {
+    for (int i = 0; i < columns; i++) {
       checkBoxColumns.add(_buildCheckBox());
     }
 
     List<TableRow> checkBoxRows = [];
-    for(int i=0; i<rows; i++) {
+    for (int i = 0; i < rows; i++) {
       checkBoxRows.add(TableRow(children: checkBoxColumns));
     }
 
