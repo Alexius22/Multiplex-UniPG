@@ -34,6 +34,7 @@ class SeatCheckBox extends StatefulWidget {
 }
 
 class _SeatCheckBoxState extends State<SeatCheckBox> {
+  bool _disabled;
   bool _checked;
   Widget _currentWidget;
   Color _color;
@@ -41,10 +42,11 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
 
   @override
   void initState() {
+    _disabled = widget.disabled;
     _checked = widget.checked;
     _currentWidget = Text("", key: ValueKey<bool>(_checked));
     
-    if(widget.disabled)
+    if(_disabled)
       _color = widget.backgroundColorDisabled;
     else
       _color = widget.backgroundColor;
@@ -54,7 +56,7 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
 
   void _onCheckBoxTap() {
     setState(() {
-      if (!widget.disabled) {
+      if (!_disabled) {
         _checked = !_checked;
         if (_checked) {
           _currentWidget = Icon(Icons.check, key: ValueKey<bool>(_checked));

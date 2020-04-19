@@ -28,7 +28,8 @@ class _State extends State<FilmDetails> {
   @override
   Widget build(BuildContext context) {
     void _onBuyPressed() {
-      Navigator.push(context, SlideTopRoute(page: BuyTicket(film: widget.film)));
+      Navigator.push(
+          context, SlideTopRoute(page: BuyTicket(film: widget.film)));
     }
 
     return Scaffold(
@@ -85,7 +86,8 @@ class _State extends State<FilmDetails> {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         color: Colors.deepOrange[900],
-                        splashColor: Colors.deepOrange[300],
+                        highlightColor: Colors.white24,
+                        splashColor: Colors.white38,
                         textColor: Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

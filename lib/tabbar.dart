@@ -47,7 +47,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Theme.of(context).highlightColor;
+    var accentColor = Colors.deepOrange[900];
 
     //Declare some buttons for our tab bar
     _navBarItems = [

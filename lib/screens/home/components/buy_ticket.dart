@@ -18,6 +18,12 @@ class BuyTicket extends StatefulWidget {
 }
 
 class _State extends State<BuyTicket> {
+  // Config
+  Color selectionColor = Colors.deepOrange;
+  Color mainTextColor = Colors.white;
+  Color secondaryTextColor = Colors.white;
+
+  // Working variable
   String _timePicked;
   List<String> _hoursChoice;
 
@@ -51,6 +57,7 @@ class _State extends State<BuyTicket> {
   void initState() {
     _hoursChoice = widget.film.hours;
     _timePicked = _hoursChoice[0];
+    super.initState();
   }
 
   @override
@@ -69,12 +76,10 @@ class _State extends State<BuyTicket> {
               ),
               _buildScreen(),
               _buildSeats(),
-              _legendColor(),
-              /*
-              Text("DIM TAB"),
-              _dimTab(),
-              */
-              SizedBox(height: 40),
+              _buildLegend(),
+              SizedBox(height: 20),
+              _buildSeatsSummary(),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,6 +88,7 @@ class _State extends State<BuyTicket> {
                   _timePicker(),
                 ],
               ),
+              SizedBox(height: 20),
               Text("Vuoi includere uno snack?", style: TextStyle(fontSize: 20)),
               _foodSelection("Pop-corn"),
             ],
@@ -183,7 +189,7 @@ class _State extends State<BuyTicket> {
     );
   }
 
-  Widget _legendColor() {
+  Widget _buildLegend() {
     return Container(
       padding: EdgeInsets.only(top: 10, left: 30, right: 30),
       child: Row(
@@ -220,6 +226,35 @@ class _State extends State<BuyTicket> {
     );
   }
 
+  Widget _buildSeatsSummary() {
+    return Padding(
+      padding: EdgeInsets.only(left: 40, right: 40),
+      child: Row(
+        children: <Widget>[
+          Text(
+            "Posti:",
+            style: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              letterSpacing: 1,
+            ),
+          ),
+          SizedBox(width: 10),
+          Text(
+            "A1, B6, H9, C3, G1",
+            style: TextStyle(
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.bold,
+              color: selectionColor,
+              fontSize: 20,
+              letterSpacing: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _datePicker() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -242,43 +277,36 @@ class _State extends State<BuyTicket> {
         SizedBox(height: 5),
         Row(
           children: <Widget>[
-            MaterialButton(
-              padding: EdgeInsets.all(3.0),
-              height: 0.0,
-              minWidth: 10,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              splashColor: Colors.deepOrange[300],
-              textColor: Colors.white,
-              child: Text(
-                _selectedDate,
-                style: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+            Material(
+              borderRadius: BorderRadius.circular(30.0),
+              child: MaterialButton(
+                padding: EdgeInsets.only(left: 8.0, right: 0.0),
+                height: 0.0,
+                minWidth: 10,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                highlightColor: Colors.white24,
+                splashColor: Colors.white38,
+                textColor: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      _selectedDate,
+                      style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: selectionColor,
+                      ),
+                    ),
+                    Icon(Icons.keyboard_arrow_left),
+                  ],
                 ),
+                onPressed: _selectDate,
               ),
-              onPressed: _selectDate,
             ),
-            Icon(Icons.keyboard_arrow_left),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _foodSelection(text) {
-    return SwitchListTile(
-      title: Text(text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: MediaQuery.of(context).size.height / 40,
-          )),
-      subtitle: Text("Piccolo: € 2.00",
-          style: TextStyle(
-            color: Colors.grey.shade400,
-          )),
-      value: false,
-      onChanged: (val) {},
     );
   }
 
@@ -314,7 +342,7 @@ class _State extends State<BuyTicket> {
               height: 0,
             ),
             style: TextStyle(
-              color: Colors.white,
+              color: selectionColor,
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -333,6 +361,22 @@ class _State extends State<BuyTicket> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _foodSelection(text) {
+    return SwitchListTile(
+      title: Text(text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: MediaQuery.of(context).size.height / 40,
+          )),
+      subtitle: Text("Piccolo: € 2.00",
+          style: TextStyle(
+            color: Colors.grey.shade400,
+          )),
+      value: false,
+      onChanged: (val) {},
     );
   }
 
@@ -370,7 +414,8 @@ class _State extends State<BuyTicket> {
           borderRadius: BorderRadius.circular(20.0),
         ),
         color: Colors.deepOrange[900],
-        splashColor: Colors.deepOrange[300],
+        highlightColor: Colors.white24,
+        splashColor: Colors.white38,
         textColor: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -390,6 +435,44 @@ class _State extends State<BuyTicket> {
         ),
         onPressed: () {},
       ),
+    );
+  }
+
+  Widget _buildSeatsSummaryOld() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          children: [
+            Icon(Icons.event_seat),
+            SizedBox(width: 4),
+            Text(
+              "Posti",
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 16,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 5),
+        Container(
+          alignment: Alignment.center,
+          width: 100,
+          child: Text(
+            "A1, B6, H9, C3, G1",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
