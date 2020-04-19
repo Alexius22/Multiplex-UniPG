@@ -3,6 +3,9 @@ import 'package:cinema_app/data/films.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
+import './blank_page_route.dart';
+import './buy_ticket.dart';
+
 class FilmDetails extends StatefulWidget {
   final Film film;
 
@@ -32,6 +35,10 @@ class _State extends State<FilmDetails> {
 
   @override
   Widget build(BuildContext context) {
+    void _onBuyPressed() {
+      Navigator.push(context, BlankPageRoute(enterPage: BuyTicket()));
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -104,7 +111,7 @@ class _State extends State<FilmDetails> {
                             ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: _onBuyPressed,
                       ),
                     ),
                   ),
