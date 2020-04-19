@@ -12,6 +12,7 @@ class Film {
   final String direction;
   final String cast;
   final List<String> genre;
+  final List<String> hours;
 
   Film({
     this.id,
@@ -23,7 +24,8 @@ class Film {
     this.plot,
     this.direction,
     this.cast,
-    this.genre
+    this.genre,
+    this.hours,
   });
 }
 
@@ -45,6 +47,7 @@ class FilmsData {
       direction: "Anthony Russo, Joe Russo",
       cast: "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner, Don Cheadle, Paul Rudd, Brie Larson, Karen Gillan, Danai Gurira, Josh Brolin",
       genre: ["Azione", "Fantascienza", "Avventura"],
+      hours: ["16:30", "18:00", "20:45", "21:30", "23:00"],
     ),
     Film(
       id: 1,
@@ -61,6 +64,7 @@ class FilmsData {
       direction: "Anna Boden, Ryan Fleck",
       cast: "Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Djimon Hounsou, Lee Pace, Lashana Lynch, Gemma Chan, Annette Bening, Clark Gregg, Jude Law",
       genre: ["Azione", "Fantascienza", "Avventura"],
+      hours: ["16:15", "17:30", "20:15", "21:45", "22:30"],
     ),
     Film(
       id: 2,
@@ -77,6 +81,7 @@ class FilmsData {
       direction: "Anthony e Joe Russo",
       cast: "Chris Evans, Robert Downey Jr., Scarlett Johansson, Sebastian Stan, Anthony Mackie, Don Cheadle, Jeremy Renner, Chadwick Boseman, Paul Bettany, Elizabeth Olsen, Paul Rudd, Emily VanCamp, Tom Holland, Frank Grillo, William Hurt, Daniel Brühl",
       genre: ["Azione", "Fantascienza"],
+      hours: ["16:45", "17:30", "19:45", "21:00", "22:15"],
     ),
     Film(
       id: 3,
@@ -93,6 +98,7 @@ class FilmsData {
       direction: "Scott Derrickson",
       cast: "Benedict Cumberbatch, Chiwetel Ejiofor, Rachel McAdams, Benedict Wong, Michael Stuhlbarg, Benjamin Bratt, Scott Adkins, Mads Mikkelsen, Tilda Swinton",
       genre: ["Azione", "Fantastico", "Avventura"],
+      hours: ["15:45", "17:00", "18:15", "20:45", "22:30"],
     ),
     Film(
       id: 4,
@@ -109,6 +115,7 @@ class FilmsData {
       direction: "James Gunn",
       cast: "Chris Pratt, Zoe Saldana, Dave Bautista, Lee Pace, Michael Rooker, Karen Gillan, Djimon Hounsou, John C. Reilly, Glenn Close, Benicio del Toro",
       genre: ["Azione", "Fantascienza", "Avventura"],
+      hours: ["16:00", "17:30", "19:00", "20.30", "22.45"],
     ),
     Film(
       id: 5,
@@ -125,6 +132,7 @@ class FilmsData {
       direction: "Shane Black",
       cast: "Robert Downey Jr., Gwyneth Paltrow, Don Cheadle, Guy Pearce, Rebecca Hall, Ty Simpkins, Stephanie Szostak, James Badge Dale, Jon Favreau, Ben Kingsley",
       genre: ["Azione", "Fantascienza"],
+      hours: ["16:15", "17:30", "19:45", "21:15", "22:45"],
     ),
     Film(
       id: 6,
@@ -141,6 +149,7 @@ class FilmsData {
       direction: "Jon Watts",
       cast: "Tom Holland, Michael Keaton, Jon Favreau, Zendaya: Michelle, Donald Glover, Tyne Daly, Marisa Tomei, Robert Downey Jr.",
       genre: ["Azione", "Avventura", "Fantascienza"],
+      hours: ["17:15", "18:30", "20:15", "21:45", "23:00"],
     ),
     Film(
       id: 7,
@@ -157,6 +166,7 @@ class FilmsData {
       direction: "Anthony e Joe Russo",
       cast: "Chris Evans, Scarlett Johansson, Sebastian Stan, Anthony Mackie, Cobie Smulders, Frank Grillo, Emily VanCamp, Hayley Atwell, Robert Redford, Samuel L. Jackson",
       genre: ["Azione", "Fantascienza"],
+      hours: ["16:00", "17:30", "19:15", "20:45", "22:30"],
     ),
     Film(
       id: 8,
@@ -173,6 +183,7 @@ class FilmsData {
       direction: "Taika Waititi",
       cast: "Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Idris Elba, Jeff Goldblum, Tessa Thompson, Karl Urban, Mark Ruffalo, Anthony Hopkins",
       genre: ["Azione", "Fantastico", "Avventura", "Fantascienza"],
+      hours: ["17:15", "18:00", "20:00", "21:45", "23:30"],
     ),
     Film(
       id: 9,
@@ -189,6 +200,7 @@ class FilmsData {
       direction: "Ryan Coogler",
       cast: "Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o, Danai Gurira, Martin Freeman, Daniel Kaluuya, Letitia Wright, Winston Duke, Angela Bassett, Forest Whitaker, Andy Serkis",
       genre: ["Azione", "Fantascienza", "Avventura"],
+      hours: ["16:30", "18:30", "20:45", "22:00", "23:45"],
     ),
   ];
 
