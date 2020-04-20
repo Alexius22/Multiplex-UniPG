@@ -72,82 +72,52 @@ class _State extends State<LoggedInScreen> {
             ],
           ),
           SizedBox(height: 10),
-          ListTile(
-            title: Text(
-              "Password",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            subtitle: Text(
-              "********",
-              style: TextStyle(
-                color: Colors.grey.shade400,
-              ),
-            ),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.grey.shade400,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Email",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            subtitle: Text(
-              "prova@example.com",
-              style: TextStyle(
-                color: Colors.grey.shade400,
-              ),
-            ),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.grey.shade400,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Pagamento",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            subtitle: Text(
-              "Visa xxxx-xxxx-xxxx-1234",
-              style: TextStyle(
-                color: Colors.grey.shade400,
-              ),
-            ),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.grey.shade400,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Logout",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            onTap: _onLogoutPressed,
-          ),
+          _listDrop("Password", "********"),
+          _listDrop("Email", "prova@example.com"),
+          _listDrop("Pagamento", "Visa xxxx-xxxx-xxxx-1234"),
+          _tileLogout("Logout", "Effettua il logout di questo account", _onLogoutPressed),
         ],
       ),
+    );
+  }
+
+  Widget _listDrop(primary, secondary) {
+    return ListTile(
+      title: Text(
+        primary,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      subtitle: Text(secondary,
+          style: TextStyle(
+            color: Colors.grey.shade400,
+          )),
+      trailing: Icon(
+        Icons.keyboard_arrow_right,
+        color: Colors.grey.shade400,
+      ),
+      onTap: () {},
+    );
+  }
+
+  Widget _tileLogout(text, secondary, func) {
+    return ListTile(
+      title: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height / 40,
+        ),
+      ),
+      subtitle: Text(secondary,
+          style: TextStyle(
+            color: Colors.grey.shade400,
+          )),
+      onTap: func,
     );
   }
 }
