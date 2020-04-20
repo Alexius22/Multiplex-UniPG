@@ -19,8 +19,8 @@ class _State extends State<SettingScreen> {
           _listDrop("Lingua", "Italiano IT"),
           _listDrop("Posizione", "Perugia (PG)"),
           _listDrop("Filtri", "Nessuno"),
-          _listButton("Vietato Minori", "Off"),
-          _listButton("Notifiche Push", "On"),
+          _listButton("Vietato Minori", "Off", false),
+          _listButton("Notifiche Push", "On", true),
         ],
       ),
     );
@@ -48,7 +48,7 @@ class _State extends State<SettingScreen> {
     );
   }
 
-  Widget _listButton(primary, secondary) {
+  Widget _listButton(primary, secondary, val) {
     return SwitchListTile(
       title: Text(primary,
           style: TextStyle(
@@ -60,7 +60,7 @@ class _State extends State<SettingScreen> {
           style: TextStyle(
             color: Colors.grey.shade400,
           )),
-      value: true,
+      value: val,
       onChanged: (val) {},
     );
   }
