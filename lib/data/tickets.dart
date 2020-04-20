@@ -26,10 +26,12 @@ class TicketData {
 
 class Consumable {
   final String label;
+  final String dim;
   final int n;
 
   Consumable({
     this.label,
+    this.dim,
     this.n,
   });
 }
@@ -37,6 +39,8 @@ class Consumable {
 /// Class that contains some example instances of tickets.
 class TicketsData {
   static final _possibleMinutes = [0, 15, 30, 45];
+  static final _possibleConsumableLabels = ['PopCorn', 'Patatine', 'Caramelle', 'Nachos', 'Hot Dog', 'Menù nachos', 'Menù PopCorn', 'Yogurt', 'Acqua', 'Coca-Cola', 'Fanta'];
+  static final _possibleConsumableDims = ['Small', 'Medium', 'Large'];
 
   final _tickets = List<TicketData>.generate(
     8,
@@ -55,13 +59,13 @@ class TicketsData {
         room: 1 + _random.nextInt(6),
         row: String.fromCharCode(65 + _random.nextInt(20)),
         seat: 1 + _random.nextInt(20),
-        consumables: <Consumable>[
-          Consumable(label: "PopCorn", n: _random.nextInt(6)),
-          Consumable(label: "Patatine", n: _random.nextInt(6)),
-          Consumable(label: "Coca-Cola", n: _random.nextInt(6)),
-          Consumable(label: "Acqua", n: _random.nextInt(6)),
-          Consumable(label: "Altro", n: _random.nextInt(6)),
-        ],
+        consumables: List<Consumable>.generate(_random.nextInt(8), (i) => 
+          Consumable(
+            label: _possibleConsumableLabels[_random.nextInt(_possibleConsumableLabels.length)],
+            dim: _possibleConsumableDims[_random.nextInt(_possibleConsumableDims.length)],
+            n: 1 + _random.nextInt(4),
+          )
+        ),
       );
     },
   );

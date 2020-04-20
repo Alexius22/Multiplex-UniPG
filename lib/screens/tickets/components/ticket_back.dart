@@ -38,7 +38,6 @@ class _TicketBackState extends State<TicketBack> {
   String countDownText;
   String countDownText2;
   String barCode;
-  List<Widget> _consumables = [];
 
   @override
   void initState() {
@@ -47,11 +46,6 @@ class _TicketBackState extends State<TicketBack> {
         ticketData.idCity.toString() +
         ticketData.row.toString() +
         ticketData.seat.toString();
-
-    // Prepare food
-    for (var consumable in ticketData.consumables) {
-      _consumables.add(_buildFoodReminder(consumable.label, consumable.n));
-    }
 
     // Prepare timer
     String _durationToString(Duration duration) {
@@ -117,12 +111,9 @@ class _TicketBackState extends State<TicketBack> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           // Consumables
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: _consumables,
-            ),
+          Container(
+            height: 62,
+            child: _buildFoodSection(),
           ),
           Divider(height: 0, thickness: 1.2, color: borderColor),
           // Timers
@@ -154,13 +145,64 @@ class _TicketBackState extends State<TicketBack> {
     );
   }
 
-  _buildFoodReminder(text, n) {
+  Widget _buildFoodSection() {
+    if (ticketData.consumables.length > 0)
+      return Center(
+        child: ListView.separated(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+          itemCount: ticketData.consumables.length,
+          itemBuilder: (BuildContext context, int i) {
+            return _buildFoodReminder(
+              label: ticketData.consumables[i].label,
+              dim: ticketData.consumables[i].dim,
+              n: ticketData.consumables[i].n,
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              SizedBox(width: 15.0),
+        ),
+      );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          "Non hai incluso nessuno snack...",
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: secondaryTextColor,
+          ),
+        ),
+        Text(
+          "Potrai comunque acquistarne al nostro bar!",
+          style: TextStyle(
+            color: mainTextColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFoodReminder({label, dim, n}) {
     return Column(
       children: <Widget>[
         Text(
-          text,
+          label,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: "OpenSans",
+            fontSize: 14,
+            color: mainTextColor,
+          ),
+        ),
+        Text(
+          dim,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "OpenSans",
+            fontSize: 12,
+            letterSpacing: 1,
             color: secondaryTextColor,
           ),
         ),
@@ -169,7 +211,7 @@ class _TicketBackState extends State<TicketBack> {
           style: TextStyle(
             fontFamily: "Oswald",
             fontSize: 20,
-            color: mainTextColor,
+            color: main2TextColor,
           ),
         ),
       ],
@@ -192,7 +234,7 @@ class _TicketBackState extends State<TicketBack> {
           "$countDownText",
           style: TextStyle(
             fontFamily: "Oswald",
-            fontSize: 30,
+            fontSize: 25,
             letterSpacing: 3,
             color: main2TextColor,
           ),
@@ -217,7 +259,7 @@ class _TicketBackState extends State<TicketBack> {
           "$countDownText2",
           style: TextStyle(
             fontFamily: "Oswald",
-            fontSize: 30,
+            fontSize: 25,
             letterSpacing: 3,
             color: main2TextColor,
           ),
