@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:cinema_app/data/films.dart';
 import './seat_checkbox.dart';
+import './food_selection.dart';
 
 class BuyTicket extends StatefulWidget {
   final Film film;
@@ -75,7 +76,7 @@ class _State extends State<BuyTicket> {
                 ],
               ),
               Container(
-                height: MediaQuery.of(context).size.height - 160,
+                height: MediaQuery.of(context).size.height - 170,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -96,24 +97,32 @@ class _State extends State<BuyTicket> {
                       ),
                       SizedBox(height: 20),
                       ExpansionTile(
-                        title: Text("Vuoi includere uno snack?",
-                            style: TextStyle(color: Colors.white, fontSize: 20)),
+                        title: Text(
+                          "Vuoi includere uno snack?",
+                          style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
                         children: <Widget>[
-                          _foodSelection("Pop-corn", "Piccolo: € 2.00"),
-                          _foodSelection("Patatine", "Piccolo: € 2.00"),
-                          _foodSelection("Caramelle", "Piccolo: € 2.00"),
-                          _foodSelection("Nachos", "Piccolo: € 2.00"),
-                          _foodSelection("Hot Dog", "Piccolo: € 2.00"),
-                          _foodSelection("Menù Nachos", "Piccolo: € 2.00"),
-                          _foodSelection("Menù PopCorn", "Piccolo: € 2.00"),
-                          _foodSelection("Yogurt", "Piccolo: € 2.00"),
-                          _foodSelection("Coca-Cola", "Piccolo: € 2.00"),
-                          _foodSelection("Sprite", "Piccolo: € 2.00"),
-                          _foodSelection("Acqua", "Piccolo: € 2.00"),
-                          _foodSelection("Smarties", "Piccolo: € 2.00"),
-                          _foodSelection("Twix", "Piccolo: € 2.00"),
-                          _foodSelection("Bounty", "Piccolo: € 2.00"),
-                          _foodSelection("Mars", "Piccolo: € 2.00"),
+                          FoodSelection(title: "Pop-corn"),
+                          FoodSelection(title: "Patatine"),
+                          FoodSelection(title: "Caramelle"),
+                          FoodSelection(title: "Nachos"),
+                          FoodSelection(title: "Hot Dog"),
+                          FoodSelection(
+                              title: "Menù Nachos", prices: [4.0, 5.0, 6.0]),
+                          FoodSelection(
+                              title: "Menù PopCorn", prices: [4.0, 5.0, 6.0]),
+                          FoodSelection(title: "Yogurt"),
+                          FoodSelection(title: "Coca-Cola"),
+                          FoodSelection(title: "Sprite"),
+                          FoodSelection(title: "Acqua", prices: [1.5]),
+                          FoodSelection(title: "Smarties", prices: [1.5]),
+                          FoodSelection(title: "Twix", prices: [1.5]),
+                          FoodSelection(title: "Bounty", prices: [1.5]),
+                          FoodSelection(title: "Mars", prices: [1.5]),
                         ],
                       ),
                     ],
@@ -162,7 +171,7 @@ class _State extends State<BuyTicket> {
         padding: EdgeInsets.only(top: 13),
         child: Center(
           child: Text(
-            "Seleziona il posto",
+            "Il tuo ordine",
             style: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
@@ -196,6 +205,8 @@ class _State extends State<BuyTicket> {
         checkBoxRow.add(
           SeatCheckBox(
             width: 35,
+            backgroundColorChecked: Colors.deepOrange[900],
+            borderColorChecked: Colors.deepOrange,
             disabled: _rand.nextBool(),
           ),
         );
@@ -226,7 +237,8 @@ class _State extends State<BuyTicket> {
         children: <Widget>[
           _buildLegendLabel(
               Icons.radio_button_unchecked, Colors.grey, "Disponibile"),
-          _buildLegendLabel(Icons.brightness_1, Colors.green, "Selezionato"),
+          _buildLegendLabel(
+              Icons.brightness_1, Colors.deepOrange[800], "Selezionato"),
           _buildLegendLabel(Icons.brightness_1, Colors.grey, "Riservato"),
         ],
       ),
@@ -390,59 +402,6 @@ class _State extends State<BuyTicket> {
           ),
         ),
       ],
-    );
-  }
-
-  int _itemCount = 0;
-  Widget _foodSelection(primary, secondary) {
-    return ListTile(
-      title: Text(
-        primary,
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.height / 40,
-        ),
-      ),
-      subtitle: Text(
-        secondary,
-        style: TextStyle(
-          color: Colors.grey.shade400,
-        ),
-      ),
-      trailing: Wrap(
-        children: <Widget>[
-          _itemCount != 0
-              ? FloatingActionButton(
-                  onPressed: () => setState(() => _itemCount--),
-                  backgroundColor: Colors.transparent,
-                  mini: true,
-                  child: Icon(
-                    Icons.remove,
-                    color: Colors.white,
-                  ),
-                )
-              : SizedBox(width: 48),
-          Container(
-            padding: EdgeInsets.only(top: 15),
-            child: Text(
-              _itemCount.toString(),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          FloatingActionButton(
-            onPressed: () => setState(() => _itemCount++),
-            backgroundColor: Colors.transparent,
-            mini: true,
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

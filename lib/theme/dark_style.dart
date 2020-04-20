@@ -12,5 +12,6 @@ ThemeData appDarkTheme() {
     splashColor: Colors.white38,
     canvasColor: Colors.black87,
     disabledColor: Colors.grey[800],
+    accentColor: Colors.deepOrange[600],
   );
 }
