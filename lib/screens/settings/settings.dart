@@ -16,93 +16,52 @@ class _State extends State<SettingScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 100,
           ),
-          ListTile(
-            title: Text(
-              "Lingua",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            subtitle: Text("Italiano IT",
-                style: TextStyle(
-                  color: Colors.grey.shade400,
-                )),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.grey.shade400,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Posizione",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            subtitle: Text("Perugia",
-                style: TextStyle(
-                  color: Colors.grey.shade400,
-                )),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.grey.shade400,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Filtri",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height / 40,
-              ),
-            ),
-            subtitle: Text("Nessuno",
-                style: TextStyle(
-                  color: Colors.grey.shade400,
-                )),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.grey.shade400,
-            ),
-            onTap: () {},
-          ),
-          SwitchListTile(
-            title: Text("Vietato Minori",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.height / 40,
-                )),
-            subtitle: Text("Off",
-                style: TextStyle(
-                  color: Colors.grey.shade400,
-                )),
-            value: false,
-            onChanged: (val) {},
-          ),
-          SwitchListTile(
-            title: Text("Notifiche Push",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.height / 40,
-                )),
-            subtitle: Text("On",
-                style: TextStyle(
-                  color: Colors.grey.shade400,
-                )),
-            value: true,
-            onChanged: (val) {},
-          ),
+          _listDrop("Lingua", "Italiano IT"),
+          _listDrop("Posizione", "Perugia (PG)"),
+          _listDrop("Filtri", "Nessuno"),
+          _listButton("Vietato Minori", "Off"),
+          _listButton("Notifiche Push", "On"),
         ],
       ),
+    );
+  }
+
+  Widget _listDrop(primary, secondary) {
+    return ListTile(
+      title: Text(
+        primary,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      subtitle: Text(secondary,
+          style: TextStyle(
+            color: Colors.grey.shade400,
+          )),
+      trailing: Icon(
+        Icons.keyboard_arrow_right,
+        color: Colors.grey.shade400,
+      ),
+      onTap: () {},
+    );
+  }
+
+  Widget _listButton(primary, secondary) {
+    return SwitchListTile(
+      title: Text(primary,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          )),
+      subtitle: Text(secondary,
+          style: TextStyle(
+            color: Colors.grey.shade400,
+          )),
+      value: true,
+      onChanged: (val) {},
     );
   }
 }
