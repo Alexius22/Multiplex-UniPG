@@ -43,7 +43,7 @@ class TicketsData {
   static final _possibleConsumableDims = ['Small', 'Medium', 'Large'];
 
   final _tickets = List<TicketData>.generate(
-    8,
+    16,
     (i) {
       final _random = Random();
       return TicketData(
