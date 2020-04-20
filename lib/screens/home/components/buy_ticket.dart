@@ -74,23 +74,52 @@ class _State extends State<BuyTicket> {
                   _buildHead(),
                 ],
               ),
-              _buildScreen(),
-              _buildSeats(),
-              _buildLegend(),
-              SizedBox(height: 20),
-              _buildSeatsSummary(),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  _datePicker(),
-                  _timePicker(),
-                ],
+              Container(
+                height: MediaQuery.of(context).size.height - 160,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: <Widget>[
+                      _buildScreen(),
+                      _buildSeats(),
+                      _buildLegend(),
+                      SizedBox(height: 20),
+                      _buildSeatsSummary(),
+                      SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          _datePicker(),
+                          _timePicker(),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      ExpansionTile(
+                        title: Text("Vuoi includere uno snack?",
+                            style: TextStyle(color: Colors.white, fontSize: 20)),
+                        children: <Widget>[
+                          _foodSelection("Pop-corn", "Piccolo: € 2.00"),
+                          _foodSelection("Patatine", "Piccolo: € 2.00"),
+                          _foodSelection("Caramelle", "Piccolo: € 2.00"),
+                          _foodSelection("Nachos", "Piccolo: € 2.00"),
+                          _foodSelection("Hot Dog", "Piccolo: € 2.00"),
+                          _foodSelection("Menù Nachos", "Piccolo: € 2.00"),
+                          _foodSelection("Menù PopCorn", "Piccolo: € 2.00"),
+                          _foodSelection("Yogurt", "Piccolo: € 2.00"),
+                          _foodSelection("Coca-Cola", "Piccolo: € 2.00"),
+                          _foodSelection("Sprite", "Piccolo: € 2.00"),
+                          _foodSelection("Acqua", "Piccolo: € 2.00"),
+                          _foodSelection("Smarties", "Piccolo: € 2.00"),
+                          _foodSelection("Twix", "Piccolo: € 2.00"),
+                          _foodSelection("Bounty", "Piccolo: € 2.00"),
+                          _foodSelection("Mars", "Piccolo: € 2.00"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              SizedBox(height: 20),
-              Text("Vuoi includere uno snack?", style: TextStyle(fontSize: 20)),
-              _foodSelection("Pop-corn"),
             ],
           ),
           // Footer
@@ -364,19 +393,56 @@ class _State extends State<BuyTicket> {
     );
   }
 
-  Widget _foodSelection(text) {
-    return SwitchListTile(
-      title: Text(text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: MediaQuery.of(context).size.height / 40,
-          )),
-      subtitle: Text("Piccolo: € 2.00",
-          style: TextStyle(
-            color: Colors.grey.shade400,
-          )),
-      value: false,
-      onChanged: (val) {},
+  int _itemCount = 0;
+  Widget _foodSelection(primary, secondary) {
+    return ListTile(
+      title: Text(
+        primary,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height / 40,
+        ),
+      ),
+      subtitle: Text(
+        secondary,
+        style: TextStyle(
+          color: Colors.grey.shade400,
+        ),
+      ),
+      trailing: Wrap(
+        children: <Widget>[
+          _itemCount != 0
+              ? FloatingActionButton(
+                  onPressed: () => setState(() => _itemCount--),
+                  backgroundColor: Colors.transparent,
+                  mini: true,
+                  child: Icon(
+                    Icons.remove,
+                    color: Colors.white,
+                  ),
+                )
+              : SizedBox(width: 48),
+          Container(
+            padding: EdgeInsets.only(top: 15),
+            child: Text(
+              _itemCount.toString(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          FloatingActionButton(
+            onPressed: () => setState(() => _itemCount++),
+            backgroundColor: Colors.transparent,
+            mini: true,
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -435,44 +501,6 @@ class _State extends State<BuyTicket> {
         ),
         onPressed: () {},
       ),
-    );
-  }
-
-  Widget _buildSeatsSummaryOld() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Row(
-          children: [
-            Icon(Icons.event_seat),
-            SizedBox(width: 4),
-            Text(
-              "Posti",
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 16,
-                letterSpacing: 1,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 5),
-        Container(
-          alignment: Alignment.center,
-          width: 100,
-          child: Text(
-            "A1, B6, H9, C3, G1",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ),
-      ],
     );
   }
 
