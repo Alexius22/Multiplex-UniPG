@@ -38,9 +38,30 @@ class Consumable {
 
 /// Class that contains some example instances of tickets.
 class TicketsData {
-  static final _possibleMinutes = [0, 15, 30, 45];
-  static final _possibleConsumableLabels = ['PopCorn', 'Patatine', 'Caramelle', 'Nachos', 'Hot Dog', 'Menù nachos', 'Menù PopCorn', 'Yogurt', 'Acqua', 'Coca-Cola', 'Fanta'];
-  static final _possibleConsumableDims = ['Small', 'Medium', 'Large'];
+  static final _minutes = [0, 15, 30, 45];
+  static final _consumableLabels = [
+    [
+      'PopCorn',
+      'Patatine',
+      'Caramelle',
+      'Nachos',
+      'Hot Dog',
+      'Menù nachos',
+      'Menù PopCorn',
+      'Yogurt',
+      'Coca-Cola',
+      'Fanta',
+      'Sprite',
+    ],
+    [
+      'Acqua',
+      'Smarties',
+      'Twix',
+      'Bounty',
+      'Mars',
+    ]
+  ];
+  static final _consumableDims = ['Small', 'Medium', 'Large'];
 
   final _tickets = List<TicketData>.generate(
     16,
@@ -54,17 +75,24 @@ class TicketsData {
           4 + _random.nextInt(3),
           1 + _random.nextInt(31),
           14 + _random.nextInt(10),
-          _possibleMinutes[_random.nextInt(_possibleMinutes.length)],
+          _minutes[_random.nextInt(_minutes.length)],
         ),
         room: 1 + _random.nextInt(6),
         row: String.fromCharCode(65 + _random.nextInt(20)),
         seat: 1 + _random.nextInt(20),
-        consumables: List<Consumable>.generate(_random.nextInt(8), (i) => 
-          Consumable(
-            label: _possibleConsumableLabels[_random.nextInt(_possibleConsumableLabels.length)],
-            dim: _possibleConsumableDims[_random.nextInt(_possibleConsumableDims.length)],
-            n: 1 + _random.nextInt(4),
-          )
+        consumables: List<Consumable>.generate(
+          _random.nextInt(8),
+          (i) {
+            int _typeConsumable = _random.nextInt(2);
+            return Consumable(
+              label: _consumableLabels[_typeConsumable]
+                  [_random.nextInt(_consumableLabels.length)],
+              dim: _typeConsumable == 0
+                  ? _consumableDims[_random.nextInt(_consumableDims.length)]
+                  : 'No size',
+              n: 1 + _random.nextInt(4),
+            );
+          },
         ),
       );
     },
