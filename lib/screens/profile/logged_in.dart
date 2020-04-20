@@ -88,7 +88,7 @@ class _State extends State<LoggedInScreen> {
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
       subtitle: Text(secondary,

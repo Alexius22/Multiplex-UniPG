@@ -33,7 +33,7 @@ class _State extends State<SettingScreen> {
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
       subtitle: Text(secondary,
@@ -54,7 +54,7 @@ class _State extends State<SettingScreen> {
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: MediaQuery.of(context).size.height / 40,
           )),
       subtitle: Text(secondary,
           style: TextStyle(
