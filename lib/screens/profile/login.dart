@@ -22,7 +22,7 @@ class LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _iconAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1300));
     _iconAnimation = CurvedAnimation(
       parent: _iconAnimationController,
       curve: Curves.bounceOut,
@@ -48,10 +48,11 @@ class LoginScreenState extends State<LoginScreen>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  FlutterLogo(
-                    size: _iconAnimation.value *
-                        MediaQuery.of(context).size.height /
-                        7,
+                  Image(
+                    height: _iconAnimation.value * MediaQuery.of(context).size.height / 6,
+                    image: AssetImage(
+                      "images/logo.png",
+                    ),
                   ),
                 ],
               ),
