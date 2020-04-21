@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cinema_app/data/films.dart';
 import 'package:cinema_app/transitions/blank_page_route.dart';
 import '../film_details/film_details.dart';
+import 'film_poster.dart';
 
 class FeaturedFilm extends StatelessWidget {
   final Film film;
@@ -18,6 +19,99 @@ class FeaturedFilm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        var detailPage = FilmDetails(film: film);
+        Navigator.push(context, BlankPageRoute(enterPage: detailPage));
+      },
+      child: Stack(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Hero(
+                tag: "film-image" + film.id.toString(),
+                child: Container(
+                  width: double.infinity,
+                  height: this.imageHeight,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                      alignment: Alignment.topCenter,
+                      image: AssetImage(film.imagePath),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              Hero(
+                tag: "film-shadow" + film.id.toString(),
+                child: Container(
+                  width: double.infinity,
+                  height: this.imageHeight,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.white,
+                    gradient: LinearGradient(
+                      begin: FractionalOffset(0.0, 0.3),
+                      end: FractionalOffset(0.0, 1.0),
+                      colors: [
+                        Colors.black.withOpacity(0.0),
+                        Colors.black,
+                      ],
+                      stops: [0.0, 1.0],
+                    ),
+                  ),
+                ),
+              ),
+              // Text
+              Container(
+                alignment: Alignment.bottomCenter,
+                width: double.infinity,
+                height: this.imageHeight,
+                padding: EdgeInsets.only(left: 10, right: 10, bottom: 15),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: this.textSize + 15),
+                  child: Text(
+                    "In primo piano",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'OpenSans',
+                      package: 'cinema-app',
+                      color: Colors.white,
+                      fontSize: this.textSize / 2.2,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+              Hero(
+                tag: "film-title" + film.id.toString(),
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: this.imageHeight,
+                    alignment: Alignment.bottomCenter,
+                    padding: EdgeInsets.only(bottom: 21),
+                    child: Text(
+                      this.film.title.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Oswald',
+                        fontSize: this.textSize,
+                        color: Colors.white,
+                        letterSpacing: 3,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+    /*
     return GestureDetector(
       onTap: () {
         var detailPage = FilmDetails(film: film);
@@ -94,5 +188,6 @@ class FeaturedFilm extends StatelessWidget {
         ],
       ),
     );
+    */
   }
 }
