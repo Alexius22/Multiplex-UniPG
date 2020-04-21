@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:cinema_app/data/films.dart';
 import 'package:cinema_app/transitions/blank_page_route.dart';
 import '../film_details/film_details.dart';
-import 'film_poster.dart';
 
 class FeaturedFilm extends StatelessWidget {
   final Film film;
@@ -65,45 +64,47 @@ class FeaturedFilm extends StatelessWidget {
               ),
               // Text
               Container(
-                alignment: Alignment.bottomCenter,
-                width: double.infinity,
                 height: this.imageHeight,
-                padding: EdgeInsets.only(left: 10, right: 10, bottom: 15),
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: this.textSize + 15),
-                  child: Text(
-                    "In primo piano",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      package: 'cinema-app',
-                      color: Colors.white,
-                      fontSize: this.textSize / 2.2,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ),
-              ),
-              Hero(
-                tag: "film-title" + film.id.toString(),
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: this.imageHeight,
-                    alignment: Alignment.bottomCenter,
-                    padding: EdgeInsets.only(bottom: 21),
-                    child: Text(
-                      this.film.title.toUpperCase(),
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      "In primo piano",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Oswald',
-                        fontSize: this.textSize,
+                        fontFamily: 'OpenSans',
+                        package: 'cinema-app',
                         color: Colors.white,
-                        letterSpacing: 3,
+                        fontSize: this.textSize / 2.2,
+                        letterSpacing: 1,
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20, bottom: 15, top: 2),
+                      child: Hero(
+                        tag: "film-title" + this.film.id.toString(),
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              this.film.title.toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Oswald',
+                                fontSize: 30,
+                                height: 1.1,
+                                letterSpacing: 3,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

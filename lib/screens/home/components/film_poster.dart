@@ -80,6 +80,7 @@ class FilmPoster extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: this.textSize,
+                        height: 1.2,
                         fontFamily: 'Oswald',
                         letterSpacing: 1,
                       ),

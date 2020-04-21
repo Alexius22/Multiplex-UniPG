@@ -179,18 +179,20 @@ class _State extends State<FilmDetails> {
             ),
           ),
           // Film Title
-          Hero(
-            tag: "film-title" + widget.film.id.toString(),
-            child: Material(
-              type: MaterialType.transparency,
-              child: Padding(
-                padding: EdgeInsets.all(20),
+          Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 2),
+            child: Hero(
+              tag: "film-title" + widget.film.id.toString(),
+              child: Material(
+                type: MaterialType.transparency,
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     widget.film.title.toUpperCase(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Oswald',
+                      height: 1.1,
                       fontSize: 30,
                       letterSpacing: 3,
                     ),

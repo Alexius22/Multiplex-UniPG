@@ -31,7 +31,7 @@ class Film {
 
 /// Class that contains some example instances of films.
 class FilmsData {
-  final _films = [
+  final List<Film> _films = [
     Film(
       id: 0,
       title: 'Avengers: End Game',
@@ -204,7 +204,7 @@ class FilmsData {
     ),
   ];
 
-  get getAll => _films;
+  List<Film> get getAll => _films;
 
   getFilm(int index) {
     return _films.elementAt(index);
