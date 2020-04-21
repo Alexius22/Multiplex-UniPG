@@ -1,9 +1,11 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
+import 'package:flip_card/flip_card.dart';
 
 import 'package:cinema_app/data/tickets.dart';
-import './components/ticket.dart';
+import 'components/ticket_front.dart';
+import 'components/ticket_back.dart';
 
 class TicketScreen extends StatefulWidget {
   @override
@@ -47,7 +49,7 @@ class _TicketScreenState extends State<TicketScreen> {
               padding: EdgeInsets.all(padding),
               itemCount: _tickets.length ~/ 2,
               itemBuilder: (BuildContext context, int index) {
-                return Ticket(
+                return _buildTicket(
                   ticketData: _tickets.elementAt(index),
                 );
               },
@@ -60,8 +62,9 @@ class _TicketScreenState extends State<TicketScreen> {
               padding: EdgeInsets.all(padding),
               itemCount: _tickets.length ~/ 2,
               itemBuilder: (BuildContext context, int index) {
-                return Ticket(
+                return _buildTicket(
                   ticketData: _tickets.elementAt(_tickets.length ~/ 2 + index),
+                  onlyFront: true,
                 );
               },
               separatorBuilder: (BuildContext context, int index) =>
@@ -71,5 +74,15 @@ class _TicketScreenState extends State<TicketScreen> {
         ),
       ),
     );
+  }
+
+  _buildTicket({ticketData, onlyFront: false}) {
+    return onlyFront
+        ? TicketFront(ticketData: ticketData)
+        : FlipCard(
+            direction: FlipDirection.HORIZONTAL,
+            front: TicketFront(ticketData: ticketData),
+            back: TicketBack(ticketData: ticketData),
+          );
   }
 }
