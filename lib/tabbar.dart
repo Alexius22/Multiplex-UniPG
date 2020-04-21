@@ -108,21 +108,29 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
       brightness: Brightness.dark,
       backgroundColor: backgroundColor,
       elevation: 0,
-      title: Container(
-        width: double.infinity,
-        alignment: Alignment.centerLeft,
-        child: Text(
-          'Multiplex UniPG'.toUpperCase(),
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            fontSize: 18,
-            letterSpacing: 0.5,
-            color: appBarIconsColor,
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.bold,
-            package: 'cinema_app',
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 15),
+            child: Image.asset(
+              'images/logo.png',
+              height: 30,
+            ),
           ),
-        ),
+          Text(
+            'Multiplex UniPG'.toUpperCase(),
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 18,
+              letterSpacing: 0.5,
+              color: appBarIconsColor,
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.bold,
+              package: 'cinema_app',
+            ),
+          ),
+        ],
       ),
     );
   }
