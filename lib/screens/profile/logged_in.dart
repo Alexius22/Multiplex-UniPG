@@ -1,6 +1,9 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
+import 'cards.dart';
+
+import 'package:cinema_app/transitions/slide_left_route.dart';
 
 class LoggedInScreen extends StatefulWidget {
   final ValueChanged<bool> onLogin;
@@ -18,6 +21,9 @@ class _State extends State<LoggedInScreen> {
   Widget build(BuildContext context) {
     void _onLogoutPressed() {
       onLogin(false);
+    }
+    void _onPaymentPressed() {
+      Navigator.push(context, SlideLeftRoute(page: Cards()));
     }
 
     return Container(
@@ -72,16 +78,17 @@ class _State extends State<LoggedInScreen> {
             ],
           ),
           SizedBox(height: 10),
-          _listDrop("Password", "********"),
-          _listDrop("Email", "prova@example.com"),
-          _listDrop("Pagamento", "Visa xxxx-xxxx-xxxx-1234"),
-          _tileLogout("Logout", "Effettua il logout di questo account", _onLogoutPressed),
+          _listDrop("Password", "********", null),
+          _listDrop("Email", "prova@example.com", null),
+          _listDrop("Pagamento", "Visa xxxx-xxxx-xxxx-1234", _onPaymentPressed),
+          _tileLogout("Logout", "Effettua il logout di questo account",
+              _onLogoutPressed),
         ],
       ),
     );
   }
 
-  Widget _listDrop(primary, secondary) {
+  Widget _listDrop(primary, secondary, func) {
     return ListTile(
       title: Text(
         primary,
@@ -99,7 +106,7 @@ class _State extends State<LoggedInScreen> {
         Icons.keyboard_arrow_right,
         color: Colors.grey.shade400,
       ),
-      onTap: () {},
+      onTap: func,
     );
   }
 

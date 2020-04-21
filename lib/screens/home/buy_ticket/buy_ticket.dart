@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:cinema_app/data/films.dart';
-import './seat_checkbox.dart';
-import './food_selection.dart';
+import 'components/seat_checkbox.dart';
+import 'components/food_selection.dart';
 
 class BuyTicket extends StatefulWidget {
   final Film film;

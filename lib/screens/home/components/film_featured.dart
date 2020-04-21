@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:cinema_app/data/films.dart';
-import './film_details.dart';
-import './blank_page_route.dart';
+import 'package:cinema_app/transitions/blank_page_route.dart';
+import '../film_details/film_details.dart';
 
 class FeaturedFilm extends StatelessWidget {
   final Film film;

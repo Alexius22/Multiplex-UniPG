@@ -3,8 +3,8 @@ import 'package:cinema_app/data/films.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-import './slide_route.dart';
-import './buy_ticket.dart';
+import 'package:cinema_app/transitions/slide_top_route.dart';
+import '../buy_ticket/buy_ticket.dart';
 
 class FilmDetails extends StatefulWidget {
   final Film film;
