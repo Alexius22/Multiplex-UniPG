@@ -12,7 +12,7 @@ class Cards extends StatefulWidget {
 
 class _State extends State<Cards> {
   void _onAddPressed() {
-    Navigator.push(context, SlideTopRoute(page: addCard()));
+    Navigator.push(context, SlideTopRoute(page: AddCard()));
   }
 
   @override

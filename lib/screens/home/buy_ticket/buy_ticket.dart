@@ -6,6 +6,8 @@ import 'dart:math';
 import 'package:cinema_app/data/films.dart';
 import 'components/seat_checkbox.dart';
 import 'components/food_selection.dart';
+import 'package:cinema_app/transitions/slide_left_route.dart';
+import 'components/checkout.dart';
 
 class BuyTicket extends StatefulWidget {
   final Film film;
@@ -19,6 +21,10 @@ class BuyTicket extends StatefulWidget {
 }
 
 class _State extends State<BuyTicket> {
+  void _onCheckoutPressed() {
+    Navigator.push(context, SlideLeftRoute(page: Checkout()));
+  }
+  @override
   // Config
   Color selectionColor = Colors.deepOrange;
   Color mainTextColor = Colors.white;
@@ -450,7 +456,7 @@ class _State extends State<BuyTicket> {
               size: 22,
             ),
             Text(
-              "Acquista",
+              "Riepilogo",
               style: TextStyle(
                 fontSize: 20,
                 letterSpacing: 1,
@@ -458,8 +464,8 @@ class _State extends State<BuyTicket> {
             ),
           ],
         ),
-        onPressed: () {},
-      ),
+        onPressed: (_onCheckoutPressed)
+        ),
     );
   }
 

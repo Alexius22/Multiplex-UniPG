@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-class addCard extends StatefulWidget {
+class AddCard extends StatefulWidget {
   @override
   _State createState() => new _State();
 }
 
-class _State extends State<addCard> {
+class _State extends State<AddCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

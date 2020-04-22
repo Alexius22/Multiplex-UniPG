@@ -34,7 +34,7 @@ class FilmsData {
   final List<Film> _films = [
     Film(
       id: 0,
-      title: 'Avengers: End Game',
+      title: 'Avengers: Endgame',
       imagePath: 'images/posters/avengers.jpg',
       trailerURL: 'https://www.youtube.com/watch?v=TcMBFSGVi1c',
       releaseDate: DateTime(
