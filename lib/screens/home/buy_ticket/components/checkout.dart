@@ -86,7 +86,7 @@ class _State extends State<Checkout> {
             style: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              fontSize: 28,
+              fontSize: MediaQuery.of(context).size.height / 28.5,
             ),
           ),
         ),
@@ -107,7 +107,7 @@ class _State extends State<Checkout> {
                   title,
                   style: TextStyle(
                     fontFamily: 'OpenSans',
-                    fontSize: 18,
+                    fontSize: MediaQuery.of(context).size.height / 45,
                     letterSpacing: 1,
                   ),
                   textAlign: TextAlign.center,
@@ -122,7 +122,7 @@ class _State extends State<Checkout> {
                   style: TextStyle(
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: MediaQuery.of(context).size.height / 40,
                     letterSpacing: 1,
                   ),
                   textAlign: TextAlign.center,
@@ -142,8 +142,8 @@ class _State extends State<Checkout> {
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         Center(
           child: Container(
-            height: 50,
-            width: 200,
+            height: MediaQuery.of(context).size.height / 16,
+            width: MediaQuery.of(context).size.width / 2.05,
             child: MaterialButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -157,12 +157,12 @@ class _State extends State<Checkout> {
                 children: <Widget>[
                   Icon(
                     Icons.arrow_forward_ios,
-                    size: 22,
+                    size: MediaQuery.of(context).size.height / 37,
                   ),
                   Text(
                     "Acquista",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: MediaQuery.of(context).size.height / 40,
                       letterSpacing: 1,
                     ),
                   ),
