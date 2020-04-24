@@ -73,14 +73,17 @@ class FilmPoster extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     width: this.imageWidth,
                     height: this.imageHeight,
-                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 15),
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 40,
+                        right: MediaQuery.of(context).size.width / 40,
+                        bottom: MediaQuery.of(context).size.height / 52),
                     child: Text(
                       film.title.toUpperCase(),
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: this.textSize,
-                        height: 1.2,
+                        height: MediaQuery.of(context).size.height / 680,
                         fontFamily: 'Oswald',
                         letterSpacing: 1,
                       ),

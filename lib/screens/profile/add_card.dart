@@ -42,11 +42,13 @@ class _State extends State<AddCard> {
   Widget _buildBackButton(context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, top: 10),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 40,
+            top: MediaQuery.of(context).size.height / 80),
         child: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            size: 25,
+            size: MediaQuery.of(context).size.height / 31,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -61,13 +63,14 @@ class _State extends State<AddCard> {
       child: Align(
         alignment: Alignment.topCenter,
         child: Padding(
-          padding: EdgeInsets.only(top: 13),
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
           child: Text(
             "Nuova carta",
             style: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              fontSize: 30,
+              fontSize: MediaQuery.of(context).size.height / 27,
             ),
           ),
         ),
@@ -95,7 +98,7 @@ class _State extends State<AddCard> {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.height / 40,
                   letterSpacing: 1,
                 ),
               ),
@@ -108,7 +111,7 @@ class _State extends State<AddCard> {
                 child: Icon(
                   icon,
                   color: Colors.white,
-                  size: 35,
+                  size: MediaQuery.of(context).size.height / 23,
                 ),
               ),
               Expanded(
@@ -123,7 +126,7 @@ class _State extends State<AddCard> {
                   ),
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 25,
+                    fontSize: MediaQuery.of(context).size.height / 32,
                   ),
                   keyboardType: keyboard,
                 ),
@@ -142,8 +145,8 @@ class _State extends State<AddCard> {
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         Center(
           child: Container(
-            height: 50,
-            width: 200,
+            height: MediaQuery.of(context).size.height / 16,
+            width: MediaQuery.of(context).size.width / 2.05,
             child: MaterialButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -158,7 +161,7 @@ class _State extends State<AddCard> {
                   Text(
                     "Aggiungi carta",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: MediaQuery.of(context).size.height / 40,
                       letterSpacing: 1,
                     ),
                   ),

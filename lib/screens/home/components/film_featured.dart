@@ -82,7 +82,10 @@ class FeaturedFilm extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 20, right: 20, bottom: 15, top: 2),
+                          left: MediaQuery.of(context).size.width / 20,
+                          right: MediaQuery.of(context).size.width / 20,
+                          bottom: MediaQuery.of(context).size.height / 52,
+                          top: MediaQuery.of(context).size.height / 350),
                       child: Hero(
                         tag: "film-title" + this.film.id.toString(),
                         child: Material(
@@ -94,7 +97,8 @@ class FeaturedFilm extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Oswald',
-                                fontSize: 30,
+                                fontSize:
+                                    MediaQuery.of(context).size.height / 27,
                                 height: 1.1,
                                 letterSpacing: 3,
                                 color: Colors.white,
@@ -112,83 +116,5 @@ class FeaturedFilm extends StatelessWidget {
         ],
       ),
     );
-    /*
-    return GestureDetector(
-      onTap: () {
-        var detailPage = FilmDetails(film: film);
-        Navigator.push(context, BlankPageRoute(enterPage: detailPage));
-      },
-      child: Stack(
-        children: <Widget>[
-          // Image with gradient
-          Container(
-            width: double.infinity,
-            height: this.imageHeight,
-            child: Ink.image(
-              alignment: Alignment.center,
-              image: AssetImage(
-                film.imagePath,
-              ),
-              fit: BoxFit.fitWidth,
-              child: InkWell(
-                highlightColor: Colors.black38,
-                splashColor: Colors.black38,
-                onTap: () {
-                  var detailPage = FilmDetails(film: film);
-                  Navigator.push(
-                      context, BlankPageRoute(enterPage: detailPage));
-                },
-              ),
-            ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(0.0),
-                  Colors.black,
-                ],
-                stops: [0.2, 1.0],
-              ),
-            ),
-          ),
-          // Featured Text
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: this.imageHeight,
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: this.textSize + 22),
-            child: Text(
-              "In primo piano",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-                package: 'cinema-app',
-                color: Colors.white,
-                fontSize: this.textSize / 2.2,
-                letterSpacing: 1,
-              ),
-            ),
-          ),
-          // Text
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: this.imageHeight,
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 15),
-            child: Text(
-              this.film.title.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: this.textSize,
-                letterSpacing: 3,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    */
   }
 }

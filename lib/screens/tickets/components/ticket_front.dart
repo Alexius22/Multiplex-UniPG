@@ -47,7 +47,7 @@ class _TicketFrontState extends State<TicketFront> {
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              width: 190,
+              width: MediaQuery.of(context).size.width / 2.15,
               child: Image.asset(
                 filmsData.getFilm(ticketData.idFilm).imagePath,
                 scale: 1.5,
@@ -71,9 +71,9 @@ class _TicketFrontState extends State<TicketFront> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15.0,
-              vertical: 12.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 26,
+              vertical: MediaQuery.of(context).size.height / 67,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,12 +95,12 @@ class _TicketFrontState extends State<TicketFront> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          width: 220,
+          width: MediaQuery.of(context).size.width / 1.9,
           child: Text(
             filmsData.getFilm(ticketData.idFilm).title.toString().toUpperCase(),
             textAlign: TextAlign.left,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: MediaQuery.of(context).size.height / 40,
               letterSpacing: 2,
               color: mainTextColor,
               fontFamily: 'Oswald',
@@ -111,7 +111,7 @@ class _TicketFrontState extends State<TicketFront> {
           citiesData.getCity(ticketData.idCity).name.toString(),
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 15,
+            fontSize: MediaQuery.of(context).size.height / 52,
             color: secondaryTextColor,
             fontFamily: 'OpenSans',
           ),
@@ -129,7 +129,7 @@ class _TicketFrontState extends State<TicketFront> {
           DateFormat('dd / MM / yyyy').format(ticketDate),
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 15,
+            fontSize: MediaQuery.of(context).size.height / 52,
             color: mainTextColor,
           ),
         ),
@@ -137,7 +137,7 @@ class _TicketFrontState extends State<TicketFront> {
           DateFormat('HH : mm').format(ticketDate),
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: MediaQuery.of(context).size.height / 45,
             letterSpacing: 2,
             color: secondaryTextColor,
             fontFamily: 'Oswald',
@@ -148,9 +148,7 @@ class _TicketFrontState extends State<TicketFront> {
   }
 
   _buildPositionInfo() {
-    final textStyle = TextStyle(
-      color: mainTextColor
-    );
+    final textStyle = TextStyle(color: mainTextColor);
     return Stack(
       children: <Widget>[
         Text(
@@ -158,14 +156,15 @@ class _TicketFrontState extends State<TicketFront> {
           style: textStyle,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 60),
+          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 7),
           child: Text(
             "Fila",
             style: textStyle,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 120),
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width / 3.4),
           child: Text(
             "Posto",
             style: textStyle,
@@ -177,7 +176,7 @@ class _TicketFrontState extends State<TicketFront> {
 
   _buildPosition() {
     final textStyle = TextStyle(
-      fontSize: 18,
+      fontSize: MediaQuery.of(context).size.height / 45,
       fontFamily: 'Oswald',
       color: secondaryTextColor,
     );
@@ -192,14 +191,16 @@ class _TicketFrontState extends State<TicketFront> {
               style: textStyle,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 60),
+              padding:
+                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 7),
               child: Text(
                 ticketData.row,
                 style: textStyle,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 120),
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width / 3.4),
               child: Text(
                 ticketData.seat.toString(),
                 style: textStyle,

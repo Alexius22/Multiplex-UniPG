@@ -1,8 +1,8 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
-import 'package:cinema_app/screens/profile/add_card.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cinema_app/screens/profile/add_card.dart';
 import 'package:cinema_app/transitions/slide_top_route.dart';
 
 class Cards extends StatefulWidget {
@@ -31,7 +31,9 @@ class _State extends State<Cards> {
               ),
               _infoBox(),
               Container(
-                height: MediaQuery.of(context).size.height - 225,
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height / 4,
+                //Scroll view implemented for more than 8 cards saved
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,
@@ -40,14 +42,6 @@ class _State extends State<Cards> {
                       _card("Postepay", "termina con 1234", true),
                       _card("MasterCard", "termina con 1234", false),
                       _card("American Express", "termina con 1234", false),
-                      //Scroll view implemented for more than 8 cards saved
-                      /*
-                      _card("Postepay", "termina con 1234", true),
-                      _card("Postepay", "termina con 1234", true),
-                      _card("Postepay", "termina con 1234", true),
-                      _card("Postepay", "termina con 1234", true),
-                      _card("Postepay", "termina con 1234", true),
-                      _card("Postepay", "termina con 1234", true),*/
                     ],
                   ),
                 ),
@@ -63,11 +57,13 @@ class _State extends State<Cards> {
   Widget _buildBackButton(context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, top: 10),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 40,
+            top: MediaQuery.of(context).size.height / 80),
         child: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            size: 25,
+            size: MediaQuery.of(context).size.height / 32,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -80,14 +76,14 @@ class _State extends State<Cards> {
   Widget _buildHead() {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: 13),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
         child: Center(
           child: Text(
             "Metodo di pagamento",
             style: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              fontSize: 28,
+              fontSize: MediaQuery.of(context).size.height / 28.5,
             ),
           ),
         ),
@@ -104,7 +100,7 @@ class _State extends State<Cards> {
               "Seleziona una o più preferenze di pagamento",
               style: TextStyle(
                 fontFamily: 'OpenSans',
-                fontSize: 17,
+                fontSize: MediaQuery.of(context).size.height / 47,
                 color: Colors.grey[400],
               ),
             ),
@@ -138,8 +134,8 @@ class _State extends State<Cards> {
       children: <Widget>[
         Center(
           child: Container(
-            height: 50,
-            width: 200,
+            height: MediaQuery.of(context).size.height / 16,
+            width: MediaQuery.of(context).size.width / 2.05,
             child: MaterialButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -154,7 +150,7 @@ class _State extends State<Cards> {
                     Text(
                       "Aggiungi carta",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: MediaQuery.of(context).size.height / 40,
                         letterSpacing: 1,
                       ),
                     ),

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/transitions/slide_left_route.dart';
 import 'components/seat_checkbox.dart';
 import 'components/food_selection.dart';
-import 'package:cinema_app/transitions/slide_left_route.dart';
 import 'components/checkout.dart';
 
 class BuyTicket extends StatefulWidget {
@@ -24,6 +24,7 @@ class _State extends State<BuyTicket> {
   void _onCheckoutPressed() {
     Navigator.push(context, SlideLeftRoute(page: Checkout()));
   }
+
   @override
   // Config
   Color selectionColor = Colors.deepOrange;
@@ -82,7 +83,8 @@ class _State extends State<BuyTicket> {
                 ],
               ),
               Container(
-                height: MediaQuery.of(context).size.height - 170,
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height / 5,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -90,9 +92,9 @@ class _State extends State<BuyTicket> {
                       _buildScreen(),
                       _buildSeats(),
                       _buildLegend(),
-                      SizedBox(height: 20),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
                       _buildSeatsSummary(),
-                      SizedBox(height: 30),
+                      SizedBox(height: MediaQuery.of(context).size.height / 26),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,14 +103,14 @@ class _State extends State<BuyTicket> {
                           _timePicker(),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
                       ExpansionTile(
                         title: Text(
                           "Vuoi includere uno snack?",
                           style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: MediaQuery.of(context).size.height / 40,
                           ),
                         ),
                         children: <Widget>[
@@ -157,11 +159,13 @@ class _State extends State<BuyTicket> {
   Widget _buildBackButton(context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, top: 10),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 40,
+            top: MediaQuery.of(context).size.height / 80),
         child: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            size: 25,
+            size: MediaQuery.of(context).size.height / 30,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -174,14 +178,14 @@ class _State extends State<BuyTicket> {
   Widget _buildHead() {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: 13),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
         child: Center(
           child: Text(
             "Il tuo ordine",
             style: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              fontSize: 30,
+              fontSize: MediaQuery.of(context).size.height / 27,
             ),
           ),
         ),
@@ -192,9 +196,10 @@ class _State extends State<BuyTicket> {
   Widget _buildScreen() {
     return Center(
       child: Padding(
-        padding: EdgeInsets.only(top: 15),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 52),
         child: CustomPaint(
-          size: Size(350, 70),
+          size: Size(MediaQuery.of(context).size.width / 1.2,
+              MediaQuery.of(context).size.height / 11),
           painter: MyPainter(),
         ),
       ),
@@ -210,7 +215,7 @@ class _State extends State<BuyTicket> {
       for (int j = 0; j < columns; j++) {
         checkBoxRow.add(
           SeatCheckBox(
-            width: 35,
+            width: MediaQuery.of(context).size.width / 12,
             backgroundColorChecked: Colors.deepOrange[900],
             borderColorChecked: Colors.deepOrange,
             disabled: _rand.nextBool(),
@@ -226,7 +231,9 @@ class _State extends State<BuyTicket> {
     }
 
     return Container(
-      padding: EdgeInsets.only(left: 40, right: 40),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width / 10,
+          right: MediaQuery.of(context).size.width / 10),
       height: height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,7 +244,10 @@ class _State extends State<BuyTicket> {
 
   Widget _buildLegend() {
     return Container(
-      padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height / 80,
+          left: MediaQuery.of(context).size.width / 14,
+          right: MediaQuery.of(context).size.width / 14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -257,15 +267,15 @@ class _State extends State<BuyTicket> {
         Icon(
           icon,
           color: color,
-          size: 20,
+          size: MediaQuery.of(context).size.height / 40,
         ),
-        SizedBox(width: 3),
+        SizedBox(width: MediaQuery.of(context).size.width / 120),
         Text(
           text,
           style: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.w600,
-            fontSize: 15,
+            fontSize: MediaQuery.of(context).size.height / 52,
             letterSpacing: 1,
           ),
         ),
@@ -275,25 +285,27 @@ class _State extends State<BuyTicket> {
 
   Widget _buildSeatsSummary() {
     return Padding(
-      padding: EdgeInsets.only(left: 40, right: 40),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width / 10,
+          right: MediaQuery.of(context).size.width / 10),
       child: Row(
         children: <Widget>[
           Text(
             "Posti:",
             style: TextStyle(
               fontFamily: 'OpenSans',
-              fontSize: 18,
+              fontSize: MediaQuery.of(context).size.height / 45,
               letterSpacing: 1,
             ),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: MediaQuery.of(context).size.width / 40),
           Text(
             "A1, B6, H9, C3, G1",
             style: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
               color: selectionColor,
-              fontSize: 20,
+              fontSize: MediaQuery.of(context).size.height / 40,
               letterSpacing: 1,
             ),
           ),
@@ -310,18 +322,18 @@ class _State extends State<BuyTicket> {
         Row(
           children: [
             Icon(Icons.calendar_today),
-            SizedBox(width: 4),
+            SizedBox(width: MediaQuery.of(context).size.width / 120),
             Text(
               "Giorno",
               style: TextStyle(
                 fontFamily: 'OpenSans',
-                fontSize: 16,
+                fontSize: MediaQuery.of(context).size.height / 50,
                 letterSpacing: 1,
               ),
             ),
           ],
         ),
-        SizedBox(height: 5),
+        SizedBox(height: MediaQuery.of(context).size.height / 160),
         Row(
           children: <Widget>[
             Material(
@@ -329,7 +341,7 @@ class _State extends State<BuyTicket> {
               child: MaterialButton(
                 padding: EdgeInsets.only(left: 8.0, right: 0.0),
                 height: 0.0,
-                minWidth: 10,
+                minWidth: MediaQuery.of(context).size.width / 40,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 highlightColor: Colors.white24,
                 splashColor: Colors.white38,
@@ -341,7 +353,7 @@ class _State extends State<BuyTicket> {
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: MediaQuery.of(context).size.height / 45,
                         color: selectionColor,
                       ),
                     ),
@@ -365,18 +377,18 @@ class _State extends State<BuyTicket> {
         Row(
           children: [
             Icon(Icons.schedule),
-            SizedBox(width: 4),
+            SizedBox(width: MediaQuery.of(context).size.width / 115),
             Text(
               "Orario",
               style: TextStyle(
                 fontFamily: 'OpenSans',
-                fontSize: 16,
+                fontSize: MediaQuery.of(context).size.height / 50,
                 letterSpacing: 1,
               ),
             ),
           ],
         ),
-        SizedBox(height: 5),
+        SizedBox(height: MediaQuery.of(context).size.height / 160),
         ButtonTheme(
           alignedDropdown: true,
           child: DropdownButton<String>(
@@ -392,7 +404,7 @@ class _State extends State<BuyTicket> {
               color: selectionColor,
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: MediaQuery.of(context).size.height / 45,
             ),
             onChanged: (String newValue) {
               setState(() {
@@ -418,17 +430,17 @@ class _State extends State<BuyTicket> {
           "Totale:",
           style: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 18,
+            fontSize: MediaQuery.of(context).size.height / 45,
             letterSpacing: 1,
           ),
         ),
-        SizedBox(width: 10),
+        SizedBox(width: MediaQuery.of(context).size.width / 40),
         Text(
           "€ 12.40",
           style: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
-            fontSize: 26,
+            fontSize: MediaQuery.of(context).size.height / 31,
             letterSpacing: 1,
           ),
         ),
@@ -438,34 +450,33 @@ class _State extends State<BuyTicket> {
 
   Widget _buyButton() {
     return Container(
-      height: 50,
-      width: 180,
+      height: MediaQuery.of(context).size.height / 16,
+      width: MediaQuery.of(context).size.width / 2.3,
       child: MaterialButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        color: Colors.deepOrange[900],
-        highlightColor: Colors.white24,
-        splashColor: Colors.white38,
-        textColor: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 22,
-            ),
-            Text(
-              "Riepilogo",
-              style: TextStyle(
-                fontSize: 20,
-                letterSpacing: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          color: Colors.deepOrange[900],
+          highlightColor: Colors.white24,
+          splashColor: Colors.white38,
+          textColor: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.arrow_forward_ios,
+                size: MediaQuery.of(context).size.height / 37,
               ),
-            ),
-          ],
-        ),
-        onPressed: (_onCheckoutPressed)
-        ),
+              Text(
+                "Riepilogo",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height / 40,
+                  letterSpacing: 1,
+                ),
+              ),
+            ],
+          ),
+          onPressed: (_onCheckoutPressed)),
     );
   }
 

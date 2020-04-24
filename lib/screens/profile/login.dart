@@ -21,8 +21,8 @@ class LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     super.initState();
-    _iconAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1300));
+    _iconAnimationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1300));
     _iconAnimation = CurvedAnimation(
       parent: _iconAnimationController,
       curve: Curves.bounceOut,
@@ -49,7 +49,9 @@ class LoginScreenState extends State<LoginScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image(
-                    height: _iconAnimation.value * MediaQuery.of(context).size.height / 6,
+                    height: _iconAnimation.value *
+                        MediaQuery.of(context).size.height /
+                        6,
                     image: AssetImage(
                       "images/logo.png",
                     ),
@@ -194,7 +196,7 @@ class LoginScreenState extends State<LoginScreen>
               ),
             ),
             SizedBox(
-              height: 15,
+              height: MediaQuery.of(context).size.height / 52,
             ),
           ],
         ),
@@ -218,14 +220,5 @@ class LoginScreenState extends State<LoginScreen>
         ),
       ),
     );
-    /*
-    return Expanded(
-      child: Image(
-        width: MediaQuery.of(context).size.width / 15,
-        height: MediaQuery.of(context).size.height / 15,
-        image: AssetImage(imgPath),
-      ),
-    );
-    */
   }
 }

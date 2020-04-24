@@ -1,8 +1,8 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
-import 'package:cinema_app/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cinema_app/screens/home/home.dart';
 import 'package:cinema_app/transitions/slide_top_route.dart';
 
 class Checkout extends StatefulWidget {
@@ -30,7 +30,8 @@ class _State extends State<Checkout> {
                   ],
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height - 160,
+                  height: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).size.height / 5,
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
@@ -59,11 +60,13 @@ class _State extends State<Checkout> {
   Widget _buildBackButton(context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, top: 10),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 40,
+            top: MediaQuery.of(context).size.width / 40),
         child: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            size: 25,
+            size: MediaQuery.of(context).size.height / 30,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -76,7 +79,7 @@ class _State extends State<Checkout> {
   Widget _buildHead() {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: 13),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
         child: Center(
           child: Text(
             "Riepilogo ordine",
@@ -94,7 +97,7 @@ class _State extends State<Checkout> {
   Widget _buildCheckout(title, choice) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(top: 15),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
         child: Column(
           children: <Widget>[
             Row(

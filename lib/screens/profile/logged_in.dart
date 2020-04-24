@@ -1,9 +1,9 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'cards.dart';
 
 import 'package:cinema_app/transitions/slide_left_route.dart';
+import 'cards.dart';
 
 class LoggedInScreen extends StatefulWidget {
   final ValueChanged<bool> onLogin;

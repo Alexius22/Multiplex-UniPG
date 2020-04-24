@@ -20,7 +20,8 @@ class _State extends State<DateMenu> {
     setState(() {
       pressedButtons = List.filled(3, false);
       pressedButtons[i] = true;
-      _selectedDate = 'Altra data';
+      if(i==2)
+        _selectDate();
     });
   }
 
@@ -53,38 +54,10 @@ class _State extends State<DateMenu> {
     return ButtonBar(
       alignment: MainAxisAlignment.center,
       children: <Widget>[
-        FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(20.0),
-          ),
-          padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-          color: pressedButtons[0] ? Colors.deepOrange[900] : Colors.black,
-          splashColor: Colors.deepOrange[300],
-          textColor: Colors.white,
-          child: Text(
-            "Oggi",
-            style: TextStyle(fontSize: 20.0),
-          ),
-          onPressed: () {
-            _pressButton(0);
-          },
-        ),
-        FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(20.0),
-          ),
-          padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-          color: pressedButtons[1] ? Colors.deepOrange[900] : Colors.black,
-          splashColor: Colors.deepOrange[300],
-          textColor: Colors.white,
-          child: Text(
-            "Domani",
-            style: TextStyle(fontSize: 20.0),
-          ),
-          onPressed: () {
-            _pressButton(1);
-          },
-        ),
+        _dateButton(0, "Oggi"),
+        _dateButton(1, "Domani"),
+        _dateButton(2, _selectedDate),
+        /*
         FlatButton(
           shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(20.0),
@@ -95,11 +68,36 @@ class _State extends State<DateMenu> {
           textColor: Colors.white,
           child: Text(
             _selectedDate,
-            style: TextStyle(fontSize: 20.0),
+            style: TextStyle(fontSize: MediaQuery.of(context).size.height / 40),
           ),
           onPressed: _selectDate,
-        ),
+        ),*/
       ],
+    );
+  }
+
+  Widget _dateButton(press, text) {
+    return FlatButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width / 26,
+          right: MediaQuery.of(context).size.width / 26,
+          top: MediaQuery.of(context).size.height / 80,
+          bottom: MediaQuery.of(context).size.height / 80),
+      color: pressedButtons[press] ? Colors.deepOrange[900] : Colors.black,
+      splashColor: Colors.deepOrange[300],
+      textColor: Colors.white,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.height / 40,
+        ),
+      ),
+      onPressed: () {
+        _pressButton(press);
+      },
     );
   }
 }

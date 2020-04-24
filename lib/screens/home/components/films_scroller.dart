@@ -1,8 +1,9 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import './film_poster.dart';
+
 import 'package:cinema_app/data/films.dart';
+import './film_poster.dart';
 
 class FilmScroller extends StatefulWidget {
   final List<Film> films;
@@ -41,7 +42,10 @@ class _State extends State<FilmScroller> {
       child: ListView.separated(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 10),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 17,
+            right: MediaQuery.of(context).size.width / 17,
+            top: MediaQuery.of(context).size.height / 80),
         itemCount: films.length,
         itemBuilder: (BuildContext context, int index) {
           return FilmPoster(
@@ -51,7 +55,7 @@ class _State extends State<FilmScroller> {
           );
         },
         separatorBuilder: (BuildContext context, int index) =>
-            const SizedBox(width: 20),
+            SizedBox(width: MediaQuery.of(context).size.width / 20),
       ),
     );
   }

@@ -1,8 +1,11 @@
+// Copyright 2020 Amatucci & Strippoli. All rights reserved.
+
 import 'package:flutter/material.dart';
-import 'package:cinema_app/data/films.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
+import 'package:cinema_app/data/films.dart';
 import 'package:cinema_app/transitions/slide_top_route.dart';
 import '../buy_ticket/buy_ticket.dart';
 
@@ -99,7 +102,7 @@ class _State extends State<FilmDetails> {
                             Text(
                               "Acquista",
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: MediaQuery.of(context).size.height / 40,
                                 letterSpacing: 1,
                               ),
                             ),
@@ -122,11 +125,13 @@ class _State extends State<FilmDetails> {
   Widget _buildBackButton(context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, top: 10),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 40,
+            top: MediaQuery.of(context).size.height / 80),
         child: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            size: 25,
+            size: MediaQuery.of(context).size.height / 31,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -180,7 +185,11 @@ class _State extends State<FilmDetails> {
           ),
           // Film Title
           Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 2),
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width / 20,
+                right: MediaQuery.of(context).size.width / 20,
+                bottom: MediaQuery.of(context).size.height / 52,
+                top: MediaQuery.of(context).size.height / 350),
             child: Hero(
               tag: "film-title" + widget.film.id.toString(),
               child: Material(
@@ -193,7 +202,7 @@ class _State extends State<FilmDetails> {
                     style: TextStyle(
                       fontFamily: 'Oswald',
                       height: 1.1,
-                      fontSize: 30,
+                      fontSize: MediaQuery.of(context).size.height / 27,
                       letterSpacing: 3,
                     ),
                   ),

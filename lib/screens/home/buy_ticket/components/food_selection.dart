@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 
 class FoodSelection extends StatefulWidget {
-  String title;
-  List<double> prices;
-  List<String> labelPrices;
+  final String title;
+  final List<double> prices;
+  final List<String> labelPrices;
 
   FoodSelection({
     this.title = "",
@@ -30,7 +30,7 @@ class _FoodSelectionState extends State<FoodSelection> {
   Widget build(BuildContext context) {
     if (widget.prices.length == 1)
       return Padding(
-        padding: EdgeInsets.only(left: 30),
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 14),
         child: _buildFoodEntry(
           0,
           widget.title,
@@ -44,18 +44,19 @@ class _FoodSelectionState extends State<FoodSelection> {
           i,
           widget.labelPrices[i],
           "€ ${widget.prices[i]}",
-          padding: EdgeInsets.only(left: 30),
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width / 14),
         ));
       }
 
       return Padding(
-        padding: EdgeInsets.only(left: 30),
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 14),
         child: ExpansionTile(
           title: Text(
             widget.title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: MediaQuery.of(context).size.height / 40,
               letterSpacing: 1,
             ),
           ),
@@ -98,9 +99,10 @@ class _FoodSelectionState extends State<FoodSelection> {
                       color: Colors.white,
                     ),
                   )
-                : SizedBox(width: 48),
+                : SizedBox(width: MediaQuery.of(context).size.width / 10),
             Container(
-              padding: EdgeInsets.only(top: 15),
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 52),
               child: Text(
                 _itemCount[i].toString(),
                 style: TextStyle(

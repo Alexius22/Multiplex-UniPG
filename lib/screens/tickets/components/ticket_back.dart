@@ -112,7 +112,7 @@ class _TicketBackState extends State<TicketBack> {
         children: <Widget>[
           // Consumables
           Container(
-            height: 62,
+            height: MediaQuery.of(context).size.height / 12.5,
             child: _buildFoodSection(),
           ),
           Divider(height: 0, thickness: 1.2, color: borderColor),
@@ -131,7 +131,7 @@ class _TicketBackState extends State<TicketBack> {
               params: Code39BarCodeParams(
                 barCode,
                 lineWidth: 3.0,
-                barHeight: 50.0,
+                barHeight: MediaQuery.of(context).size.height / 16,
                 withText: true,
               ),
               onError: (error) {
@@ -151,7 +151,9 @@ class _TicketBackState extends State<TicketBack> {
         child: ListView.separated(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+          padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width / 26,
+              right: MediaQuery.of(context).size.width / 26),
           itemCount: ticketData.consumables.length,
           itemBuilder: (BuildContext context, int i) {
             return _buildFoodReminder(
@@ -161,7 +163,7 @@ class _TicketBackState extends State<TicketBack> {
             );
           },
           separatorBuilder: (BuildContext context, int index) =>
-              SizedBox(width: 15.0),
+              SizedBox(width: MediaQuery.of(context).size.width / 26),
         ),
       );
     return Column(
@@ -192,7 +194,7 @@ class _TicketBackState extends State<TicketBack> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: "OpenSans",
-            fontSize: 14,
+            fontSize: MediaQuery.of(context).size.height / 56.5,
             color: mainTextColor,
           ),
         ),
@@ -201,7 +203,7 @@ class _TicketBackState extends State<TicketBack> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: "OpenSans",
-            fontSize: 12,
+            fontSize: MediaQuery.of(context).size.height / 67,
             letterSpacing: 1,
             color: secondaryTextColor,
           ),
@@ -210,7 +212,7 @@ class _TicketBackState extends State<TicketBack> {
           "$n",
           style: TextStyle(
             fontFamily: "Oswald",
-            fontSize: 20,
+            fontSize: MediaQuery.of(context).size.height / 40,
             color: main2TextColor,
           ),
         ),
@@ -225,7 +227,7 @@ class _TicketBackState extends State<TicketBack> {
           "Inizio Film",
           style: TextStyle(
             fontFamily: "OpenSans",
-            fontSize: 16,
+            fontSize: MediaQuery.of(context).size.height / 50,
             letterSpacing: 2,
             color: secondaryTextColor,
           ),
@@ -234,7 +236,7 @@ class _TicketBackState extends State<TicketBack> {
           "$countDownText",
           style: TextStyle(
             fontFamily: "Oswald",
-            fontSize: 25,
+            fontSize: MediaQuery.of(context).size.height / 32,
             letterSpacing: 3,
             color: main2TextColor,
           ),
@@ -250,7 +252,7 @@ class _TicketBackState extends State<TicketBack> {
           "Intervallo",
           style: TextStyle(
             fontFamily: "OpenSans",
-            fontSize: 16,
+            fontSize: MediaQuery.of(context).size.height / 50,
             letterSpacing: 2,
             color: secondaryTextColor,
           ),
@@ -259,7 +261,7 @@ class _TicketBackState extends State<TicketBack> {
           "$countDownText2",
           style: TextStyle(
             fontFamily: "Oswald",
-            fontSize: 25,
+            fontSize: MediaQuery.of(context).size.height / 32,
             letterSpacing: 3,
             color: main2TextColor,
           ),
