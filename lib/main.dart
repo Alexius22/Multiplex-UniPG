@@ -3,13 +3,13 @@
 // Import flutter packages
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 
 // Import custom themes
 import 'package:cinema_app/theme/dark_style.dart';
 import 'package:cinema_app/theme/light_style.dart';
 
 // Import custom widgets
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar_item_data.dart';
 import 'package:cinema_app/tabbar.dart';
 

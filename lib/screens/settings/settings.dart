@@ -2,6 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:cinema_app/widgets/settings_utility/list_tile_setting.dart';
+import 'package:cinema_app/widgets/settings_utility/switch_list_tile_setting.dart';
+import 'package:cinema_app/data/cities.dart';
+
 class SettingScreen extends StatefulWidget {
   @override
   _State createState() => new _State();
@@ -16,51 +20,28 @@ class _State extends State<SettingScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 100,
           ),
-          _listDrop("Lingua", "Italiano IT"),
-          _listDrop("Posizione", "Perugia (PG)"),
-          _listDrop("Filtri", "Nessuno"),
-          _listButton("Dark mode", "On", true),
-          _listButton("Vietato Minori", "Off", false),
-          _listButton("Notifiche Push", "On", true),
+          ListTileSetting(
+            "Lingua",
+            ["Italiano (IT)", "English (EN)", "Japanese (JP)"],
+            "Cambiare la lingua comporta un cambio a tutti i testi dell'applicazione.",
+          ),
+          ListTileSetting(
+            "Filtri",
+            ["Nessuno", "VM18"],
+            "Impostando dei filtri eviterai che ti vengano mostrati determinati film.",
+          ),
+          SwitchListTileSetting(
+            "Dark mode",
+            true,
+            "La dark mode imposta un tema scuro all'applicazione.",
+          ),
+          SwitchListTileSetting(
+            "Notifiche Push",
+            true,
+            "Le notifiche push permettono alla app di poterti contattare.",
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _listDrop(primary, secondary) {
-    return ListTile(
-      title: Text(
-        primary,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.height / 40,
-        ),
-      ),
-      subtitle: Text(secondary,
-          style: TextStyle(
-            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
-          )),
-      trailing: Icon(
-        Icons.keyboard_arrow_right,
-        color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
-      ),
-      onTap: () {},
-    );
-  }
-
-  Widget _listButton(primary, secondary, val) {
-    return SwitchListTile(
-      title: Text(primary,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.height / 40,
-          )),
-      subtitle: Text(secondary,
-          style: TextStyle(
-            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
-          )),
-      value: val,
-      onChanged: (val) {},
     );
   }
 }

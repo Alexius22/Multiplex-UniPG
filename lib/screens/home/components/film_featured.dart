@@ -53,8 +53,8 @@ class FeaturedFilm extends StatelessWidget {
                       begin: FractionalOffset(0.0, 0.3),
                       end: FractionalOffset(0.0, 1.0),
                       colors: [
-                        Theme.of(context).backgroundColor.withOpacity(0.0),
-                        Theme.of(context).backgroundColor,
+                        Colors.black.withOpacity(0.0),
+                        Colors.black,
                       ],
                       stops: [0.0, 1.0],
                     ),
@@ -76,12 +76,13 @@ class FeaturedFilm extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         fontSize: this.textSize / 2.2,
                         letterSpacing: 1,
+                        color: Colors.white,
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 50,
-                          right: MediaQuery.of(context).size.width / 50,
+                          left: 40,
+                          right: 40,
                           bottom: MediaQuery.of(context).size.height / 52,
                           top: MediaQuery.of(context).size.height / 350),
                       child: Hero(
@@ -99,6 +100,7 @@ class FeaturedFilm extends StatelessWidget {
                                     MediaQuery.of(context).size.height / 27,
                                 height: 1.1,
                                 letterSpacing: 3,
+                                color: Colors.white,
                               ),
                             ),
                           ),

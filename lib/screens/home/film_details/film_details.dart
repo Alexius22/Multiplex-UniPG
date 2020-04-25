@@ -40,12 +40,7 @@ class _State extends State<FilmDetails> {
           Column(
             children: <Widget>[
               // Build trailer, title
-              Stack(
-                children: <Widget>[
-                  _buildBackButton(context),
-                  _buildHead(),
-                ],
-              ),
+              _buildHead(),
               _buildInfo(),
             ],
           ),
@@ -157,6 +152,7 @@ class _State extends State<FilmDetails> {
             tag: "film-image" + widget.film.id.toString(),
             child: Container(
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
                   alignment: Alignment.topCenter,
                   image: AssetImage(widget.film.imagePath),
@@ -170,12 +166,13 @@ class _State extends State<FilmDetails> {
             tag: "film-shadow" + widget.film.id.toString(),
             child: Container(
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Theme.of(context).backgroundColor.withOpacity(0.0),
-                    Theme.of(context).backgroundColor,
+                    Colors.black.withOpacity(0.0),
+                    Colors.black,
                   ],
                   stops: [0.4, 1.0],
                 ),
@@ -185,8 +182,8 @@ class _State extends State<FilmDetails> {
           // Film Title
           Padding(
             padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / 100,
-                right: MediaQuery.of(context).size.width / 100,
+                left: 40,
+                right: 40,
                 bottom: MediaQuery.of(context).size.height / 52,
                 top: MediaQuery.of(context).size.height / 350),
             child: Hero(
@@ -203,6 +200,7 @@ class _State extends State<FilmDetails> {
                       height: 1.1,
                       fontSize: MediaQuery.of(context).size.height / 27,
                       letterSpacing: 3,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -218,6 +216,7 @@ class _State extends State<FilmDetails> {
               child: Icon(
                 Icons.play_circle_filled,
                 size: 50,
+                color: Colors.white,
               ),
             ),
           ),
@@ -251,6 +250,7 @@ class _State extends State<FilmDetails> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: <Widget>[
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: _genres,

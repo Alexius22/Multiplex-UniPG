@@ -13,9 +13,6 @@ ThemeData appDarkTheme() {
     // Splashs colors
     highlightColor: Colors.deepOrange[500].withOpacity(0.5),
     splashColor: Colors.deepOrange[900],
-    // Other colors
-    disabledColor: Colors.grey[800],
-    accentColor: Colors.deepOrange[600],
     // Button text color
     buttonColor: Colors.deepOrange[900],
     textTheme: TextTheme(
@@ -44,8 +41,13 @@ ThemeData appDarkTheme() {
           color: Colors.white70,
         ),
       ),
+      iconTheme: IconThemeData(color: Colors.white),
     ),
     // Switch colors
     toggleableActiveColor: Colors.deepOrange[800],
+    // Other colors
+    primaryColor: Colors.deepOrange[700],
+    disabledColor: Colors.grey[800],
+    accentColor: Colors.deepOrange[600],
   );
 }

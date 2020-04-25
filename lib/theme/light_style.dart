@@ -6,16 +6,13 @@ ThemeData appLightTheme() {
   return ThemeData(
     brightness: Brightness.light,
     // Backgrounds
-    backgroundColor: Colors.white,
-    scaffoldBackgroundColor: Colors.white,
-    bottomAppBarColor: Colors.white,
+    backgroundColor: Colors.grey[300],
+    scaffoldBackgroundColor: Colors.grey[300],
+    bottomAppBarColor: Colors.grey[300],
     canvasColor: Colors.white70,
     // Splashs colors
     highlightColor: Colors.deepOrange[500].withOpacity(0.5),
     splashColor: Colors.deepOrange[900],
-    // Other colors
-    disabledColor: Colors.grey[800],
-    accentColor: Colors.deepOrange[600],
     // Button text color
     buttonColor: Colors.deepOrange[900],
     textTheme: TextTheme(
@@ -33,15 +30,20 @@ ThemeData appLightTheme() {
     // AppBar colors
     appBarTheme: AppBarTheme(
       brightness: Brightness.light,
-      color: Colors.white,
+      color: Colors.grey[300],
       elevation: 0.0,
       textTheme: TextTheme(
         title: TextStyle(
           color: Colors.black87,
         ),
       ),
+      iconTheme: IconThemeData(color: Colors.black),
     ),
     // Switch colors
     toggleableActiveColor: Colors.deepOrange[800],
+    // Other colors
+    primaryColor: Colors.deepOrange[700],
+    disabledColor: Colors.grey[800],
+    accentColor: Colors.deepOrange[600],
   );
 }

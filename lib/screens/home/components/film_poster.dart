@@ -55,8 +55,8 @@ class FilmPoster extends StatelessWidget {
                       begin: FractionalOffset(0.0, 0.3),
                       end: FractionalOffset(0.0, 1.0),
                       colors: [
-                        Theme.of(context).backgroundColor.withOpacity(0.0),
-                        Theme.of(context).backgroundColor,
+                        Colors.black.withOpacity(0.0),
+                        Colors.black,
                       ],
                       stops: [0.0, 1.0],
                     ),
@@ -84,6 +84,7 @@ class FilmPoster extends StatelessWidget {
                         height: MediaQuery.of(context).size.height / 680,
                         fontFamily: 'Oswald',
                         letterSpacing: 1,
+                        color: Colors.white,
                       ),
                     ),
                   ),
