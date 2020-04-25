@@ -65,8 +65,6 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
       actions: <Widget>[
         Align(alignment: Alignment.centerRight, child: _buildDropDownMenu()),
       ],
-      elevation: 0,
-      backgroundColor: Theme.of(context).backgroundColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

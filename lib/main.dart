@@ -22,7 +22,6 @@ import 'screens/settings/settings.dart';
 // Import cities data
 import 'package:cinema_app/data/cities.dart';
 
-
 void main() => runApp(CinemaApp());
 
 class CinemaApp extends StatelessWidget {

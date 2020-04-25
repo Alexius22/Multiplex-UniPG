@@ -19,6 +19,7 @@ class _State extends State<SettingScreen> {
           _listDrop("Lingua", "Italiano IT"),
           _listDrop("Posizione", "Perugia (PG)"),
           _listDrop("Filtri", "Nessuno"),
+          _listButton("Dark mode", "On", true),
           _listButton("Vietato Minori", "Off", false),
           _listButton("Notifiche Push", "On", true),
         ],

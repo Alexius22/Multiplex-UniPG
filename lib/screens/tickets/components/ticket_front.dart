@@ -60,10 +60,9 @@ class _TicketFrontState extends State<TicketFront> {
                 end: Alignment.centerRight,
                 colors: [
                   Theme.of(context).backgroundColor,
-                  Theme.of(context).backgroundColor.withOpacity(0.9),
                   Theme.of(context).backgroundColor.withOpacity(0.0)
                 ],
-                stops: [0.5, 0.7, 1.0],
+                stops: [0.5, 0.9],
               ),
             ),
           ),

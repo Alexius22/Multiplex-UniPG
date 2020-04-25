@@ -34,13 +34,18 @@ ThemeData appDarkTheme() {
         fontWeight: FontWeight.bold,
       ),
     ),
+    // AppBar colors
     appBarTheme: AppBarTheme(
+      brightness: Brightness.dark,
       color: Colors.black,
+      elevation: 0.0,
       textTheme: TextTheme(
         title: TextStyle(
           color: Colors.white70,
         ),
       ),
     ),
+    // Switch colors
+    toggleableActiveColor: Colors.deepOrange[800],
   );
 }

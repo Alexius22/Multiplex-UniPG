@@ -22,7 +22,7 @@ class LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _iconAnimationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1300));
+        vsync: this, duration: Duration(milliseconds: 1800));
     _iconAnimation = CurvedAnimation(
       parent: _iconAnimationController,
       curve: Curves.bounceOut,
