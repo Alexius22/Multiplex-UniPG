@@ -4,14 +4,43 @@ import 'package:flutter/material.dart';
 
 ThemeData appDarkTheme() {
   return ThemeData(
-    fontFamily: 'Oswald',
     brightness: Brightness.dark,
+    // Backgrounds
     backgroundColor: Colors.black,
+    scaffoldBackgroundColor: Colors.black,
     bottomAppBarColor: Colors.black,
-    highlightColor: Colors.white24,
-    splashColor: Colors.white38,
     canvasColor: Colors.black87,
+    // Splashs colors
+    highlightColor: Colors.deepOrange[500].withOpacity(0.5),
+    splashColor: Colors.deepOrange[900],
+    // Other colors
     disabledColor: Colors.grey[800],
     accentColor: Colors.deepOrange[600],
+    // Button text color
+    buttonColor: Colors.deepOrange[900],
+    textTheme: TextTheme(
+      button: TextStyle(
+        color: Colors.white,
+      ),
+    ),
+    buttonTheme: ButtonThemeData(
+      highlightColor: Colors.deepOrange[500].withOpacity(0.5),
+      splashColor: Colors.deepOrange[900],
+    ),
+    // Tab bar color
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.white,
+      labelStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    appBarTheme: AppBarTheme(
+      color: Colors.black,
+      textTheme: TextTheme(
+        title: TextStyle(
+          color: Colors.white70,
+        ),
+      ),
+    ),
   );
 }

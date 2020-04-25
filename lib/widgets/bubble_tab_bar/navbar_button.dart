@@ -1,8 +1,8 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'clipped_view.dart';
-import 'navbar.dart';
 import 'rotation_3d.dart';
+import 'clipped_view.dart';
+import 'navbar_item_data.dart';
 
 // Handle the transition between selected and de-deselected, by animating it's own width,
 // and modifying the color/visibility of some child widgets
@@ -11,13 +11,14 @@ class NavbarButton extends StatefulWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const NavbarButton(this.data, this.isSelected, {@required this.onTap });
+  const NavbarButton(this.data, this.isSelected, {@required this.onTap});
 
   @override
   _NavbarButtonState createState() => _NavbarButtonState();
 }
 
-class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderStateMixin {
+class _NavbarButtonState extends State<NavbarButton>
+    with SingleTickerProviderStateMixin {
   AnimationController _iconAnimController;
   bool _wasSelected;
   double _animScale = 1.0;
@@ -52,7 +53,9 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
           child: Icon(
             widget.data.icon,
             size: 24,
-            color: widget.isSelected ? Colors.white : Color(0xffcccccc),
+            color: widget.isSelected
+                ? Theme.of(context).textTheme.button.color
+                : Theme.of(context).textTheme.button.backgroundColor,
           ),
         ),
         //Add some hz spacing
@@ -60,7 +63,11 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
         //Label
         Text(
           widget.data.title,
-          style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "OpenSans", package: "cinema_app"),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).textTheme.button.color,
+          ),
         ),
       ],
     );
@@ -81,7 +88,9 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
           duration: Duration(milliseconds: (600 / _animScale).round()),
           //Use BoxDecoration top create a rounded container
           decoration: BoxDecoration(
-            color: widget.isSelected ? widget.data.selectedColor : Colors.black,
+            color: widget.isSelected
+                ? Theme.of(context).buttonColor
+                : Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.all(Radius.circular(24)),
           ),
           //Wrap the row in a ClippedView to suppress any overflow errors if we momentarily exceed the screen size
@@ -96,7 +105,9 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
   void _startAnimIfSelectedChanged(bool isSelected) {
     if (_wasSelected != widget.isSelected) {
       //Go forward or reverse, depending on the isSelected state
-      widget.isSelected ? _iconAnimController.forward() : _iconAnimController.reverse();
+      widget.isSelected
+          ? _iconAnimController.forward()
+          : _iconAnimController.reverse();
     }
     _wasSelected = widget.isSelected;
   }

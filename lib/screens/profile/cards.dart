@@ -18,7 +18,6 @@ class _State extends State<Cards> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           Column(
@@ -101,7 +100,7 @@ class _State extends State<Cards> {
               style: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: MediaQuery.of(context).size.height / 47,
-                color: Colors.grey[400],
+                color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
               ),
             ),
           ],
@@ -112,16 +111,14 @@ class _State extends State<Cards> {
 
   Widget _card(primary, secondary, val) {
     return SwitchListTile(
-      activeColor: Colors.deepOrange[900],
       title: Text(primary,
           style: TextStyle(
-            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: MediaQuery.of(context).size.height / 40,
           )),
       subtitle: Text(secondary,
           style: TextStyle(
-            color: Colors.grey.shade400,
+            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
           )),
       value: val,
       onChanged: (val) {},

@@ -76,14 +76,12 @@ class _FoodSelectionState extends State<FoodSelection> {
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.height / 40,
             letterSpacing: 1,
-            color: Colors.white,
           ),
         ),
         subtitle: Text(
           subtitle,
           style: TextStyle(
             letterSpacing: 1,
-            color: Colors.grey.shade400,
           ),
         ),
         trailing: Wrap(
@@ -93,10 +91,12 @@ class _FoodSelectionState extends State<FoodSelection> {
                     onPressed: () =>
                         setState(() => _itemCount[i] = _itemCount[i] - 1),
                     backgroundColor: Colors.transparent,
+                    elevation: 0.0,
+                    highlightElevation: 0.0,
                     mini: true,
                     child: Icon(
                       Icons.remove,
-                      color: Colors.white,
+                      color: Theme.of(context).textTheme.title.color,
                     ),
                   )
                 : SizedBox(width: MediaQuery.of(context).size.width / 10),
@@ -114,10 +114,12 @@ class _FoodSelectionState extends State<FoodSelection> {
               onPressed: () =>
                   setState(() => _itemCount[i] = _itemCount[i] + 1),
               backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              highlightElevation: 0.0,
               mini: true,
               child: Icon(
                 Icons.add,
-                color: Colors.white,
+                color: Theme.of(context).textTheme.title.color,
               ),
             ),
           ],

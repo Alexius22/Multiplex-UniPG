@@ -22,8 +22,6 @@ class _TicketFrontState extends State<TicketFront> {
   // Configuration
   final double height = 210.0;
   final borderColor = Colors.grey[850];
-  final backgroundColor = Color(0xff0b0b0b);
-  final mainTextColor = Colors.white;
   final secondaryTextColor = Colors.deepOrange[800];
 
   // Working variables
@@ -40,7 +38,7 @@ class _TicketFrontState extends State<TicketFront> {
       decoration: BoxDecoration(
         border: Border.all(color: borderColor),
         borderRadius: BorderRadius.circular(6.0),
-        color: backgroundColor,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Stack(
         children: <Widget>[
@@ -57,14 +55,13 @@ class _TicketFrontState extends State<TicketFront> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: mainTextColor,
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: [
-                  backgroundColor,
-                  backgroundColor.withOpacity(0.9),
-                  backgroundColor.withOpacity(0.0)
+                  Theme.of(context).backgroundColor,
+                  Theme.of(context).backgroundColor.withOpacity(0.9),
+                  Theme.of(context).backgroundColor.withOpacity(0.0)
                 ],
                 stops: [0.5, 0.7, 1.0],
               ),
@@ -102,7 +99,6 @@ class _TicketFrontState extends State<TicketFront> {
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.height / 40,
               letterSpacing: 2,
-              color: mainTextColor,
               fontFamily: 'Oswald',
             ),
           ),
@@ -130,7 +126,6 @@ class _TicketFrontState extends State<TicketFront> {
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.height / 52,
-            color: mainTextColor,
           ),
         ),
         Text(
@@ -148,18 +143,15 @@ class _TicketFrontState extends State<TicketFront> {
   }
 
   _buildPositionInfo() {
-    final textStyle = TextStyle(color: mainTextColor);
     return Stack(
       children: <Widget>[
         Text(
           "Sala",
-          style: textStyle,
         ),
         Padding(
           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 7),
           child: Text(
             "Fila",
-            style: textStyle,
           ),
         ),
         Padding(
@@ -167,7 +159,6 @@ class _TicketFrontState extends State<TicketFront> {
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 3.4),
           child: Text(
             "Posto",
-            style: textStyle,
           ),
         )
       ],

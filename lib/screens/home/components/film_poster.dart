@@ -51,13 +51,12 @@ class FilmPoster extends StatelessWidget {
                   height: this.imageHeight,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
                     gradient: LinearGradient(
                       begin: FractionalOffset(0.0, 0.3),
                       end: FractionalOffset(0.0, 1.0),
                       colors: [
-                        Colors.black.withOpacity(0.0),
-                        Colors.black,
+                        Theme.of(context).backgroundColor.withOpacity(0.0),
+                        Theme.of(context).backgroundColor,
                       ],
                       stops: [0.0, 1.0],
                     ),
@@ -81,7 +80,6 @@ class FilmPoster extends StatelessWidget {
                       film.title.toUpperCase(),
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: this.textSize,
                         height: MediaQuery.of(context).size.height / 680,
                         fontFamily: 'Oswald',

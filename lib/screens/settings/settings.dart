@@ -31,18 +31,17 @@ class _State extends State<SettingScreen> {
       title: Text(
         primary,
         style: TextStyle(
-          color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
       subtitle: Text(secondary,
           style: TextStyle(
-            color: Colors.grey.shade400,
+            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
           )),
       trailing: Icon(
         Icons.keyboard_arrow_right,
-        color: Colors.grey.shade400,
+        color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
       ),
       onTap: () {},
     );
@@ -52,13 +51,12 @@ class _State extends State<SettingScreen> {
     return SwitchListTile(
       title: Text(primary,
           style: TextStyle(
-            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: MediaQuery.of(context).size.height / 40,
           )),
       subtitle: Text(secondary,
           style: TextStyle(
-            color: Colors.grey.shade400,
+            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
           )),
       value: val,
       onChanged: (val) {},

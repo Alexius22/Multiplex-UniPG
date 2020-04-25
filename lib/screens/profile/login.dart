@@ -76,7 +76,6 @@ class LoginScreenState extends State<LoginScreen>
                     padding: EdgeInsets.only(bottom: 0.2),
                     child: Icon(
                       Icons.alternate_email,
-                      color: Colors.white,
                     ),
                   ),
                   Expanded(
@@ -86,11 +85,8 @@ class LoginScreenState extends State<LoginScreen>
                         border: InputBorder.none,
                         hintText: 'prova@example.com',
                         hintStyle: TextStyle(
-                          color: Colors.grey,
+                          color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
                         ),
-                      ),
-                      style: TextStyle(
-                        color: Colors.white,
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -115,7 +111,6 @@ class LoginScreenState extends State<LoginScreen>
                     padding: EdgeInsets.only(bottom: 0.2),
                     child: Icon(
                       Icons.lock_open,
-                      color: Colors.white,
                     ),
                   ),
                   Expanded(
@@ -125,11 +120,8 @@ class LoginScreenState extends State<LoginScreen>
                         border: InputBorder.none,
                         hintText: 'Password',
                         hintStyle: TextStyle(
-                          color: Colors.grey,
+                          color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
                         ),
-                      ),
-                      style: TextStyle(
-                        color: Colors.white,
                       ),
                       obscureText: true,
                       keyboardType: TextInputType.text,

@@ -1,5 +1,6 @@
 import 'clipped_view.dart';
 import 'navbar_button.dart';
+import 'navbar_item_data.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
@@ -27,7 +28,7 @@ class NavBar extends StatelessWidget {
     //Create a container with a row, and add our btn widgets into the row
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Theme.of(context).backgroundColor,
         //Add some drop-shadow to our navbar, use 2 for a slightly nicer effect
         boxShadow: [
           BoxShadow(blurRadius: 15, color: Color(0xff181818)),
@@ -47,13 +48,4 @@ class NavBar extends StatelessWidget {
       ),
     );
   }
-}
-
-class NavBarItemData {
-  final String title;
-  final IconData icon;
-  final Color selectedColor;
-  final double width;
-
-  NavBarItemData(this.title, this.icon, this.width, this.selectedColor);
 }

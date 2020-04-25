@@ -22,6 +22,7 @@ class _State extends State<LoggedInScreen> {
     void _onLogoutPressed() {
       onLogin(false);
     }
+
     void _onPaymentPressed() {
       Navigator.push(context, SlideLeftRoute(page: Cards()));
     }
@@ -46,7 +47,9 @@ class _State extends State<LoggedInScreen> {
                       image: AssetImage('images/profile.jpg'),
                       fit: BoxFit.cover,
                     ),
-                    border: Border.all(color: Colors.white, width: 2.0),
+                    border: Border.all(
+                        color: Theme.of(context).textTheme.title.color,
+                        width: 2.0),
                   ),
                 ),
               ),
@@ -93,18 +96,17 @@ class _State extends State<LoggedInScreen> {
       title: Text(
         primary,
         style: TextStyle(
-          color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
       subtitle: Text(secondary,
           style: TextStyle(
-            color: Colors.grey.shade400,
+            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
           )),
       trailing: Icon(
         Icons.keyboard_arrow_right,
-        color: Colors.grey.shade400,
+        color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
       ),
       onTap: func,
     );
@@ -115,14 +117,13 @@ class _State extends State<LoggedInScreen> {
       title: Text(
         text,
         style: TextStyle(
-          color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
       subtitle: Text(secondary,
           style: TextStyle(
-            color: Colors.grey.shade400,
+            color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
           )),
       onTap: func,
     );

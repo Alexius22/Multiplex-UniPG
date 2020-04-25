@@ -12,6 +12,8 @@ class SeatCheckBox extends StatefulWidget {
   final Color backgroundColorDisabled;
   final Color borderColor;
   final Color borderColorChecked;
+  final Color highlightColor;
+  final Color splashColor;
   bool checked;
   bool disabled;
 
@@ -25,6 +27,8 @@ class SeatCheckBox extends StatefulWidget {
     this.backgroundColorDisabled = Colors.grey,
     this.borderColor = Colors.grey,
     this.borderColorChecked = Colors.greenAccent,
+    this.highlightColor: Colors.white24,
+    this.splashColor: Colors.white38,
     this.checked = false,
     this.disabled = false,
   });
@@ -59,7 +63,7 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
       if (!_disabled) {
         _checked = !_checked;
         if (_checked) {
-          _currentWidget = Icon(Icons.check, key: ValueKey<bool>(_checked));
+          _currentWidget = Icon(Icons.check, color: widget.backgroundColor, key: ValueKey<bool>(_checked));
           _color = widget.backgroundColorChecked;
           _borderColor = widget.borderColorChecked;
         } else {
@@ -86,8 +90,8 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          highlightColor: Colors.white24,
-          splashColor: Colors.white38,
+          highlightColor: widget.highlightColor,
+          splashColor: widget.splashColor,
           onTap: _onCheckBoxTap,
           child: Center(
             child: AnimatedSwitcher(

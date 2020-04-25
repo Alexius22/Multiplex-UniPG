@@ -25,7 +25,6 @@ class _State extends State<FilmDetails> {
   final trailerHeight = 300.0;
   final buyHeight = 50.0;
   final buyPadding = 30.0;
-  final mainTextColor = Colors.white;
   final secondaryTextColor = Colors.deepOrange[800];
 
   @override
@@ -36,7 +35,6 @@ class _State extends State<FilmDetails> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           Column(
@@ -68,8 +66,8 @@ class _State extends State<FilmDetails> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.black.withOpacity(0.0),
-                          Colors.black,
+                          Theme.of(context).backgroundColor.withOpacity(0.0),
+                          Theme.of(context).backgroundColor,
                         ],
                         stops: [0.0, 0.8],
                       ),
@@ -102,7 +100,8 @@ class _State extends State<FilmDetails> {
                             Text(
                               "Acquista",
                               style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.height / 40,
+                                fontSize:
+                                    MediaQuery.of(context).size.height / 40,
                                 letterSpacing: 1,
                               ),
                             ),
@@ -132,6 +131,7 @@ class _State extends State<FilmDetails> {
           icon: Icon(
             Icons.arrow_back_ios,
             size: MediaQuery.of(context).size.height / 31,
+            color: Colors.white,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -170,13 +170,12 @@ class _State extends State<FilmDetails> {
             tag: "film-shadow" + widget.film.id.toString(),
             child: Container(
               decoration: BoxDecoration(
-                color: mainTextColor,
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.0),
-                    Colors.black,
+                    Theme.of(context).backgroundColor.withOpacity(0.0),
+                    Theme.of(context).backgroundColor,
                   ],
                   stops: [0.4, 1.0],
                 ),
@@ -186,8 +185,8 @@ class _State extends State<FilmDetails> {
           // Film Title
           Padding(
             padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / 20,
-                right: MediaQuery.of(context).size.width / 20,
+                left: MediaQuery.of(context).size.width / 100,
+                right: MediaQuery.of(context).size.width / 100,
                 bottom: MediaQuery.of(context).size.height / 52,
                 top: MediaQuery.of(context).size.height / 350),
             child: Hero(
@@ -219,7 +218,6 @@ class _State extends State<FilmDetails> {
               child: Icon(
                 Icons.play_circle_filled,
                 size: 50,
-                color: Colors.white70,
               ),
             ),
           ),
@@ -276,7 +274,6 @@ class _State extends State<FilmDetails> {
                   style: TextStyle(
                     fontSize: 17,
                     letterSpacing: 1,
-                    color: mainTextColor,
                   ),
                 ),
                 SizedBox(width: 30),
@@ -295,7 +292,6 @@ class _State extends State<FilmDetails> {
                   style: TextStyle(
                     fontSize: 17,
                     letterSpacing: 1,
-                    color: mainTextColor,
                   ),
                 ),
               ],
@@ -320,7 +316,6 @@ class _State extends State<FilmDetails> {
                     style: TextStyle(
                       fontFamily: 'OpenSans',
                       fontSize: 17,
-                      color: mainTextColor,
                     ),
                   ),
                 ],
@@ -347,12 +342,14 @@ class _State extends State<FilmDetails> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    widget.film.direction,
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 17,
-                      color: Colors.grey[300],
+                  Opacity(
+                    opacity: 0.75,
+                    child: Text(
+                      widget.film.direction,
+                      style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                   SizedBox(height: 3),
@@ -373,13 +370,15 @@ class _State extends State<FilmDetails> {
                     ),
                   ),
                   SizedBox(height: 3),
-                  Text(
-                    widget.film.cast,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 17,
-                      color: Colors.grey[300],
+                  Opacity(
+                    opacity: 0.75,
+                    child: Text(
+                      widget.film.cast,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 18)
@@ -393,13 +392,17 @@ class _State extends State<FilmDetails> {
   }
 
   Widget _buildGenre(label) {
+    // Improvable?
+    Color _color = Theme.of(context).backgroundColor == Colors.black
+        ? Colors.grey[500]
+        : Colors.deepOrange[900];
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: Colors.grey[500],
+          color: _color,
           width: 1.0,
         ),
       ),
@@ -411,7 +414,7 @@ class _State extends State<FilmDetails> {
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.w600,
             letterSpacing: 1,
-            color: Colors.grey[400],
+            color: _color,
           ),
         ),
       ),

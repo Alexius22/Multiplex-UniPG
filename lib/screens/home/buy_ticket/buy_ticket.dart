@@ -71,7 +71,6 @@ class _State extends State<BuyTicket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           Column(
@@ -84,7 +83,7 @@ class _State extends State<BuyTicket> {
               ),
               Container(
                 height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 5,
+                    MediaQuery.of(context).size.height / 5 - 30,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -140,8 +139,9 @@ class _State extends State<BuyTicket> {
             ],
           ),
           // Footer
-          Align(
+          Container(
             alignment: Alignment.bottomCenter,
+            padding: EdgeInsets.only(bottom: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,7 +200,7 @@ class _State extends State<BuyTicket> {
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width / 1.2,
               MediaQuery.of(context).size.height / 11),
-          painter: MyPainter(),
+          painter: MyPainter(Theme.of(context).textTheme.title.color),
         ),
       ),
     );
@@ -209,6 +209,8 @@ class _State extends State<BuyTicket> {
   Widget _buildSeats({rows: 6, columns: 8, height: 250.0}) {
     List<Row> checkBoxRows = [];
     Random _rand = Random();
+    final bool _isDarkThemeEnabled =
+        Theme.of(context).backgroundColor == Colors.black;
 
     for (int i = 0; i < rows; i++) {
       List<Widget> checkBoxRow = [];
@@ -216,8 +218,11 @@ class _State extends State<BuyTicket> {
         checkBoxRow.add(
           SeatCheckBox(
             width: MediaQuery.of(context).size.width / 12,
+            backgroundColor: _isDarkThemeEnabled ? Colors.black : Colors.white,
             backgroundColorChecked: Colors.deepOrange[900],
             borderColorChecked: Colors.deepOrange,
+            highlightColor: _isDarkThemeEnabled ? Colors.white24 : Colors.deepOrange[500].withOpacity(0.5),
+            splashColor: _isDarkThemeEnabled ? Colors.white38 : Colors.deepOrange[900],
             disabled: _rand.nextBool(),
           ),
         );
@@ -493,12 +498,15 @@ class _State extends State<BuyTicket> {
 }
 
 class MyPainter extends CustomPainter {
+  final Color color;
+  MyPainter(this.color);
+
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = new Paint()
       ..isAntiAlias = true
       ..strokeWidth = 1.0
-      ..color = Colors.white
+      ..color = color
       ..style = PaintingStyle.stroke;
     canvas.drawArc(
         Rect.fromLTWH(-35.0, 10.0, size.width * 1.2, size.height * 1.5),

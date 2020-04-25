@@ -32,6 +32,14 @@ class CitiesData {
 
   get getAll => _cities;
 
+  List<String> getAllStrings() {
+    List<String> _citiesString = [];
+    _cities.forEach((City city) {
+      _citiesString.add(city.name);
+    });
+    return _citiesString;
+  }
+
   City getCity(int index) {
     return _cities.elementAt(index);
   }

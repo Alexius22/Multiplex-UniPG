@@ -14,7 +14,6 @@ class TicketScreen extends StatefulWidget {
 
 class _TicketScreenState extends State<TicketScreen> {
   // Configuration
-  final backgroundColor = Colors.black;
   final padding = 25.0;
 
   // Read random tickets
@@ -28,7 +27,7 @@ class _TicketScreenState extends State<TicketScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: TabBar(
           tabs: [
             Tab(

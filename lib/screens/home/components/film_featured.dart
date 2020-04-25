@@ -49,13 +49,12 @@ class FeaturedFilm extends StatelessWidget {
                   height: this.imageHeight,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
                     gradient: LinearGradient(
                       begin: FractionalOffset(0.0, 0.3),
                       end: FractionalOffset(0.0, 1.0),
                       colors: [
-                        Colors.black.withOpacity(0.0),
-                        Colors.black,
+                        Theme.of(context).backgroundColor.withOpacity(0.0),
+                        Theme.of(context).backgroundColor,
                       ],
                       stops: [0.0, 1.0],
                     ),
@@ -74,16 +73,15 @@ class FeaturedFilm extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'OpenSans',
-                        package: 'cinema-app',
-                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
                         fontSize: this.textSize / 2.2,
                         letterSpacing: 1,
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 20,
-                          right: MediaQuery.of(context).size.width / 20,
+                          left: MediaQuery.of(context).size.width / 50,
+                          right: MediaQuery.of(context).size.width / 50,
                           bottom: MediaQuery.of(context).size.height / 52,
                           top: MediaQuery.of(context).size.height / 350),
                       child: Hero(
@@ -101,7 +99,6 @@ class FeaturedFilm extends StatelessWidget {
                                     MediaQuery.of(context).size.height / 27,
                                 height: 1.1,
                                 letterSpacing: 3,
-                                color: Colors.white,
                               ),
                             ),
                           ),

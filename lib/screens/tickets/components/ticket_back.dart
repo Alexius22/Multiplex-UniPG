@@ -23,10 +23,8 @@ class _TicketBackState extends State<TicketBack> {
   // Configuration
   final double height = 210.0;
   final borderColor = Colors.grey[850];
-  final backgroundColor = Color(0xff0b0b0b);
   final mainTextColor = Colors.white;
   final main2TextColor = Colors.deepOrange[800];
-  final secondaryTextColor = Colors.grey[500];
 
   // Timer configuration
   Duration countDownCurrent = Duration(minutes: 50, seconds: 30);
@@ -105,7 +103,7 @@ class _TicketBackState extends State<TicketBack> {
       decoration: BoxDecoration(
         border: Border.all(color: borderColor),
         borderRadius: BorderRadius.circular(6.0),
-        color: backgroundColor,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -126,13 +124,15 @@ class _TicketBackState extends State<TicketBack> {
           ),
           Divider(height: 0, thickness: 1.2, color: borderColor),
           // BarCode
-          Center(
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(bottom: 4),
             child: BarCodeImage(
               params: Code39BarCodeParams(
                 barCode,
                 lineWidth: 3.0,
-                barHeight: MediaQuery.of(context).size.height / 16,
-                withText: true,
+                barHeight: MediaQuery.of(context).size.height / 20,
+                withText: false,
               ),
               onError: (error) {
                 // Error handler
@@ -169,18 +169,17 @@ class _TicketBackState extends State<TicketBack> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          "Non hai incluso nessuno snack...",
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            color: secondaryTextColor,
+        Opacity(
+          opacity: 0.6,
+          child: Text(
+            "Non hai incluso nessuno snack...",
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ),
         Text(
           "Potrai comunque acquistarne al nostro bar!",
-          style: TextStyle(
-            color: mainTextColor,
-          ),
         ),
       ],
     );
@@ -195,17 +194,18 @@ class _TicketBackState extends State<TicketBack> {
           style: TextStyle(
             fontFamily: "OpenSans",
             fontSize: MediaQuery.of(context).size.height / 56.5,
-            color: mainTextColor,
           ),
         ),
-        Text(
-          dim,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: "OpenSans",
-            fontSize: MediaQuery.of(context).size.height / 67,
-            letterSpacing: 1,
-            color: secondaryTextColor,
+        Opacity(
+          opacity: 0.6,
+          child: Text(
+            dim,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "OpenSans",
+              fontSize: MediaQuery.of(context).size.height / 67,
+              letterSpacing: 1,
+            ),
           ),
         ),
         Text(
@@ -223,13 +223,16 @@ class _TicketBackState extends State<TicketBack> {
   _buildTimerFilmStart() {
     return Column(
       children: <Widget>[
-        Text(
-          "Inizio Film",
-          style: TextStyle(
-            fontFamily: "OpenSans",
-            fontSize: MediaQuery.of(context).size.height / 50,
-            letterSpacing: 2,
-            color: secondaryTextColor,
+        Opacity(
+          opacity: 0.6,
+          child: Text(
+            "Inizio Film",
+            style: TextStyle(
+              fontFamily: "OpenSans",
+              fontWeight: FontWeight.w600,
+              fontSize: MediaQuery.of(context).size.height / 50,
+              letterSpacing: 2,
+            ),
           ),
         ),
         Text(
@@ -248,13 +251,16 @@ class _TicketBackState extends State<TicketBack> {
   _buildTimerInterval() {
     return Column(
       children: <Widget>[
-        Text(
-          "Intervallo",
-          style: TextStyle(
-            fontFamily: "OpenSans",
-            fontSize: MediaQuery.of(context).size.height / 50,
-            letterSpacing: 2,
-            color: secondaryTextColor,
+        Opacity(
+          opacity: 0.6,
+          child: Text(
+            "Intervallo",
+            style: TextStyle(
+              fontFamily: "OpenSans",
+              fontWeight: FontWeight.w600,
+              fontSize: MediaQuery.of(context).size.height / 50,
+              letterSpacing: 2,
+            ),
           ),
         ),
         Text(

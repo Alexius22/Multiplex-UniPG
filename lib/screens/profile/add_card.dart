@@ -11,7 +11,6 @@ class _State extends State<AddCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           _buildBackButton(context),
@@ -110,7 +109,6 @@ class _State extends State<AddCard> {
                 padding: EdgeInsets.only(bottom: 0.2),
                 child: Icon(
                   icon,
-                  color: Colors.white,
                   size: MediaQuery.of(context).size.height / 23,
                 ),
               ),
@@ -121,11 +119,10 @@ class _State extends State<AddCard> {
                     border: InputBorder.none,
                     hintText: hintText,
                     hintStyle: TextStyle(
-                      color: Colors.grey,
+                      color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
                     ),
                   ),
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: MediaQuery.of(context).size.height / 32,
                   ),
                   keyboardType: keyboard,

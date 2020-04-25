@@ -1,87 +1,50 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
+
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
-
-import 'screens/home/home.dart';
-import 'screens/tickets/tickets.dart';
-import 'screens/profile/profile.dart';
-import 'screens/settings/settings.dart';
-
-import 'package:cinema_app/data/cities.dart';
+import 'package:cinema_app/widgets/bubble_tab_bar/navbar_item_data.dart';
 
 class BubbleTabBar extends StatefulWidget {
+  final List<NavBarItemData> items;
+  final List<String> cities;
+  const BubbleTabBar({this.items, this.cities});
+
   @override
   _BubbleTabBarState createState() => _BubbleTabBarState();
 }
 
 class _BubbleTabBarState extends State<BubbleTabBar> {
-  // Extract cities data
-  List<String> _cities = [];
-  String dropdownValue;
-
   // Working variables
-  List<NavBarItemData> _navBarItems;
-  int _selectedNavIndex = 0;
-  List<Widget> _viewsByIndex;
+  int _selectedNavIndex;
+  String _dropdownValue;
 
   @override
   void initState() {
-    // Extract cities data
-    final _citiesData = CitiesData();
-    dropdownValue = _citiesData.getCity(0).name; // Defaults to 'Perugia'
-    _citiesData.getAll.forEach((City city) {
-      _cities.add(city.name);
-    });
-
-    //Create the views which will be mapped to the indices for our nav btns
-    _viewsByIndex = <Widget>[
-      HomeScreen(),
-      TicketScreen(),
-      ProfileScreen(),
-      SettingScreen(),
-    ];
+    _selectedNavIndex = 0;
+    _dropdownValue = widget.cities[0];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Colors.deepOrange[900];
-
-    //Declare some buttons for our tab bar
-    _navBarItems = [
-      NavBarItemData("Home", OMIcons.home, 120, accentColor),
-      NavBarItemData("Biglietti", OMIcons.receipt, 130, accentColor),
-      NavBarItemData("Profilo", OMIcons.person, 120, accentColor),
-      NavBarItemData("Impostazioni", OMIcons.settings, 180, accentColor),
-    ];
-
     //Create custom navBar, pass in a list of buttons, and listen for tap event
     var navBar = NavBar(
-      items: _navBarItems,
+      items: widget.items,
       itemTapped: _handleNavBtnTapped,
       currentIndex: _selectedNavIndex,
     );
     //Display the correct child view for the current index
     var contentView =
-        _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
+        widget.items[min(_selectedNavIndex, widget.items.length - 1)].widget;
 
-    //Wrap our custom navbar + contentView with the app Scaffold
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       appBar: buildAppBar(),
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          //Wrap the current page in an AnimatedSwitcher for an easy cross-fade effect
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: 350),
-            //Pass the current accent color down as a theme, so our overscroll indicator matches the btn color
-            child: Theme(
-              data: ThemeData(accentColor: accentColor),
-              child: contentView,
-            ),
+            child: contentView,
           ),
         ),
       ),
@@ -98,16 +61,12 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
   }
 
   Widget buildAppBar() {
-    Color backgroundColor = Colors.black;
-    Color appBarIconsColor = Colors.white70;
-
     return AppBar(
       actions: <Widget>[
         Align(alignment: Alignment.centerRight, child: _buildDropDownMenu()),
       ],
-      brightness: Brightness.dark,
-      backgroundColor: backgroundColor,
       elevation: 0,
+      backgroundColor: Theme.of(context).backgroundColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -124,10 +83,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
             style: TextStyle(
               fontSize: 18,
               letterSpacing: 0.5,
-              color: appBarIconsColor,
-              fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              package: 'cinema_app',
             ),
           ),
         ],
@@ -137,22 +93,18 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
   _buildDropDownMenu() {
     return DropdownButton<String>(
-      value: dropdownValue,
+      value: _dropdownValue,
       icon: Icon(Icons.arrow_drop_down),
       iconSize: 24,
-      style: TextStyle(
-        fontFamily: 'OpenSans',
-        color: Colors.white70,
-      ),
       underline: Container(
         height: 0,
       ),
       onChanged: (String newValue) {
         setState(() {
-          dropdownValue = newValue;
+          _dropdownValue = newValue;
         });
       },
-      items: _cities.map<DropdownMenuItem<String>>((String value) {
+      items: widget.cities.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

@@ -16,7 +16,7 @@ class BlankPageRoute extends PageRouteBuilder {
                   CurvedAnimation(curve: Interval(0, .2), parent: animation));
               return Stack(children: <Widget>[
                 FadeTransition(
-                    opacity: fadeOut, child: Container(color: Colors.black)),
+                    opacity: fadeOut, child: Container(color: Theme.of(context).backgroundColor)),
                 FadeTransition(opacity: fadeIn, child: child)
               ]);
             });

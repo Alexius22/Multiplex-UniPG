@@ -68,7 +68,7 @@ class _State extends State<DateMenu> {
     );
   }
 
-  Widget _dateButton(press, text) {
+  Widget _dateButton(id, text) {
     return FlatButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -78,17 +78,21 @@ class _State extends State<DateMenu> {
           right: MediaQuery.of(context).size.width / 26,
           top: MediaQuery.of(context).size.height / 80,
           bottom: MediaQuery.of(context).size.height / 80),
-      color: pressedButtons[press] ? Colors.deepOrange[900] : Colors.black,
-      splashColor: Colors.deepOrange[300],
-      textColor: Colors.white,
+      color: pressedButtons[id]
+          ? Theme.of(context).buttonColor
+          : Theme.of(context).backgroundColor,
+      highlightColor: Theme.of(context).highlightColor,
+      splashColor: Theme.of(context).splashColor,
       child: Text(
         text,
         style: TextStyle(
           fontSize: MediaQuery.of(context).size.height / 40,
+          fontWeight: FontWeight.bold,
+          color: pressedButtons[id] ? Theme.of(context).textTheme.button.color : Theme.of(context).textTheme.title.color,
         ),
       ),
       onPressed: () {
-        _pressButton(press);
+        _pressButton(id);
       },
     );
   }

@@ -18,7 +18,6 @@ class _State extends State<Checkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
         body: Stack(
           children: <Widget>[
             Column(
