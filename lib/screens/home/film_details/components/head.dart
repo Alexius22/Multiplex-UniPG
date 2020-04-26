@@ -14,6 +14,11 @@ class FilmDetailsHead extends StatelessWidget {
     this.height,
   });
 
+  void _openTrailer() async {
+    String url = this.film.trailerURL;
+    if (await canLaunch(url)) await launch(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -22,20 +27,8 @@ class FilmDetailsHead extends StatelessWidget {
           this.film,
           imageWidth: MediaQuery.of(context).size.width,
           imageHeight: this.height,
-          onTap: () async {
-            String url = this.film.trailerURL;
-            if (await canLaunch(url)) await launch(url);
-          },
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: this.height,
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.play_circle_filled,
-            size: 50,
-            color: Colors.white,
-          ),
+          trailer: true,
+          onTap: _openTrailer,
         ),
         SafeArea(
           minimum: EdgeInsets.only(

@@ -10,6 +10,7 @@ class FilmBanner extends StatelessWidget {
   final double borderRadius;
   final double textSize;
   final bool featured;
+  final bool trailer;
   final Function onTap;
 
   FilmBanner(
@@ -19,6 +20,7 @@ class FilmBanner extends StatelessWidget {
     this.imageHeight = 180.0,
     this.textSize = 30.0,
     this.featured = false,
+    this.trailer = false,
     this.onTap,
   });
 
@@ -115,6 +117,14 @@ class FilmBanner extends StatelessWidget {
               ),
             ),
           ),
+          if (this.trailer)
+            Center(
+              child: Icon(
+                Icons.play_circle_filled,
+                size: 50,
+                color: Colors.white,
+              ),
+            ),
           // Splash animation
           Material(
             type: MaterialType.transparency,
