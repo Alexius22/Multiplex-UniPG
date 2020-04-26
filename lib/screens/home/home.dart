@@ -1,43 +1,44 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
-import 'dart:math';
 import 'package:flutter/material.dart';
 
-import './components/film_featured.dart';
+import 'package:cinema_app/data/films.dart';
 import './components/datemenu.dart';
 import './components/films_scroller.dart';
 
-import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/widgets/films/film_banner.dart';
+import 'package:cinema_app/transitions/blank_page_route.dart';
+import 'film_details/film_details.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   // Get Films data
-  final List<Film> filmsData = FilmsData().getAll;
-  Film filmFeatured;
+  final List<Film> filmsData = FilmsData().getAll();
 
-  @override
-  HomeScreen() {
-    final filmFeaturedID = Random().nextInt(filmsData.length);
-    filmsData.shuffle();
-    filmFeatured = filmsData.removeAt(filmFeaturedID);
-  }
-
-  @override
-  _State createState() => new _State();
-}
-
-class _State extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    void _imageOnTap(film) {
+      var detailPage = FilmDetails(film: film);
+      Navigator.push(
+        context,
+        BlankPageRoute(enterPage: detailPage),
+      );
+    }
+
     return Container(
       child: Column(
         children: [
-          FeaturedFilm(
-            film: widget.filmFeatured,
-            imageHeight: MediaQuery.of(context).size.height / 4.05,
+          FilmBanner(
+            this.filmsData[0],
+            imageWidth: MediaQuery.of(context).size.width,
+            imageHeight: MediaQuery.of(context).size.height / 4,
+            featured: true,
+            onTap: () {
+              _imageOnTap(this.filmsData[0]);
+            },
           ),
           DateMenu(),
           FilmScroller(
-            films: widget.filmsData,
+            films: this.filmsData.sublist(1),
             imageHeight: MediaQuery.of(context).size.height / 2.3,
             textSize: MediaQuery.of(context).size.height / 38,
           ),

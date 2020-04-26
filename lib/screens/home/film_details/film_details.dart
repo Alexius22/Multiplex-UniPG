@@ -1,15 +1,14 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-
-import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
-
 import 'package:cinema_app/data/films.dart';
-import 'package:cinema_app/transitions/slide_top_route.dart';
-import '../buy_ticket/buy_ticket.dart';
 
-class FilmDetails extends StatefulWidget {
+// Components
+import 'components/head.dart';
+import 'components/footer.dart';
+import 'components/info.dart';
+
+class FilmDetails extends StatelessWidget {
   final Film film;
 
   FilmDetails({
@@ -17,406 +16,44 @@ class FilmDetails extends StatefulWidget {
   });
 
   @override
-  _State createState() => new _State();
-}
-
-class _State extends State<FilmDetails> {
-  // Configuration
-  final trailerHeight = 300.0;
-  final buyHeight = 50.0;
-  final buyPadding = 30.0;
-  final secondaryTextColor = Colors.deepOrange[800];
-
-  @override
   Widget build(BuildContext context) {
-    void _onBuyPressed() {
-      Navigator.push(
-          context, SlideTopRoute(page: BuyTicket(film: widget.film)));
-    }
+    // Configuration
+    final headHeight = MediaQuery.of(context).size.height / 4 +
+        AppBar().preferredSize.height +
+        MediaQuery.of(context).padding.top;
+    final footerHeight = 50.0;
+    final footerBottomPadding = 15.0;
 
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Column(
             children: <Widget>[
-              // Build trailer, title
-              _buildHead(),
-              _buildInfo(),
-            ],
-          ),
-          _buildBackButton(context),
-          Stack(
-            children: <Widget>[
-              // Gradiente
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: buyHeight + 20),
-                  child: Container(
-                    width: double.infinity,
-                    height: buyPadding * 2.5,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Theme.of(context).backgroundColor.withOpacity(0.0),
-                          Theme.of(context).backgroundColor,
-                        ],
-                        stops: [0.0, 0.8],
-                      ),
-                    ),
-                  ),
-                ),
+              // Build head with trailer link and back button
+              FilmDetailsHead(
+                film: this.film,
+                height: headHeight,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                      height: buyHeight,
-                      width: 200,
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        color: Colors.deepOrange[900],
-                        highlightColor: Colors.white24,
-                        splashColor: Colors.white38,
-                        textColor: Colors.white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 22,
-                            ),
-                            Text(
-                              "Acquista",
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height / 40,
-                                letterSpacing: 1,
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: _onBuyPressed,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 50)
-                ],
+              // Build film's info (genres, plot, cast...)
+              FilmDetailsInfo(
+                film: this.film,
+                // Fill all the height except for the space for head and footer
+                height: MediaQuery.of(context).size.height -
+                    headHeight -
+                    footerHeight -
+                    footerBottomPadding,
+                // Provide a bottom padding to avoid gradient
+                bottomPadding: 45.0,
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBackButton(context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 40,
-            top: MediaQuery.of(context).size.height / 80),
-        child: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: MediaQuery.of(context).size.height / 31,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHead() {
-    void _trailerOpen() async {
-      String url = widget.film.trailerURL;
-      if (await canLaunch(url)) await launch(url);
-    }
-
-    return Container(
-      width: double.infinity,
-      height: this.trailerHeight,
-      child: Stack(
-        children: <Widget>[
-          // Image with gradient
-          Hero(
-            tag: "film-image" + widget.film.id.toString(),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  image: AssetImage(widget.film.imagePath),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          // Shadow
-          Hero(
-            tag: "film-shadow" + widget.film.id.toString(),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.0),
-                    Colors.black,
-                  ],
-                  stops: [0.4, 1.0],
-                ),
-              ),
-            ),
-          ),
-          // Film Title
-          Padding(
-            padding: EdgeInsets.only(
-                left: 40,
-                right: 40,
-                bottom: MediaQuery.of(context).size.height / 52,
-                top: MediaQuery.of(context).size.height / 350),
-            child: Hero(
-              tag: "film-title" + widget.film.id.toString(),
-              child: Material(
-                type: MaterialType.transparency,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    widget.film.title.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Oswald',
-                      height: 1.1,
-                      fontSize: MediaQuery.of(context).size.height / 27,
-                      letterSpacing: 3,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Play button
-          Container(
-            width: double.infinity,
-            height: trailerHeight,
-            child: Align(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.play_circle_filled,
-                size: 50,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          // Splash animation
-          Material(
-            type: MaterialType.transparency,
-            child: InkWell(
-              highlightColor: Colors.black26,
-              splashColor: Colors.black38,
-              onTap: _trailerOpen,
-            ),
+          FilmDetailsFooter(
+            film: this.film,
+            height: footerHeight,
+            gradientHeight: 45.0,
+            bottomPadding: footerBottomPadding,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildInfo() {
-    // Build genre widgets
-    List<Widget> _genres = [];
-    for (var genre in widget.film.genre) {
-      _genres.add(_buildGenre(genre));
-    }
-
-    return Container(
-      height: MediaQuery.of(context).size.height -
-          trailerHeight -
-          buyHeight -
-          buyPadding / 1.5,
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: _genres,
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: <Widget>[
-                SizedBox(width: 25, height: 50),
-                // Uscita
-                Text(
-                  "Uscita:",
-                  style: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 15,
-                    color: secondaryTextColor,
-                  ),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  DateFormat('dd/MM/yyyy').format(widget.film.releaseDate),
-                  style: TextStyle(
-                    fontSize: 17,
-                    letterSpacing: 1,
-                  ),
-                ),
-                SizedBox(width: 30),
-                // Durata
-                Text(
-                  "Durata:",
-                  style: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 15,
-                    color: secondaryTextColor,
-                  ),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  widget.film.duration.inMinutes.toString() + "'",
-                  style: TextStyle(
-                    fontSize: 17,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 25, right: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Trama:",
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 15,
-                      color: secondaryTextColor,
-                    ),
-                  ),
-                  SizedBox(height: 3),
-                  Text(
-                    widget.film.plot,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, left: 25),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Regia:",
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 15,
-                      color: secondaryTextColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 2, left: 25),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Opacity(
-                    opacity: 0.75,
-                    child: Text(
-                      widget.film.direction,
-                      style: TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 3),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, left: 25, right: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Cast:",
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 15,
-                      color: secondaryTextColor,
-                    ),
-                  ),
-                  SizedBox(height: 3),
-                  Opacity(
-                    opacity: 0.75,
-                    child: Text(
-                      widget.film.cast,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 18)
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGenre(label) {
-    // Improvable?
-    Color _color = Theme.of(context).backgroundColor == Colors.black
-        ? Colors.grey[500]
-        : Colors.deepOrange[900];
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: _color,
-          width: 1.0,
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(5),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1,
-            color: _color,
-          ),
-        ),
       ),
     );
   }

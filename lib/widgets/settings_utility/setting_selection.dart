@@ -42,12 +42,16 @@ class _State extends State<SettingSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(
           "Scegli un'opzione",
           style: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.height / 35,
+            fontSize: MediaQuery.of(context).size.height / 30,
             color: Theme.of(context).textTheme.title.color,
           ),
         ),

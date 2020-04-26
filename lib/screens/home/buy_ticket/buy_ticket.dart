@@ -71,19 +71,29 @@ class _State extends State<BuyTicket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          "Il tuo ordine",
+          style: TextStyle(
+            fontFamily: 'OpenSans',
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.height / 30,
+            color: Theme.of(context).textTheme.title.color,
+          ),
+        ),
+      ),
       body: Stack(
         children: <Widget>[
           Column(
             children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  _buildBackButton(context),
-                  _buildHead(),
-                ],
-              ),
               Container(
                 height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 5 - 30,
+                    MediaQuery.of(context).size.height / 5 -
+                    30,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -156,43 +166,6 @@ class _State extends State<BuyTicket> {
     );
   }
 
-  Widget _buildBackButton(context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 40,
-            top: MediaQuery.of(context).size.height / 80),
-        child: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: MediaQuery.of(context).size.height / 30,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHead() {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
-        child: Center(
-          child: Text(
-            "Il tuo ordine",
-            style: TextStyle(
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).size.height / 27,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildScreen() {
     return Center(
       child: Padding(
@@ -221,8 +194,11 @@ class _State extends State<BuyTicket> {
             backgroundColor: _isDarkThemeEnabled ? Colors.black : Colors.white,
             backgroundColorChecked: Colors.deepOrange[900],
             borderColorChecked: Colors.deepOrange,
-            highlightColor: _isDarkThemeEnabled ? Colors.white24 : Colors.deepOrange[500].withOpacity(0.5),
-            splashColor: _isDarkThemeEnabled ? Colors.white38 : Colors.deepOrange[900],
+            highlightColor: _isDarkThemeEnabled
+                ? Colors.white24
+                : Colors.deepOrange[500].withOpacity(0.5),
+            splashColor:
+                _isDarkThemeEnabled ? Colors.white38 : Colors.deepOrange[900],
             disabled: _rand.nextBool(),
           ),
         );
@@ -342,15 +318,15 @@ class _State extends State<BuyTicket> {
         Row(
           children: <Widget>[
             Material(
+              type: MaterialType.transparency,
               borderRadius: BorderRadius.circular(30.0),
-              child: MaterialButton(
+              child: FlatButton(
                 padding: EdgeInsets.only(left: 8.0, right: 0.0),
-                height: 0.0,
-                minWidth: MediaQuery.of(context).size.width / 40,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                highlightColor: Colors.white24,
-                splashColor: Colors.white38,
-                textColor: Colors.white,
+                highlightColor:
+                    Theme.of(context).textTheme.title.color.withOpacity(0.1),
+                splashColor:
+                    Theme.of(context).textTheme.title.color.withOpacity(0.4),
                 child: Row(
                   children: <Widget>[
                     Text(

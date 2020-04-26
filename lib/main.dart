@@ -29,7 +29,6 @@ class CinemaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DynamicTheme(
-      defaultBrightness: Brightness.dark,
       data: (brightness) {
         if (brightness == Brightness.light)
           return appLightTheme();
