@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:dynamic_theme/dynamic_theme.dart';
+
 import 'package:cinema_app/widgets/settings_utility/list_tile_setting.dart';
 import 'package:cinema_app/widgets/settings_utility/switch_list_tile_setting.dart';
-import 'package:cinema_app/data/cities.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -34,6 +35,8 @@ class _State extends State<SettingScreen> {
             "Dark mode",
             true,
             "La dark mode imposta un tema scuro all'applicazione.",
+            fun: (val) => DynamicTheme.of(context)
+                .setBrightness(val ? Brightness.dark : Brightness.light),
           ),
           SwitchListTileSetting(
             "Notifiche Push",

@@ -54,7 +54,7 @@ class _State extends State<SwitchListTileSetting> {
               ),
               value: snapshot.data,
               onChanged: (val) async {
-                if (widget.fun != null) widget.fun();
+                if (widget.fun != null) widget.fun(val);
                 // Update preferences
                 final SharedPreferences prefs = await _prefs;
                 setState(() {
