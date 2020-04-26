@@ -90,7 +90,7 @@ class _NavbarButtonState extends State<NavbarButton>
           decoration: BoxDecoration(
             color: widget.isSelected
                 ? Theme.of(context).buttonColor
-                : Theme.of(context).backgroundColor,
+                : Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(24)),
           ),
           //Wrap the row in a ClippedView to suppress any overflow errors if we momentarily exceed the screen size
