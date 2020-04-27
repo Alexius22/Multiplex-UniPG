@@ -26,20 +26,55 @@ class BuyTicket extends StatefulWidget {
   _State createState() => new _State();
 }
 
-class _State extends State<BuyTicket> {
-  // Working variable
-  List<String> _hoursChoice;
+class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
+  // Configuration variables
+  List<String> _shotTypologies = ['2D', '3D'];
   DateTime _minDate = DateTime.now();
+  DateTime _maxDate = DateTime.now().add(new Duration(days: 13));
+  List<String> _hours;
+
+  // Prices
+  double _totalCost = 0.0;
+  Map _shotTypologyPrices = {'2D': 3.5, '3D': 5.0};
 
   // Data selection
+  TabController _shotTyplogyPicked;
   String _timePicked;
-  String _selectedDate = 'GG/MM';
+  String _datePicked = 'GG/MM';
+  List<Point> _seatsPicked = [];
 
   @override
   void initState() {
-    _hoursChoice = widget.film.hours;
-    _timePicked = _hoursChoice[0];
+    // Get informations about the film
+    _hours = widget.film.hours;
+
+    // Initialize pickers
+    _shotTyplogyPicked = TabController(
+        vsync: this, initialIndex: 0, length: _shotTypologies.length);
+    _shotTyplogyPicked.addListener(() {
+      if (_shotTyplogyPicked.indexIsChanging) {
+        // TODO: Cambiare tipologia di riproduzione dovrebbe cambiare anche date e orari disponibili
+        setState(() {});
+      }
+    });
+    _timePicked = _hours[0];
     super.initState();
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    // Update widgets
+    super.setState(fn);
+
+    // Calculate total price
+    final String _shotSelected = _shotTypologies[_shotTyplogyPicked.index];
+    _totalCost = _shotTypologyPrices[_shotSelected] * _seatsPicked.length;
+  }
+
+  @override
+  void dispose() {
+    _shotTyplogyPicked.dispose();
+    super.dispose();
   }
 
   @override
@@ -134,6 +169,16 @@ class _State extends State<BuyTicket> {
             splashColor:
                 _isDarkThemeEnabled ? Colors.white38 : Colors.deepOrange[900],
             disabled: _rand.nextBool(),
+            onCheckChange: (status) {
+              setState(() {
+                final int x = rows - i;
+                final int y = j + 1;
+                if (status)
+                  _seatsPicked.add(Point(x, y));
+                else
+                  _seatsPicked.remove(Point(x, y));
+              });
+            },
           ),
         );
       }
@@ -214,13 +259,35 @@ class _State extends State<BuyTicket> {
             ),
           ),
           SizedBox(width: MediaQuery.of(context).size.width / 40),
-          Text(
-            "A1, B6, H9, C3, G1",
-            style: _secondaryStyle,
+          // Animation WIP, to be fixed
+          Container(
+            width: MediaQuery.of(context).size.width / 1.7,
+            alignment: Alignment.centerLeft,
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 0),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(child: child, opacity: animation);
+              },
+              child: Text(
+                _seatsPicked.isEmpty == true ? "..." : "${_formatSeats()}",
+                style: _secondaryStyle,
+                key: ValueKey<int>(_seatsPicked.length),
+              ),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  String _formatSeats() {
+    String _out = "";
+    for (Point el in _seatsPicked) {
+      String _row = String.fromCharCode(65 + el.x);
+      _out += "$_row${el.y}, ";
+    }
+    // Remove comma and return
+    return _out.substring(0, _out.length - 2);
   }
 
   Widget _shotdDateTimePicker(String title, IconData icon, Widget bottomChild) {
@@ -254,37 +321,27 @@ class _State extends State<BuyTicket> {
     return _shotdDateTimePicker(
       "Tipologia",
       Icons.live_tv,
-      DefaultTabController(
-        initialIndex: 0,
-        length: 2,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 120,
-              height: 32,
-              child: TabBar(
-                tabs: [
-                  Tab(
-                    text: "2D",
-                  ),
-                  Tab(
-                    text: "3D",
-                  ),
-                ],
-                labelColor: _secondaryStyle.color,
-                unselectedLabelColor: Theme.of(context).textTheme.title.color.withOpacity(0.3),
-                labelStyle: _secondaryStyle,
-              ),
+      Column(
+        children: <Widget>[
+          Container(
+            width: 120,
+            height: 32,
+            child: TabBar(
+              controller: _shotTyplogyPicked,
+              tabs: _shotTypologies
+                  .map(
+                    (typ) => Tab(
+                      text: typ,
+                    ),
+                  )
+                  .toList(),
+              labelColor: _secondaryStyle.color,
+              unselectedLabelColor:
+                  Theme.of(context).textTheme.title.color.withOpacity(0.3),
+              labelStyle: _secondaryStyle,
             ),
-            Container(
-              width: 0,
-              height: 0,
-              child: TabBarView(
-                children: [Text(""), Text("")],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -297,7 +354,7 @@ class _State extends State<BuyTicket> {
         initialDate: this._minDate,
         firstDate: this._minDate,
         // This should be edited with the effective duration
-        lastDate: this._minDate.add(new Duration(days: 13)),
+        lastDate: this._maxDate,
         builder: (BuildContext context, Widget child) {
           return Theme(
             data: ThemeData.dark().copyWith(
@@ -310,7 +367,7 @@ class _State extends State<BuyTicket> {
         },
       );
       if (_picked != null) {
-        setState(() => _selectedDate =
+        setState(() => _datePicked =
             _picked.day.toString() + "/" + _picked.month.toString());
       }
     }
@@ -327,7 +384,7 @@ class _State extends State<BuyTicket> {
         child: Row(
           children: <Widget>[
             Text(
-              _selectedDate,
+              _datePicked,
               style: _secondaryStyle,
             ),
             Icon(Icons.keyboard_arrow_left),
@@ -361,7 +418,7 @@ class _State extends State<BuyTicket> {
                 _timePicked = newValue;
               });
             },
-            items: _hoursChoice.map<DropdownMenuItem<String>>((String value) {
+            items: _hours.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -404,14 +461,12 @@ class _State extends State<BuyTicket> {
   }
 
   Widget _footer() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.only(bottom: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Row(
+    return Stack(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.bottomLeft,
+          padding: EdgeInsets.all(28.0),
+          child: Row(
             children: <Widget>[
               Text(
                 "Totale:",
@@ -421,9 +476,9 @@ class _State extends State<BuyTicket> {
                   letterSpacing: 1,
                 ),
               ),
-              SizedBox(width: MediaQuery.of(context).size.width / 40),
+              SizedBox(width: 20),
               Text(
-                "€ 12.40",
+                "€ $_totalCost",
                 style: TextStyle(
                   fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
@@ -433,7 +488,11 @@ class _State extends State<BuyTicket> {
               ),
             ],
           ),
-          ButtonWithIcon(
+        ),
+        Container(
+          alignment: Alignment.bottomRight,
+          padding: EdgeInsets.all(20.0),
+          child: ButtonWithIcon(
             width: 160,
             text: "Riepilogo",
             icon: Icons.arrow_forward_ios,
@@ -446,8 +505,8 @@ class _State extends State<BuyTicket> {
               );
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

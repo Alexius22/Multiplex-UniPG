@@ -29,6 +29,7 @@ void main() => runApp(CinemaApp());
 class CinemaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Configuring theme changer
     return DynamicTheme(
       data: (brightness) {
         if (brightness == Brightness.light)
@@ -39,7 +40,7 @@ class CinemaApp extends StatelessWidget {
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
           title: 'Cinema App',
-          theme: theme,
+          // Configuring language
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -48,6 +49,7 @@ class CinemaApp extends StatelessWidget {
           supportedLocales: [
             const Locale('it'),
           ],
+          // Configuring bottom navigation bar
           home: BubbleTabBar(
             items: [
               NavBarItemData("Info", OMIcons.info, 100, InfoCinema()),
@@ -59,6 +61,7 @@ class CinemaApp extends StatelessWidget {
             ],
             cities: CitiesData().getAllStrings(),
           ),
+          theme: theme,
           debugShowCheckedModeBanner: false,
         );
       },

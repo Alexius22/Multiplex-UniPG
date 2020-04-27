@@ -14,8 +14,9 @@ class SeatCheckBox extends StatefulWidget {
   final Color borderColorChecked;
   final Color highlightColor;
   final Color splashColor;
-  bool checked;
-  bool disabled;
+  final bool checked;
+  final bool disabled;
+  final Function onCheckChange;
 
   SeatCheckBox({
     this.width = 30,
@@ -31,6 +32,7 @@ class SeatCheckBox extends StatefulWidget {
     this.splashColor: Colors.white38,
     this.checked = false,
     this.disabled = false,
+    this.onCheckChange,
   });
 
   @override
@@ -41,38 +43,55 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
   bool _disabled;
   bool _checked;
   Widget _currentWidget;
-  Color _color;
-  Color _borderColor;
+  Color _currentColor;
+  Color _currentBorderColor;
 
   @override
   void initState() {
     _disabled = widget.disabled;
     _checked = widget.checked;
     _currentWidget = Text("", key: ValueKey<bool>(_checked));
-    
-    if(_disabled)
-      _color = widget.backgroundColorDisabled;
+
+    if (_disabled)
+      _currentColor = widget.backgroundColorDisabled;
     else
-      _color = widget.backgroundColor;
-    _borderColor = widget.borderColor;
+      _currentColor = widget.backgroundColor;
+    _currentBorderColor = widget.borderColor;
     super.initState();
   }
 
-  void _onCheckBoxTap() {
+  void changeCheck(bool status) {
     setState(() {
-      if (!_disabled) {
-        _checked = !_checked;
-        if (_checked) {
-          _currentWidget = Icon(Icons.check, color: widget.backgroundColor, key: ValueKey<bool>(_checked));
-          _color = widget.backgroundColorChecked;
-          _borderColor = widget.borderColorChecked;
-        } else {
-          _currentWidget = Text("", key: ValueKey<bool>(_checked));
-          _color = widget.backgroundColor;
-          _borderColor = widget.borderColor;
-        }
+      _checked = status;
+      if (_checked) {
+        _currentWidget = Icon(Icons.check,
+            color: widget.backgroundColor, key: ValueKey<bool>(_checked));
+        _currentColor = widget.backgroundColorChecked;
+        _currentBorderColor = widget.borderColorChecked;
+      } else {
+        _currentWidget = Text("", key: ValueKey<bool>(_checked));
+        _currentColor = widget.backgroundColor;
+        _currentBorderColor = widget.borderColor;
       }
     });
+  }
+
+  void changeDisabled(status) {
+    setState(() {
+      _disabled = status;
+      if (_disabled) {
+        _currentColor = widget.backgroundColorDisabled;
+      } else {
+        _currentColor = widget.backgroundColorChecked;
+      }
+    });
+  }
+
+  void _onCheckBoxTap() {
+    if (!_disabled) {
+      changeCheck(!_checked);
+      if (widget.onCheckChange != null) widget.onCheckChange(_checked);
+    }
   }
 
   @override
@@ -82,8 +101,9 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
       width: widget.width,
       height: widget.height,
       decoration: new BoxDecoration(
-        color: _color,
-        border: Border.all(width: widget.borderWidth, color: _borderColor),
+        color: _currentColor,
+        border:
+            Border.all(width: widget.borderWidth, color: _currentBorderColor),
         borderRadius:
             new BorderRadius.all(Radius.circular(widget.borderRadius)),
       ),
