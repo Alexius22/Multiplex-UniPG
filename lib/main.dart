@@ -19,6 +19,7 @@ import 'screens/home/home.dart';
 import 'screens/tickets/tickets.dart';
 import 'screens/profile/profile.dart';
 import 'screens/settings/settings.dart';
+import 'screens/info/info_cinema.dart';
 
 // Import cities data
 import 'package:cinema_app/data/cities.dart';
@@ -49,8 +50,9 @@ class CinemaApp extends StatelessWidget {
           ],
           home: BubbleTabBar(
             items: [
-              NavBarItemData("Home", OMIcons.home, 120, HomeScreen()),
+              NavBarItemData("Info", OMIcons.info, 100, InfoCinema()),
               NavBarItemData("Biglietti", OMIcons.receipt, 130, TicketScreen()),
+              NavBarItemData("Home", OMIcons.home, 120, HomeScreen()),
               NavBarItemData("Profilo", OMIcons.person, 120, ProfileScreen()),
               NavBarItemData(
                   "Impostazioni", OMIcons.settings, 180, SettingScreen()),
