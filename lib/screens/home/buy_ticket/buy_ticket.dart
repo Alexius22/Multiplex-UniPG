@@ -27,40 +27,13 @@ class BuyTicket extends StatefulWidget {
 }
 
 class _State extends State<BuyTicket> {
-  // Config
-  Color selectionColor = Colors.deepOrange;
-  Color mainTextColor = Colors.white;
-  Color secondaryTextColor = Colors.white;
-
   // Working variable
-  String _timePicked;
   List<String> _hoursChoice;
+  DateTime _minDate = DateTime.now();
 
+  // Data selection
+  String _timePicked;
   String _selectedDate = 'GG/MM';
-  DateTime minDate = DateTime.now();
-
-  Future _selectDate() async {
-    DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: minDate,
-      firstDate: minDate,
-      lastDate: minDate.add(new Duration(days: 13)),
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            backgroundColor: Colors.grey[800],
-            dialogBackgroundColor: Colors.grey[900],
-            accentColor: Colors.grey[700],
-          ),
-          child: child,
-        );
-      },
-    );
-    if (picked != null) {
-      setState(() => _selectedDate =
-          picked.day.toString() + "/" + picked.month.toString());
-    }
-  }
 
   @override
   void initState() {
@@ -71,79 +44,52 @@ class _State extends State<BuyTicket> {
 
   @override
   Widget build(BuildContext context) {
+    // Config
+    final TextStyle _secondaryStyle = TextStyle(
+      fontFamily: 'OpenSans',
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrange,
+      fontSize: MediaQuery.of(context).size.height / 40,
+    );
+
     return Scaffold(
       appBar: GoBackAppBar("Il tuo ordine").build(context),
       body: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                height: 4 / 5 * MediaQuery.of(context).size.height - 30,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: MediaQuery.of(context).size.height / 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          _datePicker(),
-                          _timePicker(),
-                        ],
-                      ),
-                      _buildScreen(),
-                      _buildSeats(),
-                      _buildLegend(),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      _buildSeatsSummary(),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      ExpansionTile(
-                        title: Text(
-                          "Vuoi includere uno snack?",
-                          style: TextStyle(
-                            fontFamily: 'OpenSans',
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height / 40,
-                          ),
-                        ),
-                        children: <Widget>[
-                          FoodSelection(title: "Pop-corn"),
-                          FoodSelection(title: "Patatine"),
-                          FoodSelection(title: "Caramelle"),
-                          FoodSelection(title: "Nachos"),
-                          FoodSelection(title: "Hot Dog"),
-                          FoodSelection(
-                              title: "Menù Nachos", prices: [4.0, 5.0, 6.0]),
-                          FoodSelection(
-                              title: "Menù PopCorn", prices: [4.0, 5.0, 6.0]),
-                          FoodSelection(title: "Yogurt"),
-                          FoodSelection(title: "Coca-Cola"),
-                          FoodSelection(title: "Sprite"),
-                          FoodSelection(title: "Acqua", prices: [1.5]),
-                          FoodSelection(title: "Smarties", prices: [1.5]),
-                          FoodSelection(title: "Twix", prices: [1.5]),
-                          FoodSelection(title: "Bounty", prices: [1.5]),
-                          FoodSelection(title: "Mars", prices: [1.5]),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
           // Footer
+          _footer(),
+          // Everything else
           Container(
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _totalPrize(),
-                _buyButton(),
-              ],
+            height: 3 / 4 * MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 30),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _buildShotTypology(_secondaryStyle),
+                        _datePicker(_secondaryStyle),
+                        _timePicker(_secondaryStyle),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  _buildScreen(),
+                  SizedBox(height: 5),
+                  _buildSeats(),
+                  SizedBox(height: 10),
+                  _buildLegend(),
+                  SizedBox(height: 15),
+                  _buildSeatsSummary(_secondaryStyle),
+                  SizedBox(height: 20),
+                  _buildOptionalSnacks(),
+                ],
+              ),
             ),
           ),
         ],
@@ -152,14 +98,17 @@ class _State extends State<BuyTicket> {
   }
 
   Widget _buildScreen() {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 52),
-        child: CustomPaint(
-          size: Size(MediaQuery.of(context).size.width / 1.2,
-              MediaQuery.of(context).size.height / 11),
-          painter: MyPainter(Theme.of(context).textTheme.title.color),
-        ),
+    return CustomPaint(
+      size: Size(
+        MediaQuery.of(context).size.width / 1.2,
+        MediaQuery.of(context).size.height / 15,
+      ),
+      painter: ScreenPainter(
+        angleLimiter: 0.2,
+        strokeWidth: 1.3,
+        strokeColor: Theme.of(context).textTheme.title.color,
+        blurValue: 6.0,
+        fillColor: Colors.deepOrange.withOpacity(0.5),
       ),
     );
   }
@@ -209,9 +158,8 @@ class _State extends State<BuyTicket> {
   }
 
   Widget _buildLegend() {
-    return Container(
+    return Padding(
       padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height / 80,
           left: MediaQuery.of(context).size.width / 14,
           right: MediaQuery.of(context).size.width / 14),
       child: Row(
@@ -235,7 +183,7 @@ class _State extends State<BuyTicket> {
           color: color,
           size: MediaQuery.of(context).size.height / 40,
         ),
-        SizedBox(width: MediaQuery.of(context).size.width / 120),
+        SizedBox(width: 3),
         Text(
           text,
           style: TextStyle(
@@ -249,11 +197,12 @@ class _State extends State<BuyTicket> {
     );
   }
 
-  Widget _buildSeatsSummary() {
+  Widget _buildSeatsSummary(_secondaryStyle) {
     return Padding(
       padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width / 10,
-          right: MediaQuery.of(context).size.width / 10),
+        left: MediaQuery.of(context).size.width / 10,
+        right: MediaQuery.of(context).size.width / 10,
+      ),
       child: Row(
         children: <Widget>[
           Text(
@@ -267,111 +216,146 @@ class _State extends State<BuyTicket> {
           SizedBox(width: MediaQuery.of(context).size.width / 40),
           Text(
             "A1, B6, H9, C3, G1",
-            style: TextStyle(
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              color: selectionColor,
-              fontSize: MediaQuery.of(context).size.height / 40,
-              letterSpacing: 1,
-            ),
+            style: _secondaryStyle,
           ),
         ],
       ),
     );
   }
 
-  Widget _datePicker() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Row(
-          children: [
-            Icon(Icons.calendar_today),
-            SizedBox(width: MediaQuery.of(context).size.width / 120),
-            Text(
-              "Giorno",
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: MediaQuery.of(context).size.height / 50,
-                letterSpacing: 1,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height / 160),
-        Row(
-          children: <Widget>[
-            Material(
-              type: MaterialType.transparency,
-              borderRadius: BorderRadius.circular(30.0),
-              child: FlatButton(
-                padding: EdgeInsets.only(left: 8.0, right: 0.0),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                highlightColor:
-                    Theme.of(context).textTheme.title.color.withOpacity(0.1),
-                splashColor:
-                    Theme.of(context).textTheme.title.color.withOpacity(0.4),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      _selectedDate,
-                      style: TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height / 45,
-                        color: selectionColor,
-                      ),
-                    ),
-                    Icon(Icons.keyboard_arrow_left),
-                  ],
+  Widget _shotdDateTimePicker(String title, IconData icon, Widget bottomChild) {
+    return Container(
+      height: 60,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: [
+              Icon(icon),
+              SizedBox(width: 5),
+              Text(
+                title,
+                style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: MediaQuery.of(context).size.height / 50,
+                  letterSpacing: 1,
                 ),
-                onPressed: _selectDate,
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+          bottomChild,
+        ],
+      ),
     );
   }
 
-  Widget _timePicker() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Row(
-          children: [
-            Icon(Icons.schedule),
-            SizedBox(width: MediaQuery.of(context).size.width / 115),
-            Text(
-              "Orario",
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: MediaQuery.of(context).size.height / 50,
-                letterSpacing: 1,
+  Widget _buildShotTypology(_secondaryStyle) {
+    return _shotdDateTimePicker(
+      "Tipologia",
+      Icons.live_tv,
+      DefaultTabController(
+        initialIndex: 0,
+        length: 2,
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: 120,
+              height: 32,
+              child: TabBar(
+                tabs: [
+                  Tab(
+                    text: "2D",
+                  ),
+                  Tab(
+                    text: "3D",
+                  ),
+                ],
+                labelColor: _secondaryStyle.color,
+                unselectedLabelColor: Theme.of(context).textTheme.title.color.withOpacity(0.3),
+                labelStyle: _secondaryStyle,
+              ),
+            ),
+            Container(
+              width: 0,
+              height: 0,
+              child: TabBarView(
+                children: [Text(""), Text("")],
               ),
             ),
           ],
         ),
-        SizedBox(height: MediaQuery.of(context).size.height / 160),
-        ButtonTheme(
+      ),
+    );
+  }
+
+  Widget _datePicker(_secondaryStyle) {
+    // Internal function for calendar
+    Future _selectDate() async {
+      DateTime _picked = await showDatePicker(
+        context: context,
+        initialDate: this._minDate,
+        firstDate: this._minDate,
+        // This should be edited with the effective duration
+        lastDate: this._minDate.add(new Duration(days: 13)),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData.dark().copyWith(
+              backgroundColor: Colors.grey[800],
+              dialogBackgroundColor: Colors.grey[900],
+              accentColor: Colors.grey[700],
+            ),
+            child: child,
+          );
+        },
+      );
+      if (_picked != null) {
+        setState(() => _selectedDate =
+            _picked.day.toString() + "/" + _picked.month.toString());
+      }
+    }
+
+    return _shotdDateTimePicker(
+      "Giorno",
+      Icons.calendar_today,
+      FlatButton(
+        padding: EdgeInsets.only(left: 8.0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        highlightColor:
+            Theme.of(context).textTheme.title.color.withOpacity(0.1),
+        splashColor: Theme.of(context).textTheme.title.color.withOpacity(0.2),
+        child: Row(
+          children: <Widget>[
+            Text(
+              _selectedDate,
+              style: _secondaryStyle,
+            ),
+            Icon(Icons.keyboard_arrow_left),
+          ],
+        ),
+        onPressed: _selectDate,
+      ),
+    );
+  }
+
+  Widget _timePicker(_secondaryStyle) {
+    return _shotdDateTimePicker(
+      "Orario",
+      Icons.schedule,
+      Padding(
+        padding: EdgeInsets.only(bottom: 9.0),
+        child: ButtonTheme(
           alignedDropdown: true,
           child: DropdownButton<String>(
             isDense: true,
             value: _timePicked,
             icon: Icon(Icons.arrow_drop_down),
-            iconSize: 24,
+            iconSize: 22,
             underline: Container(
               padding: EdgeInsets.all(0.0),
               height: 0,
             ),
-            style: TextStyle(
-              color: selectionColor,
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).size.height / 45,
-            ),
+            style: _secondaryStyle,
             onChanged: (String newValue) {
               setState(() {
                 _timePicked = newValue;
@@ -385,80 +369,128 @@ class _State extends State<BuyTicket> {
             }).toList(),
           ),
         ),
-      ],
+      ),
     );
   }
 
-  Widget _totalPrize() {
-    return Row(
+  Widget _buildOptionalSnacks() {
+    return ExpansionTile(
+      title: Text(
+        "Vuoi includere uno snack?",
+        style: TextStyle(
+          fontFamily: 'OpenSans',
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height / 40,
+        ),
+      ),
       children: <Widget>[
-        Text(
-          "Totale:",
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontSize: MediaQuery.of(context).size.height / 45,
-            letterSpacing: 1,
-          ),
-        ),
-        SizedBox(width: MediaQuery.of(context).size.width / 40),
-        Text(
-          "€ 12.40",
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.height / 31,
-            letterSpacing: 1,
-          ),
-        ),
+        FoodSelection(title: "Pop-corn"),
+        FoodSelection(title: "Patatine"),
+        FoodSelection(title: "Caramelle"),
+        FoodSelection(title: "Nachos"),
+        FoodSelection(title: "Hot Dog"),
+        FoodSelection(title: "Menù Nachos", prices: [4.0, 5.0, 6.0]),
+        FoodSelection(title: "Menù PopCorn", prices: [4.0, 5.0, 6.0]),
+        FoodSelection(title: "Yogurt"),
+        FoodSelection(title: "Coca-Cola"),
+        FoodSelection(title: "Sprite"),
+        FoodSelection(title: "Acqua", prices: [1.5]),
+        FoodSelection(title: "Smarties", prices: [1.5]),
+        FoodSelection(title: "Twix", prices: [1.5]),
+        FoodSelection(title: "Bounty", prices: [1.5]),
+        FoodSelection(title: "Mars", prices: [1.5]),
       ],
     );
   }
 
-  Widget _buyButton() {
-    return ButtonWithIcon(
-      width: 160,
-      text: "Riepilogo",
-      icon: Icons.arrow_forward_ios,
-      onTap: () {
-        Navigator.push(
-          context,
-          SlideLeftRoute(
-            page: Checkout(),
+  Widget _footer() {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.only(bottom: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text(
+                "Totale:",
+                style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: MediaQuery.of(context).size.height / 45,
+                  letterSpacing: 1,
+                ),
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width / 40),
+              Text(
+                "€ 12.40",
+                style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.height / 31,
+                  letterSpacing: 1,
+                ),
+              ),
+            ],
           ),
-        );
-      },
-    );
-  }
-
-  Widget _dimTab() {
-    return TabBar(
-      unselectedLabelColor: Colors.white,
-      labelColor: Colors.deepOrange[900],
-      tabs: <Widget>[
-        Tab(text: "2D"),
-        Tab(text: "3D"),
-      ],
+          ButtonWithIcon(
+            width: 160,
+            text: "Riepilogo",
+            icon: Icons.arrow_forward_ios,
+            onTap: () {
+              Navigator.push(
+                context,
+                SlideLeftRoute(
+                  page: Checkout(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
 
-class MyPainter extends CustomPainter {
-  final Color color;
-  MyPainter(this.color);
+class ScreenPainter extends CustomPainter {
+  final double angleLimiter;
+  final double strokeWidth;
+  final Color strokeColor;
+  final double blurValue;
+  final Color fillColor;
+
+  ScreenPainter({
+    this.angleLimiter,
+    this.strokeWidth,
+    this.strokeColor,
+    this.blurValue,
+    this.fillColor,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint = new Paint()
-      ..isAntiAlias = true
-      ..strokeWidth = 1.0
-      ..color = color
-      ..style = PaintingStyle.stroke;
     canvas.drawArc(
-        Rect.fromLTWH(-35.0, 10.0, size.width * 1.2, size.height * 1.5),
-        10,
-        2,
-        false,
-        paint);
+      Rect.fromLTWH(0.0, 0.0, size.width, size.height * 2),
+      pi + angleLimiter,
+      pi - angleLimiter * 2,
+      false,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth
+        ..isAntiAlias = true
+        ..color = strokeColor,
+    );
+    canvas.drawArc(
+      Rect.fromLTWH(0.0, 0.0, size.width, size.height * 2),
+      pi + angleLimiter,
+      pi - angleLimiter * 2,
+      false,
+      Paint()
+        ..style = PaintingStyle.fill
+        ..maskFilter = MaskFilter.blur(BlurStyle.normal, blurValue)
+        ..isAntiAlias = true
+        ..color = fillColor,
+    );
   }
 
   @override

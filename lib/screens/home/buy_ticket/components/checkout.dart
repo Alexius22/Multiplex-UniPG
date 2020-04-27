@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 import 'package:cinema_app/widgets/buttons/button_icon.dart';
 
-// Next page
-import 'package:cinema_app/screens/home/home.dart';
-
 class Checkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -99,8 +96,10 @@ class Checkout extends StatelessWidget {
             text: "Acquista",
             icon: Icons.shopping_cart,
             onTap: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.popUntil(
+                context,
+                (Route<dynamic> route) => route.isFirst,
+              );
             },
           ),
         ),
