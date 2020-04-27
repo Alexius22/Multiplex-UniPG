@@ -55,7 +55,7 @@ class CinemaApp extends StatelessWidget {
               NavBarItemData("Home", OMIcons.home, 120, HomeScreen()),
               NavBarItemData("Profilo", OMIcons.person, 120, ProfileScreen()),
               NavBarItemData(
-                  "Impostazioni", OMIcons.settings, 180, SettingScreen()),
+                  "Impostazioni", OMIcons.settings, 165, SettingScreen()),
             ],
             cities: CitiesData().getAllStrings(),
           ),

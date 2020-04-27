@@ -77,7 +77,7 @@ class _NavbarButtonState extends State<NavbarButton>
       onTap: () => widget.onTap(),
       //Wrap in a bit of extra padding to make it easier to tap
       child: Container(
-        padding: EdgeInsets.only(top: 9, bottom: 9, right: 4, left: 4),
+        padding: EdgeInsets.only(top: 9, bottom: 9, right: 0, left: 0),
         //Wrap in an animated container, so changes to width & color automatically animate into place
         child: AnimatedContainer(
           alignment: Alignment.center,

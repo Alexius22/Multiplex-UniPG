@@ -20,7 +20,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
 
   @override
   void initState() {
-    _selectedNavIndex = 0;
+    _selectedNavIndex = 2;
     _dropdownValue = widget.cities[0];
     super.initState();
   }
