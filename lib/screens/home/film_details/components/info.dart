@@ -88,7 +88,7 @@ class FilmDetailsInfo extends StatelessWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: this.height,
+      height: this.height - 1,
       padding: EdgeInsets.only(left: 25, right: 25),
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),

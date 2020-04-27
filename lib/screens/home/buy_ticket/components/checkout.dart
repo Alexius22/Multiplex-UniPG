@@ -2,98 +2,52 @@
 
 import 'package:flutter/material.dart';
 
+// Widget
+import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
+import 'package:cinema_app/widgets/buttons/button_icon.dart';
+
+// Next page
 import 'package:cinema_app/screens/home/home.dart';
-import 'package:cinema_app/transitions/slide_top_route.dart';
 
-class Checkout extends StatefulWidget {
-  @override
-  _State createState() => new _State();
-}
-
-class _State extends State<Checkout> {
-  void _onBuyPressed() {
-    Navigator.push(context, SlideTopRoute(page: HomeScreen()));
-  }
-
+class Checkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    _buildBackButton(context),
-                    _buildHead(),
-                  ],
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).size.height / 5,
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: <Widget>[
-                        _buildCheckout("Film: ", "Avengers: Endgame"),
-                        _buildCheckout("Tipologia: ", "2D"),
-                        _buildCheckout("Giorno: ", "22/04/2020"),
-                        _buildCheckout("Orario: ", "20:45"),
-                        _buildCheckout(
-                            "Posti selezionati: ", "A1, B6, H9, C3, G1"),
-                        _buildCheckout("Snack scelti: ",
-                            "Acqua: 1\nSmarties: 3\nPatatine (M): 1\nPopCorn (L): 4\nCoca-Cola (M): 2\nMars: 1\nMenù Nachos (S): 3"),
-                        _buildCheckout("Totale: ", "€ 57.00"),
-                      ],
-                    ),
+      appBar: GoBackAppBar("Riepilogo ordine").build(context),
+      body: Stack(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height / 5,
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: <Widget>[
+                      _buildCheckout(context, "Film: ", "Avengers: Endgame"),
+                      _buildCheckout(context, "Tipologia: ", "2D"),
+                      _buildCheckout(context, "Giorno: ", "22/04/2020"),
+                      _buildCheckout(context, "Orario: ", "20:45"),
+                      _buildCheckout(
+                          context, "Posti selezionati: ", "A1, B6, H9, C3, G1"),
+                      _buildCheckout(context, "Snack scelti: ",
+                          "Acqua: 1\nSmarties: 3\nPatatine (M): 1\nPopCorn (L): 4\nCoca-Cola (M): 2\nMars: 1\nMenù Nachos (S): 3"),
+                      _buildCheckout(context, "Totale: ", "€ 57.00"),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            _buyButton(),
-          ],
-        ));
-  }
-
-  Widget _buildBackButton(context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 40,
-            top: MediaQuery.of(context).size.width / 40),
-        child: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: MediaQuery.of(context).size.height / 30,
+              ),
+            ],
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+          _buyButton(context),
+        ],
       ),
     );
   }
 
-  Widget _buildHead() {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
-        child: Center(
-          child: Text(
-            "Riepilogo ordine",
-            style: TextStyle(
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).size.height / 28.5,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCheckout(title, choice) {
+  Widget _buildCheckout(context, title, choice) {
     return Container(
       child: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
@@ -134,41 +88,20 @@ class _State extends State<Checkout> {
     );
   }
 
-  Widget _buyButton() {
+  Widget _buyButton(context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height / 16,
-            width: MediaQuery.of(context).size.width / 2.05,
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              color: Colors.deepOrange[900],
-              highlightColor: Colors.white24,
-              splashColor: Colors.white38,
-              textColor: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: MediaQuery.of(context).size.height / 37,
-                  ),
-                  Text(
-                    "Acquista",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height / 40,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ],
-              ),
-              onPressed: _onBuyPressed,
-            ),
+          child: ButtonWithIcon(
+            width: 160,
+            text: "Acquista",
+            icon: Icons.shopping_cart,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
           ),
         ),
       ],

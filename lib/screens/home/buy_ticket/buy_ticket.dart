@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:cinema_app/data/films.dart';
-import 'package:cinema_app/transitions/slide_left_route.dart';
+
+// Widget
+import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
+import 'package:cinema_app/widgets/buttons/button_icon.dart';
 import 'components/seat_checkbox.dart';
 import 'components/food_selection.dart';
+
+// Next page
+import 'package:cinema_app/transitions/slide_left_route.dart';
 import 'components/checkout.dart';
 
 class BuyTicket extends StatefulWidget {
@@ -21,11 +27,6 @@ class BuyTicket extends StatefulWidget {
 }
 
 class _State extends State<BuyTicket> {
-  void _onCheckoutPressed() {
-    Navigator.push(context, SlideLeftRoute(page: Checkout()));
-  }
-
-  @override
   // Config
   Color selectionColor = Colors.deepOrange;
   Color mainTextColor = Colors.white;
@@ -71,39 +72,18 @@ class _State extends State<BuyTicket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          "Il tuo ordine",
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.height / 30,
-            color: Theme.of(context).textTheme.title.color,
-          ),
-        ),
-      ),
+      appBar: GoBackAppBar("Il tuo ordine").build(context),
       body: Stack(
         children: <Widget>[
           Column(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 5 -
-                    30,
+                height: 4 / 5 * MediaQuery.of(context).size.height - 30,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: <Widget>[
-                      _buildScreen(),
-                      _buildSeats(),
-                      _buildLegend(),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      _buildSeatsSummary(),
-                      SizedBox(height: MediaQuery.of(context).size.height / 26),
+                      SizedBox(height: MediaQuery.of(context).size.height / 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,6 +92,11 @@ class _State extends State<BuyTicket> {
                           _timePicker(),
                         ],
                       ),
+                      _buildScreen(),
+                      _buildSeats(),
+                      _buildLegend(),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      _buildSeatsSummary(),
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
                       ExpansionTile(
                         title: Text(
@@ -430,34 +415,18 @@ class _State extends State<BuyTicket> {
   }
 
   Widget _buyButton() {
-    return Container(
-      height: MediaQuery.of(context).size.height / 16,
-      width: MediaQuery.of(context).size.width / 2.3,
-      child: MaterialButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+    return ButtonWithIcon(
+      width: 160,
+      text: "Riepilogo",
+      icon: Icons.arrow_forward_ios,
+      onTap: () {
+        Navigator.push(
+          context,
+          SlideLeftRoute(
+            page: Checkout(),
           ),
-          color: Colors.deepOrange[900],
-          highlightColor: Colors.white24,
-          splashColor: Colors.white38,
-          textColor: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.arrow_forward_ios,
-                size: MediaQuery.of(context).size.height / 37,
-              ),
-              Text(
-                "Riepilogo",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height / 40,
-                  letterSpacing: 1,
-                ),
-              ),
-            ],
-          ),
-          onPressed: (_onCheckoutPressed)),
+        );
+      },
     );
   }
 

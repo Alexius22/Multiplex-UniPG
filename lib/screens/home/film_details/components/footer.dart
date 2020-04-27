@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:cinema_app/data/films.dart';
 
+// Widget
+import 'package:cinema_app/widgets/buttons/button_icon.dart';
+
 // Next page
 import 'package:cinema_app/transitions/slide_top_route.dart';
 import 'package:cinema_app/screens/home/buy_ticket/buy_ticket.dart';
@@ -43,43 +46,19 @@ class FilmDetailsFooter extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(bottom: this.bottomPadding),
-          child: Container(
-            width: 200,
-            height: 50,
-            child: FlatButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              color: Colors.deepOrange[900],
-              highlightColor: Colors.white24,
-              splashColor: Colors.white38,
-              textColor: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 22,
-                  ),
-                  Text(
-                    "Acquista",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height / 40,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ],
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  SlideTopRoute(
-                    page: BuyTicket(film: this.film),
-                  ),
-                );
-              },
-            ),
+          child: ButtonWithIcon(
+            width: 230,
+            height: this.height,
+            text: "Vai al tuo ordine",
+            icon: Icons.arrow_forward_ios,
+            onTap: () {
+              Navigator.push(
+                context,
+                SlideTopRoute(
+                  page: BuyTicket(film: this.film),
+                ),
+              );
+            },
           ),
         ),
       ],

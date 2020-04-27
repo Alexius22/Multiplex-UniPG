@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cinema_app/transitions/slide_left_route.dart';
+import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 
 class SettingSelection extends StatefulWidget {
   final String textTitle;
@@ -41,21 +41,7 @@ class _State extends State<SettingSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          "Scegli un'opzione",
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.height / 30,
-            color: Theme.of(context).textTheme.title.color,
-          ),
-        ),
-      ),
+      appBar: GoBackAppBar("Scegli un'opzione").build(context),
       body: ListView.separated(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(20),

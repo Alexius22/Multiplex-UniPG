@@ -38,7 +38,6 @@ class _TicketFrontState extends State<TicketFront> {
       decoration: BoxDecoration(
         border: Border.all(color: borderColor),
         borderRadius: BorderRadius.circular(6.0),
-        color: Theme.of(context).backgroundColor,
       ),
       child: Stack(
         children: <Widget>[
