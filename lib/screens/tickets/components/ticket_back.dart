@@ -146,7 +146,7 @@ class _TicketBackState extends State<TicketBack> {
   }
 
   Widget _buildFoodSection() {
-    if (ticketData.consumables.length > 0)
+    if (ticketData.snacks.length > 0)
       return Center(
         child: ListView.separated(
           shrinkWrap: true,
@@ -154,12 +154,12 @@ class _TicketBackState extends State<TicketBack> {
           padding: EdgeInsets.only(
               left: MediaQuery.of(context).size.width / 26,
               right: MediaQuery.of(context).size.width / 26),
-          itemCount: ticketData.consumables.length,
+          itemCount: ticketData.snacks.length,
           itemBuilder: (BuildContext context, int i) {
             return _buildFoodReminder(
-              label: ticketData.consumables[i].label,
-              dim: ticketData.consumables[i].dim,
-              n: ticketData.consumables[i].n,
+              label: ticketData.snacks[i].label,
+              dim: ticketData.snacks[i].dim,
+              n: ticketData.snacks[i].quantity,
             );
           },
           separatorBuilder: (BuildContext context, int index) =>

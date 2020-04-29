@@ -47,9 +47,9 @@ class FilmDetailsFooter extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(bottom: this.bottomPadding),
           child: ButtonWithIcon(
-            width: 230,
+            width: 150,
             height: this.height,
-            text: "Vai al tuo ordine",
+            text: "Prenota",
             icon: Icons.arrow_forward_ios,
             onTap: () {
               Navigator.push(

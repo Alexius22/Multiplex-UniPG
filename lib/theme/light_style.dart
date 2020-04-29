@@ -9,7 +9,7 @@ ThemeData appLightTheme() {
     backgroundColor: Colors.grey[300],
     scaffoldBackgroundColor: Colors.grey[300],
     bottomAppBarColor: Colors.grey[300],
-    canvasColor: Colors.white70,
+    canvasColor: Colors.grey[200],
     // Splashs colors
     highlightColor: Colors.deepOrange[500].withOpacity(0.5),
     splashColor: Colors.deepOrange[900],

@@ -2,11 +2,40 @@
 
 import 'package:flutter/material.dart';
 
+// Import data structures
+import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/data/snacks.dart';
+
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 import 'package:cinema_app/widgets/buttons/button_icon.dart';
 
 class Checkout extends StatelessWidget {
+  final Film film;
+  final String shotTypology;
+  final String time;
+  final String date;
+  final List<String> seats;
+  final List<Snack> snacks;
+  final double totalCost;
+
+  Checkout({
+    this.film,
+    this.shotTypology,
+    this.time,
+    this.date,
+    this.seats,
+    this.snacks,
+    this.totalCost,
+  });
+
+  String _formatSnacks() {
+    String _out = "";
+    for (Snack snack in this.snacks)
+      _out += "${snack.label} (${snack.dim}): ${snack.quantity}\n";
+    return _out.substring(0, _out.length - 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,15 +52,15 @@ class Checkout extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: <Widget>[
-                      _buildCheckout(context, "Film: ", "Avengers: Endgame"),
-                      _buildCheckout(context, "Tipologia: ", "2D"),
-                      _buildCheckout(context, "Giorno: ", "22/04/2020"),
-                      _buildCheckout(context, "Orario: ", "20:45"),
+                      _buildCheckout(context, "Film: ", film.title),
+                      _buildCheckout(context, "Tipologia: ", shotTypology),
+                      _buildCheckout(context, "Giorno: ", date),
+                      _buildCheckout(context, "Orario: ", time),
                       _buildCheckout(
-                          context, "Posti selezionati: ", "A1, B6, H9, C3, G1"),
-                      _buildCheckout(context, "Snack scelti: ",
-                          "Acqua: 1\nSmarties: 3\nPatatine (M): 1\nPopCorn (L): 4\nCoca-Cola (M): 2\nMars: 1\nMenù Nachos (S): 3"),
-                      _buildCheckout(context, "Totale: ", "€ 57.00"),
+                          context, "Posti selezionati: ", seats.join(', ')),
+                      _buildCheckout(
+                          context, "Snack scelti: ", _formatSnacks()),
+                      _buildCheckout(context, "Totale: ", "€ $totalCost"),
                     ],
                   ),
                 ),

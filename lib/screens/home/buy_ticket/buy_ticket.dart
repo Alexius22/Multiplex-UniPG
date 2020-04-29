@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+// Import data structures
 import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/data/snacks.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 import 'package:cinema_app/widgets/buttons/button_icon.dart';
 import 'components/seat_checkbox.dart';
-import 'components/food_selection.dart';
+import 'components/snack_selector.dart';
 
 // Next page
 import 'package:cinema_app/transitions/slide_left_route.dart';
@@ -28,20 +30,26 @@ class BuyTicket extends StatefulWidget {
 
 class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
   // Configuration variables
-  List<String> _shotTypologies = ['2D', '3D'];
+  final List<String> _shotTypologies = ['2D', '3D'];
   DateTime _minDate = DateTime.now();
   DateTime _maxDate = DateTime.now().add(new Duration(days: 13));
   List<String> _hours;
+  List<int> _roomDim = [6, 8]; // Rows, columns
+  Map<String, SnackTypology> _snackTypologies = Map.fromIterable(
+    SnackData().getAll,
+    key: (snack) => snack.label,
+  );
 
   // Prices
   double _totalCost = 0.0;
   Map _shotTypologyPrices = {'2D': 3.5, '3D': 5.0};
 
-  // Data selection
+  // User choices
   TabController _shotTyplogyPicked;
   String _timePicked;
   String _datePicked = 'GG/MM';
-  List<Point> _seatsPicked = [];
+  List<String> _seatsPicked = [];
+  Map<String, Snack> _snacks = {};
 
   @override
   void initState() {
@@ -66,9 +74,14 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
     // Update widgets
     super.setState(fn);
 
-    // Calculate total price
+    // Calculate seats cost
     final String _shotSelected = _shotTypologies[_shotTyplogyPicked.index];
     _totalCost = _shotTypologyPrices[_shotSelected] * _seatsPicked.length;
+
+    // Calculate snacks cost
+    for (var snack in _snacks.values)
+      _totalCost +=
+          _snackTypologies[snack.label].priceList[snack.dim] * snack.quantity;
   }
 
   @override
@@ -116,7 +129,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                   SizedBox(height: 30),
                   _buildScreen(),
                   SizedBox(height: 5),
-                  _buildSeats(),
+                  _buildSeats(rows: _roomDim[0], columns: _roomDim[1]),
                   SizedBox(height: 10),
                   _buildLegend(),
                   SizedBox(height: 15),
@@ -148,7 +161,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildSeats({rows: 6, columns: 8, height: 250.0}) {
+  Widget _buildSeats({rows, columns, height: 250.0}) {
     List<Row> checkBoxRows = [];
     Random _rand = Random();
     final bool _isDarkThemeEnabled =
@@ -174,9 +187,9 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                 final int x = rows - i;
                 final int y = j + 1;
                 if (status)
-                  _seatsPicked.add(Point(x, y));
+                  _seatsPicked.add(_formatSeat(x, y));
                 else
-                  _seatsPicked.remove(Point(x, y));
+                  _seatsPicked.remove(_formatSeat(x, y));
               });
             },
           ),
@@ -200,6 +213,10 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         children: checkBoxRows,
       ),
     );
+  }
+
+  String _formatSeat(x, y) {
+    return "${String.fromCharCode(64 + x)}$y";
   }
 
   Widget _buildLegend() {
@@ -269,7 +286,9 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                 return FadeTransition(child: child, opacity: animation);
               },
               child: Text(
-                _seatsPicked.isEmpty == true ? "..." : "${_formatSeats()}",
+                _seatsPicked.isEmpty == true
+                    ? "..."
+                    : "${_seatsPicked.join(', ')}",
                 style: _secondaryStyle,
                 key: ValueKey<int>(_seatsPicked.length),
               ),
@@ -278,16 +297,6 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         ],
       ),
     );
-  }
-
-  String _formatSeats() {
-    String _out = "";
-    for (Point el in _seatsPicked) {
-      String _row = String.fromCharCode(65 + el.x);
-      _out += "$_row${el.y}, ";
-    }
-    // Remove comma and return
-    return _out.substring(0, _out.length - 2);
   }
 
   Widget _shotdDateTimePicker(String title, IconData icon, Widget bottomChild) {
@@ -431,6 +440,38 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildOptionalSnacks() {
+    // Build selectors individually
+    List<Widget> _snackSelectors = [];
+    for (var key in _snackTypologies.keys) {
+      // Get current quantities
+      Map<String, int> _initialQuantities = {};
+      for (String _dim in _snackTypologies[key].priceList.keys) {
+        _initialQuantities[_dim] =
+            _snacks.containsKey(key + _dim) ? _snacks[key + _dim].quantity : 0;
+      }
+
+      // Create selector
+      _snackSelectors.add(
+        Padding(
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 14,
+          ),
+          child: SnackSelector(
+            snackTypology: _snackTypologies[key],
+            initialQuantities: _initialQuantities,
+            onSnackChanged: (Snack snack) {
+              setState(() {
+                if (snack.quantity > 0)
+                  _snacks[snack.label + snack.dim] = snack;
+                else
+                  _snacks.remove(snack.label + snack.dim);
+              });
+            },
+          ),
+        ),
+      );
+    }
+
     return ExpansionTile(
       title: Text(
         "Vuoi includere uno snack?",
@@ -440,23 +481,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
           fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
-      children: <Widget>[
-        FoodSelection(title: "Pop-corn"),
-        FoodSelection(title: "Patatine"),
-        FoodSelection(title: "Caramelle"),
-        FoodSelection(title: "Nachos"),
-        FoodSelection(title: "Hot Dog"),
-        FoodSelection(title: "Menù Nachos", prices: [4.0, 5.0, 6.0]),
-        FoodSelection(title: "Menù PopCorn", prices: [4.0, 5.0, 6.0]),
-        FoodSelection(title: "Yogurt"),
-        FoodSelection(title: "Coca-Cola"),
-        FoodSelection(title: "Sprite"),
-        FoodSelection(title: "Acqua", prices: [1.5]),
-        FoodSelection(title: "Smarties", prices: [1.5]),
-        FoodSelection(title: "Twix", prices: [1.5]),
-        FoodSelection(title: "Bounty", prices: [1.5]),
-        FoodSelection(title: "Mars", prices: [1.5]),
-      ],
+      children: _snackSelectors,
     );
   }
 
@@ -500,7 +525,15 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
               Navigator.push(
                 context,
                 SlideLeftRoute(
-                  page: Checkout(),
+                  page: Checkout(
+                    film: widget.film,
+                    shotTypology: _shotTypologies[_shotTyplogyPicked.index],
+                    time: _timePicked,
+                    date: _datePicked,
+                    seats: _seatsPicked,
+                    snacks: _snacks.values.toList(),
+                    totalCost: _totalCost,
+                  ),
                 ),
               );
             },
