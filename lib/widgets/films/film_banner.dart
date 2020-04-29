@@ -129,6 +129,7 @@ class FilmBanner extends StatelessWidget {
           Material(
             type: MaterialType.transparency,
             child: InkWell(
+              borderRadius: BorderRadius.circular(this.borderRadius),
               highlightColor: Colors.black26,
               splashColor: Colors.black38,
               onTap: this.onTap,
