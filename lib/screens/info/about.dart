@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AboutCinema extends StatelessWidget {
   _openSiteweb() async {
-    String url = "https:<URL>";
+    String url = "https://flutter.io";
     if (await canLaunch(url)) await launch(url);
   }
 
