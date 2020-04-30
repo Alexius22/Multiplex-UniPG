@@ -52,19 +52,19 @@ class _NavbarButtonState extends State<NavbarButton>
           rotationY: 180 * _iconAnimController.value,
           child: Icon(
             widget.data.icon,
-            size: 24,
+            size: MediaQuery.of(context).size.height / 34,
             color: widget.isSelected
                 ? Theme.of(context).textTheme.button.color
                 : Theme.of(context).textTheme.button.backgroundColor,
           ),
         ),
         //Add some hz spacing
-        SizedBox(width: 12),
+        SizedBox(width: MediaQuery.of(context).size.width / 55),
         //Label
         Text(
           widget.data.title,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: MediaQuery.of(context).size.height / 44,
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.button.color,
           ),
@@ -77,14 +77,14 @@ class _NavbarButtonState extends State<NavbarButton>
       onTap: () => widget.onTap(),
       //Wrap in a bit of extra padding to make it easier to tap
       child: Container(
-        padding: EdgeInsets.only(top: 9, bottom: 9, right: 0, left: 0),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 80, bottom: MediaQuery.of(context).size.height / 80),
         //Wrap in an animated container, so changes to width & color automatically animate into place
         child: AnimatedContainer(
           alignment: Alignment.center,
           //Determine target width, selected item is wider
-          width: widget.isSelected ? widget.data.width : 56,
+          width: widget.isSelected ? widget.data.width : MediaQuery.of(context).size.width / 7.5,
           curve: Curves.easeOutCubic,
-          padding: EdgeInsets.only(left: 12, right: 12),
+          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 36, right: MediaQuery.of(context).size.width / 36),
           duration: Duration(milliseconds: (600 / _animScale).round()),
           //Use BoxDecoration top create a rounded container
           decoration: BoxDecoration(

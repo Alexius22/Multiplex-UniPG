@@ -69,17 +69,17 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 15),
+            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 26),
             child: Image.asset(
               'images/logo.png',
-              height: 30,
+              height: MediaQuery.of(context).size.height / 27,
             ),
           ),
           Text(
             'Multiplex UniPG'.toUpperCase(),
             textAlign: TextAlign.left,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: MediaQuery.of(context).size.height / 42,
               letterSpacing: 0.5,
               fontWeight: FontWeight.bold,
             ),
@@ -93,7 +93,7 @@ class _BubbleTabBarState extends State<BubbleTabBar> {
     return DropdownButton<String>(
       value: _dropdownValue,
       icon: Icon(Icons.arrow_drop_down),
-      iconSize: 24,
+      iconSize: MediaQuery.of(context).size.height / 26,
       underline: Container(
         height: 0,
       ),

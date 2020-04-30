@@ -113,9 +113,11 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: 30),
+                  SizedBox(height: MediaQuery.of(context).size.height / 100),
                   Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 40,
+                        right: MediaQuery.of(context).size.width / 40),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,15 +128,15 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: MediaQuery.of(context).size.height / 80),
                   _buildScreen(),
-                  SizedBox(height: 5),
+                  SizedBox(height: MediaQuery.of(context).size.height / 160),
                   _buildSeats(rows: _roomDim[0], columns: _roomDim[1]),
-                  SizedBox(height: 10),
+                  SizedBox(height: MediaQuery.of(context).size.height / 80),
                   _buildLegend(),
-                  SizedBox(height: 15),
+                  SizedBox(height: MediaQuery.of(context).size.height / 52),
                   _buildSeatsSummary(_secondaryStyle),
-                  SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   _buildOptionalSnacks(),
                 ],
               ),
@@ -301,7 +303,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
 
   Widget _shotdDateTimePicker(String title, IconData icon, Widget bottomChild) {
     return Container(
-      height: 60,
+      height: MediaQuery.of(context).size.height / 13,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -309,7 +311,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
           Row(
             children: [
               Icon(icon),
-              SizedBox(width: 5),
+              SizedBox(width: MediaQuery.of(context).size.width / 95),
               Text(
                 title,
                 style: TextStyle(
@@ -333,8 +335,8 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       Column(
         children: <Widget>[
           Container(
-            width: 120,
-            height: 32,
+            width: MediaQuery.of(context).size.width / 3.4,
+            height: MediaQuery.of(context).size.height / 25,
             child: TabBar(
               controller: _shotTyplogyPicked,
               tabs: _shotTypologies
@@ -385,7 +387,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       "Giorno",
       Icons.calendar_today,
       FlatButton(
-        padding: EdgeInsets.only(left: 8.0),
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 50),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         highlightColor:
             Theme.of(context).textTheme.title.color.withOpacity(0.1),
@@ -409,14 +411,15 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       "Orario",
       Icons.schedule,
       Padding(
-        padding: EdgeInsets.only(bottom: 9.0),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 100),
         child: ButtonTheme(
           alignedDropdown: true,
           child: DropdownButton<String>(
             isDense: true,
             value: _timePicked,
             icon: Icon(Icons.arrow_drop_down),
-            iconSize: 22,
+            iconSize: MediaQuery.of(context).size.height / 37,
             underline: Container(
               padding: EdgeInsets.all(0.0),
               height: 0,
@@ -490,7 +493,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       children: <Widget>[
         Container(
           alignment: Alignment.bottomLeft,
-          padding: EdgeInsets.all(28.0),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 28.5),
           child: Row(
             children: <Widget>[
               Text(
@@ -501,7 +504,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                   letterSpacing: 1,
                 ),
               ),
-              SizedBox(width: 20),
+              SizedBox(width: MediaQuery.of(context).size.width / 20),
               Text(
                 "€ $_totalCost",
                 style: TextStyle(
@@ -516,9 +519,9 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         ),
         Container(
           alignment: Alignment.bottomRight,
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 40),
           child: ButtonWithIcon(
-            width: 160,
+            width: MediaQuery.of(context).size.width / 2.55,
             text: "Riepilogo",
             icon: Icons.arrow_forward_ios,
             onTap: () {
