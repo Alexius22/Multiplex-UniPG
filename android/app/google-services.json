@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "119258297349",
+    "firebase_url": "https://multiplex-unipg.firebaseio.com",
+    "project_id": "multiplex-unipg",
+    "storage_bucket": "multiplex-unipg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119258297349:android:fa1a96a55acff33fc7186c",
+        "android_client_info": {
+          "package_name": "com.amatuccistrippoli.cinema_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119258297349-nhetmvmjvavukm9qjblmtulq9qrv00fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy_IddHTgacUgaOSuHopOvCJDsQZMoZNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119258297349-nhetmvmjvavukm9qjblmtulq9qrv00fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

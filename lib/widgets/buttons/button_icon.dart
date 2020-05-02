@@ -47,9 +47,7 @@ class ButtonWithIcon extends StatelessWidget {
             ),
           ],
         ),
-        onPressed: () {
-          onTap();
-        },
+        onPressed: onTap,
       ),
     );
   }

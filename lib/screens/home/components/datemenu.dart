@@ -2,8 +2,13 @@
 
 import 'package:flutter/material.dart';
 
+// Utils
+import 'package:cinema_app/utils/calendar.dart';
+import 'package:cinema_app/utils/format.dart';
+
 class DateMenu extends StatefulWidget {
-  final DateTime minDate = DateTime.now().add(new Duration(days: 2));
+  final DateTime minDate = DateTime.now();
+  final DateTime maxDate = DateTime.now().add(Duration(days: 14));
 
   @override
   _State createState() => new _State();
@@ -15,7 +20,7 @@ class _State extends State<DateMenu> {
     false,
     false,
   ];
-  String _selectedDate = 'Altra data';
+  DateTime _selectedDate;
 
   void _pressButton(int i) {
     if (i != 2) {
@@ -23,35 +28,25 @@ class _State extends State<DateMenu> {
         // Select active button
         // Resetting defaults
         pressedButtons = List.filled(3, false);
-        _selectedDate = 'Altra data';
         pressedButtons[i] = true;
+        _selectedDate = null;
       });
     } else
       _selectDate();
   }
 
-  Future _selectDate() async {
-    DateTime picked = await showDatePicker(
+  void _selectDate() async {
+    DateTime _picked = await selectDate(
       context: context,
-      initialDate: widget.minDate,
-      firstDate: widget.minDate.subtract(new Duration(days: 1)),
-      lastDate: widget.minDate.add(new Duration(days: 13)),
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            backgroundColor: Colors.grey[800],
-            dialogBackgroundColor: Colors.grey[900],
-            accentColor: Colors.grey[700],
-          ),
-          child: child,
-        );
-      },
+      currentDate: _selectedDate,
+      firstDate: widget.minDate,
+      lastDate: widget.maxDate,
     );
-    if (picked != null) {
+    if (_picked != null) {
       setState(() {
         pressedButtons = List.filled(3, false);
         pressedButtons[2] = true;
-        _selectedDate = picked.day.toString() + "/" + picked.month.toString();
+        _selectedDate = _picked;
       });
     }
   }
@@ -63,7 +58,7 @@ class _State extends State<DateMenu> {
       children: <Widget>[
         _dateButton(0, "Oggi"),
         _dateButton(1, "Domani"),
-        _dateButton(2, _selectedDate),
+        _dateButton(2, formatDate(_selectedDate, 'Altra data')),
       ],
     );
   }

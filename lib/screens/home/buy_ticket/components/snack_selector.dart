@@ -24,7 +24,11 @@ class _State extends State<SnackSelector> {
   @override
   void initState() {
     for (String _dim in widget.snackTypology.priceList.keys) {
-      _snacks[_dim] = Snack(widget.snackTypology.label, _dim, widget.initialQuantities[_dim]);
+      _snacks[_dim] = Snack(
+        widget.snackTypology.label,
+        _dim,
+        widget.initialQuantities[_dim],
+      );
     }
     super.initState();
   }

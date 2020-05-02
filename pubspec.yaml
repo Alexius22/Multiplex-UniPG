@@ -14,14 +14,22 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  
+
+  # Google services
+  firebase_core: ^0.4.0+9
+  cloud_firestore: ^0.13.5
+  firebase_auth: ^0.16.0
+
+  # Icons
+  cupertino_icons: ^0.1.2
+  outline_material_icons: ^0.1.0
+
+  # Other
   shared_preferences: ^0.5.7
   dynamic_theme: ^1.0.1
   url_launcher: ^5.4.5
   barcode_flutter: ^1.1.2
   flip_card: ^0.4.4
-  cupertino_icons: ^0.1.2
-  outline_material_icons: ^0.1.0
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 class SeatCheckBox extends StatefulWidget {
+  final Key key;
   final double width;
   final double height;
   final double borderWidth;
@@ -19,6 +20,7 @@ class SeatCheckBox extends StatefulWidget {
   final Function onCheckChange;
 
   SeatCheckBox({
+    this.key,
     this.width = 30,
     this.height = 30,
     this.borderWidth = 1.5,
@@ -33,7 +35,7 @@ class SeatCheckBox extends StatefulWidget {
     this.checked = false,
     this.disabled = false,
     this.onCheckChange,
-  });
+  }) : super(key: key);
 
   @override
   _SeatCheckBoxState createState() => _SeatCheckBoxState();

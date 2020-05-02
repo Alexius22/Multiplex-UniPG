@@ -26,7 +26,7 @@ class InfoCinema extends StatelessWidget {
               // TODO: Cambiare la città in alto dovrebbe cambiare anche l'indirizzo
               _buildInfo2(context, "Via Fasulla, 1, 06123, Perugia (PG)"),
               _map(context, 'images/map.png'),
-              _directions(context, "Ottieni indicazioni", null),
+              _directions(context, "Ottieni indicazioni", () {}),
               Column(
                 children: <Widget>[
                   Row(
@@ -157,7 +157,7 @@ class InfoCinema extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 1.7,
       text: text,
       icon: Icons.navigation,
-      onTap: (func) {},
+      onTap: func,
     );
   }
 
