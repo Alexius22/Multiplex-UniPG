@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+//Widget
 import 'package:cinema_app/screens/profile/add_card.dart';
 import 'package:cinema_app/transitions/slide_top_route.dart';
+import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 
 class Cards extends StatefulWidget {
   @override
@@ -18,34 +20,26 @@ class _State extends State<Cards> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GoBackAppBar("Metodo di pagamento").build(context),
       body: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Stack(
+          Container(
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).size.height / 4.5,
+            //Scroll view implemented for more than 8 cards saved
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              child: Column(
                 children: <Widget>[
-                  _buildBackButton(context),
-                  _buildHead(),
+                  _infoBox(
+                      context, "Seleziona una o più preferenze di pagamento"),
+                  _card("Postepay", "termina con 1234", true),
+                  _card("MasterCard", "termina con 1234", false),
+                  _card("American Express", "termina con 1234", false),
                 ],
               ),
-              _infoBox(),
-              Container(
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 4,
-                //Scroll view implemented for more than 8 cards saved
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: <Widget>[
-                      _card("Postepay", "termina con 1234", true),
-                      _card("MasterCard", "termina con 1234", false),
-                      _card("American Express", "termina con 1234", false),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           _addCard(),
         ],
@@ -53,50 +47,13 @@ class _State extends State<Cards> {
     );
   }
 
-  Widget _buildBackButton(context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 40,
-            top: MediaQuery.of(context).size.height / 80),
-        child: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: MediaQuery.of(context).size.height / 32,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHead() {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
-        child: Center(
-          child: Text(
-            "Metodo di pagamento",
-            style: TextStyle(
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).size.height / 28.5,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _infoBox() {
+  Widget _infoBox(context, text) {
     return Container(
       child: Center(
         child: Column(
           children: <Widget>[
             Text(
-              "Seleziona una o più preferenze di pagamento",
+              text,
               style: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: MediaQuery.of(context).size.height / 47,

@@ -2,6 +2,13 @@
 
 import 'package:flutter/material.dart';
 
+//Widget
+import 'package:cinema_app/transitions/slide_top_route.dart';
+
+// Other pages
+import 'package:cinema_app/screens/profile/signup.dart';
+import 'package:cinema_app/screens/profile/forgot.dart';
+
 class LoginScreen extends StatefulWidget {
   final ValueChanged<bool> onLogin;
   const LoginScreen({this.onLogin});
@@ -59,77 +66,10 @@ class LoginScreenState extends State<LoginScreen>
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width / 10,
-                  right: MediaQuery.of(context).size.width / 10),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 0.2),
-                    child: Icon(
-                      Icons.alternate_email,
-                    ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'prova@example.com',
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
-                        ),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width / 10,
-                  right: MediaQuery.of(context).size.width / 10),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 0.2),
-                    child: Icon(
-                      Icons.lock_open,
-                    ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).textTheme.title.color.withOpacity(0.5),
-                        ),
-                      ),
-                      obscureText: true,
-                      keyboardType: TextInputType.text,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _form(context, Icons.alternate_email, "prova@example.com",
+                TextInputType.emailAddress, false),
+            _form(
+                context, Icons.lock_open, "Password", TextInputType.text, true),
             Padding(
               padding:
                   EdgeInsets.only(top: MediaQuery.of(context).size.height / 20),
@@ -152,7 +92,14 @@ class LoginScreenState extends State<LoginScreen>
               onPressed: _onLoginPressed,
             ),
             MaterialButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  SlideTopRoute(
+                    page: Forgot(),
+                  ),
+                ),
+              },
               child: Text(
                 "Password dimenticata?",
                 style: TextStyle(
@@ -179,7 +126,14 @@ class LoginScreenState extends State<LoginScreen>
               height: MediaQuery.of(context).size.height / 24,
             ),
             MaterialButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  SlideTopRoute(
+                    page: SignUp(),
+                  ),
+                ),
+              },
               child: Text(
                 "Non hai un account? Creane uno!",
                 style: TextStyle(
@@ -196,7 +150,47 @@ class LoginScreenState extends State<LoginScreen>
     );
   }
 
-  _buildSocialImg(imgPath) {
+  Widget _form(context, icon, hintText, keyboard, obscure) {
+    return Container(
+      margin: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width / 10,
+          right: MediaQuery.of(context).size.width / 10),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey,
+          ),
+        ),
+      ),
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 0.2),
+            child: Icon(
+              icon,
+            ),
+          ),
+          Expanded(
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: TextStyle(
+                  color:
+                      Theme.of(context).textTheme.title.color.withOpacity(0.5),
+                ),
+              ),
+              keyboardType: keyboard,
+              obscureText: obscure,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSocialImg(imgPath) {
     return Expanded(
       child: Material(
         type: MaterialType.transparency,

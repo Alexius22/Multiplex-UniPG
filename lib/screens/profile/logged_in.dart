@@ -33,61 +33,65 @@ class _State extends State<LoggedInScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 40,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          _profile(context, 'images/profile.jpg', "Oswald", "Green"),
+          SizedBox(height: MediaQuery.of(context).size.height / 80),
+          _listDrop("Password", "********", null),
+          _listDrop("Email", "prova@example.com", null),
+          _listDrop("Pagamento", "Visa xxxx-xxxx-xxxx-1234", _onPaymentPressed),
+          _tileLogout("Logout", "Effettua il logout da questo account",
+              _onLogoutPressed),
+        ],
+      ),
+    );
+  }
+
+  Widget _profile(context, image, name, surname) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            width: MediaQuery.of(context).size.height / 7,
+            height: MediaQuery.of(context).size.height / 7,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+              border: Border.all(
+                  color: Theme.of(context).textTheme.title.color, width: 2.0),
+            ),
+          ),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width / 26),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: MediaQuery.of(context).size.height / 7,
-                  height: MediaQuery.of(context).size.height / 7,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage('images/profile.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                    border: Border.all(
-                        color: Theme.of(context).textTheme.title.color,
-                        width: 2.0),
-                  ),
+              Text(
+                name,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                  fontSize: MediaQuery.of(context).size.height / 20,
                 ),
               ),
-              SizedBox(width: 15),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Oswald Green",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        fontSize: MediaQuery.of(context).size.height / 25,
-                      ),
-                    ),
-                    Text(
-                      "Perugia (PG)",
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height / 42,
-                        letterSpacing: 1,
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                  ],
+              Text(
+                surname,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height / 30,
+                  height: MediaQuery.of(context).size.height / 1000,
+                  letterSpacing: 1,
+                  color: Colors.grey.shade400,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10),
-          _listDrop("Password", "********", null),
-          _listDrop("Email", "prova@example.com", null),
-          _listDrop("Pagamento", "Visa xxxx-xxxx-xxxx-1234", _onPaymentPressed),
-          _tileLogout("Logout", "Effettua il logout di questo account",
-              _onLogoutPressed),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

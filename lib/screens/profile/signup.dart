@@ -5,29 +5,29 @@ import 'package:flutter/material.dart';
 //Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 
-class AddCard extends StatefulWidget {
-  @override
-  _State createState() => new _State();
-}
-
-class _State extends State<AddCard> {
+class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GoBackAppBar("Nuova Carta").build(context),
+      appBar: GoBackAppBar("Registrazione").build(context),
       body: Stack(
         children: <Widget>[
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                _form("Intestatario carta:", Icons.person, "Nome Cognome",
-                    TextInputType.text),
-                _form("Numero carta:", Icons.credit_card, "1234 1234 1234 1234",
-                    TextInputType.number),
-                _form("Data di scadenza:", Icons.calendar_today, "01/2020",
-                    TextInputType.number),
-                _form("CVV:", Icons.vpn_key, "123", TextInputType.number),
-                _saveButton(),
+                _infoBox(context,
+                    "Inserisci tutti i dati richiesti per poter creare il tuo account personale"),
+                _form(context, "Inserisci il tuo nome:", Icons.person,
+                    "Nome", TextInputType.text),
+                _form(context, "Inserisci il tuo cognome:", Icons.person,
+                    "Cognome", TextInputType.text),
+                _form(context, "Inserisci la tua email:", Icons.alternate_email,
+                    "prova@example.com", TextInputType.emailAddress),
+                _form(context, "Inserisci password:", Icons.vpn_key, "Password",
+                    TextInputType.visiblePassword),
+                _form(context, "Conferma password:", Icons.check,
+                    "Conferma Password", TextInputType.visiblePassword),
+                _saveUser(context),
               ],
             ),
           ),
@@ -36,11 +36,36 @@ class _State extends State<AddCard> {
     );
   }
 
-  Widget _form(title, icon, hintText, keyboard) {
+  Widget _infoBox(context, text) {
+    return Container(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 100),
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: MediaQuery.of(context).size.height / 47,
+                  color:
+                      Theme.of(context).textTheme.title.color.withOpacity(0.5),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _form(context, title, icon, hintText, keyboard) {
     return Container(
       margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width / 7,
-          right: MediaQuery.of(context).size.width / 7),
+          left: MediaQuery.of(context).size.width / 10,
+          right: MediaQuery.of(context).size.width / 10),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -98,7 +123,7 @@ class _State extends State<AddCard> {
     );
   }
 
-  Widget _saveButton() {
+  Widget _saveUser(context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -119,7 +144,7 @@ class _State extends State<AddCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Aggiungi carta",
+                    "Registrati",
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height / 40,
                       letterSpacing: 1,
