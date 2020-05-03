@@ -2,147 +2,163 @@
 
 import 'package:flutter/material.dart';
 
-//Widget
+// Database interface
+import 'package:cinema_app/services/auth.dart';
+
+// Transitions
 import 'package:cinema_app/transitions/slide_top_route.dart';
 
-// Other pages
+// Screens
 import 'package:cinema_app/screens/profile/signup.dart';
 import 'package:cinema_app/screens/profile/forgot.dart';
 
+// Widgets
+import 'components/logo.dart';
+import 'components/custom_form_field.dart';
+import 'package:cinema_app/widgets/buttons/custom_button.dart';
+
+// Email validator for the form
+import 'package:email_validator/email_validator.dart';
+
 class LoginScreen extends StatefulWidget {
-  final ValueChanged<bool> onLogin;
-  const LoginScreen({this.onLogin});
+  final Auth auth = Auth();
 
   @override
-  State createState() => new LoginScreenState(onLogin: onLogin);
+  State createState() => new LoginScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
-  Animation<double> _iconAnimation;
-  AnimationController _iconAnimationController;
-
-  final ValueChanged<bool> onLogin;
-  LoginScreenState({this.onLogin});
-
-  @override
-  void initState() {
-    super.initState();
-    _iconAnimationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1800));
-    _iconAnimation = CurvedAnimation(
-      parent: _iconAnimationController,
-      curve: Curves.bounceOut,
-    );
-    _iconAnimation.addListener(() => this.setState(() {}));
-    _iconAnimationController.forward();
-  }
+class LoginScreenState extends State<LoginScreen> {
+  final _loginFormKey = GlobalKey<FormState>();
+  String _email;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
-    void _onLoginPressed() {
-      onLogin(true);
-    }
-
-    return Container(
-      child: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(25.0),
         child: Column(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 40,
-                  bottom: MediaQuery.of(context).size.height / 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            Logo(
+              animated: false,
+              finalHeight: MediaQuery.of(context).size.height / 8,
+            ),
+            SizedBox(height: 10),
+            Form(
+              key: _loginFormKey,
+              child: Column(
                 children: <Widget>[
-                  Image(
-                    height: _iconAnimation.value *
-                        MediaQuery.of(context).size.height /
-                        6,
-                    image: AssetImage(
-                      "images/logo.png",
-                    ),
+                  CustomFormField(
+                    icon: Icons.alternate_email,
+                    label: "E-mail",
+                    hint: 'Inserisci la tua e-mail',
+                    inputType: TextInputType.emailAddress,
+                    validator: (String email) {
+                      email = email.trim();
+                      if (email.isEmpty) return 'Questo campo è obbligatorio';
+                      if (!EmailValidator.validate(email))
+                        return 'E-mail non valida';
+                      return null;
+                    },
+                    onSaved: (String email) => _email = email.trim(),
+                  ),
+                  CustomFormField(
+                    icon: Icons.lock_open,
+                    label: "Password",
+                    hint: 'Inserisci la tua password',
+                    inputType: TextInputType.visiblePassword,
+                    validator: (String password) {
+                      password = password.trim();
+                      if (password.isEmpty)
+                        return 'Questo campo è obbligatorio';
+                      if (password.length < 6)
+                        return 'La password deve avere almeno 6 caratteri';
+                      return null;
+                    },
+                    onSaved: (String password) => _password = password.trim(),
                   ),
                 ],
               ),
             ),
-            _form(context, Icons.alternate_email, "prova@example.com",
-                TextInputType.emailAddress, false),
-            _form(
-                context, Icons.lock_open, "Password", TextInputType.text, true),
-            Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 20),
-            ),
-            MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              height: MediaQuery.of(context).size.height / 18,
-              minWidth: MediaQuery.of(context).size.width / 5,
-              color: Colors.deepOrange[900],
-              splashColor: Colors.deepOrange[300],
-              textColor: Colors.white,
-              child: Text(
-                "LOGIN",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              onPressed: _onLoginPressed,
-            ),
-            MaterialButton(
-              onPressed: () => {
-                Navigator.push(
+            Align(
+              alignment: Alignment.centerRight,
+              child: _buildClickableText(
+                'Password dimenticata?',
+                () => Navigator.push(
                   context,
                   SlideTopRoute(
                     page: Forgot(),
                   ),
                 ),
+              ),
+            ),
+            CustomButton(
+              width: 100,
+              height: 40,
+              text: 'Login',
+              onTap: () async {
+                if (_loginFormKey.currentState.validate()) {
+                  // Fields are valid, save them
+                  _loginFormKey.currentState.save();
+
+                  // Show snackbar to notify user that login is going on
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                          SizedBox(width: 20),
+                          Text("Tentativo di login in corso...")
+                        ],
+                      ),
+                    ),
+                  );
+
+                  // Try to perform a login
+                  try {
+                    await widget.auth.signIn(_email, _password);
+                    Scaffold.of(context).hideCurrentSnackBar();
+                  } catch (e) {
+                    print(e);
+                    // Display error to the user
+                    Scaffold.of(context).hideCurrentSnackBar();
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(children: <Widget>[
+                          Text("Le credenziali inserite non sono valide. Riprova.")
+                        ]),
+                      ),
+                    );
+                  }
+                }
               },
-              child: Text(
-                "Password dimenticata?",
-                style: TextStyle(
-                  color: Colors.grey,
+            ),
+            SizedBox(height: 15),
+            _buildDivider("Oppure effettua il login con..."),
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _buildSocialLogin("images/social/facebook.png"),
+                _buildSocialLogin("images/social/google.png"),
+                _buildSocialLogin("images/social/linkedin.png"),
+                _buildSocialLogin("images/social/twitter.png"),
+              ],
+            ),
+            SizedBox(height: 15),
+            _buildDivider("Non sei registrato?"),
+            SizedBox(height: 15),
+            CustomButton(
+              width: 150,
+              height: 40,
+              text: 'Registrati',
+              onTap: () => Navigator.push(
+                context,
+                SlideTopRoute(
+                  page: SignUp(),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 30,
-                right: MediaQuery.of(context).size.height / 20,
-                left: MediaQuery.of(context).size.height / 20,
-              ),
-              child: Row(
-                children: <Widget>[
-                  _buildSocialImg("images/social/facebook.png"),
-                  _buildSocialImg("images/social/google.png"),
-                  _buildSocialImg("images/social/linkedin.png"),
-                  _buildSocialImg("images/social/twitter.png"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 24,
-            ),
-            MaterialButton(
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  SlideTopRoute(
-                    page: SignUp(),
-                  ),
-                ),
-              },
-              child: Text(
-                "Non hai un account? Creane uno!",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 52,
             ),
           ],
         ),
@@ -150,61 +166,58 @@ class LoginScreenState extends State<LoginScreen>
     );
   }
 
-  Widget _form(context, icon, hintText, keyboard, obscure) {
-    return Container(
-      margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width / 10,
-          right: MediaQuery.of(context).size.width / 10),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey,
+  Widget _buildDivider(String text) {
+    return Stack(
+      children: <Widget>[
+        Divider(
+          thickness: 1.0,
+          color: Colors.grey[600],
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Text(
+            "  $text  ",
+            style: TextStyle(
+              color: Colors.grey[700],
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            ),
           ),
         ),
-      ),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 0.2),
-            child: Icon(
-              icon,
-            ),
-          ),
-          Expanded(
-            child: TextFormField(
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: hintText,
-                hintStyle: TextStyle(
-                  color:
-                      Theme.of(context).textTheme.title.color.withOpacity(0.5),
-                ),
-              ),
-              keyboardType: keyboard,
-              obscureText: obscure,
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 
-  Widget _buildSocialImg(imgPath) {
-    return Expanded(
-      child: Material(
-        type: MaterialType.transparency,
-        child: Center(
-          child: Ink(
-            child: IconButton(
-              icon: Image.asset(imgPath),
-              iconSize: MediaQuery.of(context).size.height / 12,
-              padding: EdgeInsets.all(0),
-              onPressed: () {},
-            ),
-          ),
+  Widget _buildSocialLogin(imgPath) {
+    return IconButton(
+      icon: Image.asset(imgPath),
+      padding: EdgeInsets.all(0),
+      iconSize: MediaQuery.of(context).size.height / 13,
+      onPressed: () {},
+    );
+  }
+
+  Widget _buildClickableText(String text, Function onTap) {
+    return FlatButton(
+      padding: EdgeInsets.only(left: 4.0, right: 4.0),
+      highlightColor: Colors.deepOrange[400].withOpacity(0.2),
+      splashColor: Colors.deepOrange[400].withOpacity(0.4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.grey[600],
         ),
       ),
+      onPressed: () => {
+        Navigator.push(
+          context,
+          SlideTopRoute(
+            page: Forgot(),
+          ),
+        ),
+      },
     );
   }
 }

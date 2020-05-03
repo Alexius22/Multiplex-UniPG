@@ -4,19 +4,24 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 // Import data structures
-import 'package:cinema_app/data/films.dart';
-import 'package:cinema_app/data/snacks.dart';
+import 'package:cinema_app/services/films.dart';
+import 'package:cinema_app/services/snacks.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
-import 'package:cinema_app/widgets/buttons/button_icon.dart';
+import 'package:cinema_app/widgets/buttons/custom_button.dart';
 import 'components/seat_checkbox.dart';
 import 'components/snack_selector.dart';
+
+// Utils
+import 'package:cinema_app/utils/format.dart';
+import 'package:cinema_app/utils/calendar.dart';
 
 // Next page
 import 'package:cinema_app/transitions/slide_left_route.dart';
 import 'components/checkout.dart';
 
+/*
 class BuyTicket extends StatefulWidget {
   final Film film;
 
@@ -31,10 +36,16 @@ class BuyTicket extends StatefulWidget {
 class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
   // Configuration variables
   final List<String> _shotTypologies = ['2D', '3D'];
+
   DateTime _minDate = DateTime.now();
   DateTime _maxDate = DateTime.now().add(new Duration(days: 13));
+  List<DateTime> _unselectableDays = [];
+
   List<String> _hours;
+
   List<int> _roomDim = [6, 8]; // Rows, columns
+  List<List<bool>> _seatsStatus;
+
   Map<String, SnackTypology> _snackTypologies = Map.fromIterable(
     SnackData().getAll,
     key: (snack) => snack.label,
@@ -46,26 +57,39 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
 
   // User choices
   TabController _shotTyplogyPicked;
-  String _timePicked;
-  String _datePicked = 'GG/MM';
+  DateTime _dateTimePicked;
   List<String> _seatsPicked = [];
   Map<String, Snack> _snacks = {};
 
   @override
   void initState() {
     // Get informations about the film
-    _hours = widget.film.hours;
+    _hours = ["16:30", "18:30", "20:30"];
 
-    // Initialize pickers
+    // Initialize pickers: shot typology, day, time
     _shotTyplogyPicked = TabController(
         vsync: this, initialIndex: 0, length: _shotTypologies.length);
     _shotTyplogyPicked.addListener(() {
       if (_shotTyplogyPicked.indexIsChanging) {
-        // TODO: Cambiare tipologia di riproduzione dovrebbe cambiare anche date e orari disponibili
-        setState(() {});
+        setState(() {
+          _unselectableDays = getDaysForShot(
+            widget.film,
+            _shotTypologies[_shotTyplogyPicked.index],
+          );
+          _dateTimePicked = null;
+          _seatsPicked = [];
+        });
       }
     });
-    _timePicked = _hours[0];
+
+    _unselectableDays = getDaysForShot(
+      widget.film,
+      _shotTypologies[_shotTyplogyPicked.index],
+    );
+
+    // Initialize pickers: seats status
+    _seatsStatus = List<List<bool>>.generate(_roomDim[0],
+        (i) => List<bool>.filled(_roomDim[1], true, growable: false));
     super.initState();
   }
 
@@ -113,11 +137,9 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).size.height / 100),
+                  SizedBox(height: 30),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 40,
-                        right: MediaQuery.of(context).size.width / 40),
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,15 +150,15 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 80),
+                  SizedBox(height: 30),
                   _buildScreen(),
-                  SizedBox(height: MediaQuery.of(context).size.height / 160),
+                  SizedBox(height: 5),
                   _buildSeats(rows: _roomDim[0], columns: _roomDim[1]),
-                  SizedBox(height: MediaQuery.of(context).size.height / 80),
+                  SizedBox(height: 10),
                   _buildLegend(),
-                  SizedBox(height: MediaQuery.of(context).size.height / 52),
+                  SizedBox(height: 15),
                   _buildSeatsSummary(_secondaryStyle),
-                  SizedBox(height: MediaQuery.of(context).size.height / 40),
+                  SizedBox(height: 20),
                   _buildOptionalSnacks(),
                 ],
               ),
@@ -165,37 +187,37 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
 
   Widget _buildSeats({rows, columns, height: 250.0}) {
     List<Row> checkBoxRows = [];
-    Random _rand = Random();
     final bool _isDarkThemeEnabled =
         Theme.of(context).backgroundColor == Colors.black;
 
     for (int i = 0; i < rows; i++) {
-      List<Widget> checkBoxRow = [];
+      List<SeatCheckBox> checkBoxRow = [];
       for (int j = 0; j < columns; j++) {
-        checkBoxRow.add(
-          SeatCheckBox(
-            width: MediaQuery.of(context).size.width / 12,
-            backgroundColor: _isDarkThemeEnabled ? Colors.black : Colors.white,
-            backgroundColorChecked: Colors.deepOrange[900],
-            borderColorChecked: Colors.deepOrange,
-            highlightColor: _isDarkThemeEnabled
-                ? Colors.white24
-                : Colors.deepOrange[500].withOpacity(0.5),
-            splashColor:
-                _isDarkThemeEnabled ? Colors.white38 : Colors.deepOrange[900],
-            disabled: _rand.nextBool(),
-            onCheckChange: (status) {
-              setState(() {
-                final int x = rows - i;
-                final int y = j + 1;
-                if (status)
-                  _seatsPicked.add(_formatSeat(x, y));
-                else
-                  _seatsPicked.remove(_formatSeat(x, y));
-              });
-            },
-          ),
+        final SeatCheckBox _seat = SeatCheckBox(
+          width: MediaQuery.of(context).size.width / 12,
+          backgroundColor: _isDarkThemeEnabled ? Colors.black : Colors.white,
+          backgroundColorChecked: Colors.deepOrange[900],
+          borderColor: _isDarkThemeEnabled ? Colors.grey : Colors.grey[600],
+          borderColorChecked: Colors.deepOrange,
+          highlightColor: _isDarkThemeEnabled
+              ? Colors.white24
+              : Colors.deepOrange[500].withOpacity(0.5),
+          splashColor:
+              _isDarkThemeEnabled ? Colors.white38 : Colors.deepOrange[900],
+          checked: false,
+          disabled: _seatsStatus[i][j],
+          onCheckChange: (status) {
+            setState(() {
+              final int x = rows - i;
+              final int y = j + 1;
+              if (status)
+                _seatsPicked.add(formatSeat(x, y));
+              else
+                _seatsPicked.remove(formatSeat(x, y));
+            });
+          },
         );
+        checkBoxRow.add(_seat);
       }
       checkBoxRows.add(
         Row(
@@ -206,6 +228,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
     }
 
     return Container(
+      key: ValueKey<List<String>>(_hours),
       padding: EdgeInsets.only(
           left: MediaQuery.of(context).size.width / 10,
           right: MediaQuery.of(context).size.width / 10),
@@ -215,10 +238,6 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         children: checkBoxRows,
       ),
     );
-  }
-
-  String _formatSeat(x, y) {
-    return "${String.fromCharCode(64 + x)}$y";
   }
 
   Widget _buildLegend() {
@@ -303,7 +322,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
 
   Widget _shotdDateTimePicker(String title, IconData icon, Widget bottomChild) {
     return Container(
-      height: MediaQuery.of(context).size.height / 13,
+      height: 60,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -311,7 +330,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
           Row(
             children: [
               Icon(icon),
-              SizedBox(width: MediaQuery.of(context).size.width / 95),
+              SizedBox(width: 5),
               Text(
                 title,
                 style: TextStyle(
@@ -335,8 +354,8 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       Column(
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width / 3.4,
-            height: MediaQuery.of(context).size.height / 25,
+            width: 120,
+            height: 32,
             child: TabBar(
               controller: _shotTyplogyPicked,
               tabs: _shotTypologies
@@ -360,26 +379,31 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
   Widget _datePicker(_secondaryStyle) {
     // Internal function for calendar
     Future _selectDate() async {
-      DateTime _picked = await showDatePicker(
+      DateTime _picked = await selectDate(
         context: context,
-        initialDate: this._minDate,
+        currentDate: this._dateTimePicked,
         firstDate: this._minDate,
-        // This should be edited with the effective duration
         lastDate: this._maxDate,
-        builder: (BuildContext context, Widget child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              backgroundColor: Colors.grey[800],
-              dialogBackgroundColor: Colors.grey[900],
-              accentColor: Colors.grey[700],
-            ),
-            child: child,
-          );
-        },
+        unselectableDays: _unselectableDays,
       );
       if (_picked != null) {
-        setState(() => _datePicked =
-            _picked.day.toString() + "/" + _picked.month.toString());
+        setState(() {
+          _dateTimePicked = DateTime(
+            _picked.year,
+            _picked.month,
+            _picked.day,
+          );
+          // TODO: Qui bisogna aggiornare hours in base al giorno selezionato
+          /*
+          _hours = getHoursForDate(
+            widget.film,
+            _shotTypologies[_shotTyplogyPicked.index],
+            _dateTimePicked,
+          );
+          _timePicked = _hours[0];
+          */
+          _seatsPicked = [];
+        });
       }
     }
 
@@ -387,7 +411,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       "Giorno",
       Icons.calendar_today,
       FlatButton(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 50),
+        padding: EdgeInsets.only(left: 8.0),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         highlightColor:
             Theme.of(context).textTheme.title.color.withOpacity(0.1),
@@ -395,7 +419,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         child: Row(
           children: <Widget>[
             Text(
-              _datePicked,
+              formatDate(_datePicked, 'G/M'),
               style: _secondaryStyle,
             ),
             Icon(Icons.keyboard_arrow_left),
@@ -406,30 +430,46 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _timePicker(_secondaryStyle) {
+  Widget _timePicker(TextStyle _secondaryStyle) {
+    Function _onChanged;
+    if (_datePicked != null) // Date not selected yet
+      _onChanged = (String newValue) => setState(() {
+            _seatsPicked = [];
+            _timePicked = newValue;
+            // TODO: Qui vanno aggiornati i posti disponibili in base a giorno e orario
+            for (int i = 0; i < _seatsStatus.length; i++)
+              for (int j = 0; j < _seatsStatus[i].length; j++)
+                _seatsStatus[i][j] = Random().nextBool();
+          });
+
     return _shotdDateTimePicker(
       "Orario",
       Icons.schedule,
       Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 100),
+        padding: EdgeInsets.only(bottom: 9.0),
         child: ButtonTheme(
           alignedDropdown: true,
           child: DropdownButton<String>(
             isDense: true,
             value: _timePicked,
             icon: Icon(Icons.arrow_drop_down),
-            iconSize: MediaQuery.of(context).size.height / 37,
+            iconSize: 22,
             underline: Container(
               padding: EdgeInsets.all(0.0),
               height: 0,
             ),
             style: _secondaryStyle,
-            onChanged: (String newValue) {
-              setState(() {
-                _timePicked = newValue;
-              });
-            },
+            hint: Text(
+              "H:M",
+              style: _secondaryStyle,
+            ),
+            disabledHint: Text(
+              "H:M",
+              style: _secondaryStyle.copyWith(
+                color: Theme.of(context).textTheme.title.color.withOpacity(0.3),
+              ),
+            ),
+            onChanged: _onChanged,
             items: _hours.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -493,7 +533,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
       children: <Widget>[
         Container(
           alignment: Alignment.bottomLeft,
-          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 28.5),
+          padding: EdgeInsets.all(28.0),
           child: Row(
             children: <Widget>[
               Text(
@@ -504,7 +544,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                   letterSpacing: 1,
                 ),
               ),
-              SizedBox(width: MediaQuery.of(context).size.width / 20),
+              SizedBox(width: 20),
               Text(
                 "€ $_totalCost",
                 style: TextStyle(
@@ -519,32 +559,68 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         ),
         Container(
           alignment: Alignment.bottomRight,
-          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 40),
+          padding: EdgeInsets.all(20.0),
           child: ButtonWithIcon(
-            width: MediaQuery.of(context).size.width / 2.55,
+            width: 160,
             text: "Riepilogo",
             icon: Icons.arrow_forward_ios,
-            onTap: () {
-              Navigator.push(
-                context,
-                SlideLeftRoute(
-                  page: Checkout(
-                    film: widget.film,
-                    shotTypology: _shotTypologies[_shotTyplogyPicked.index],
-                    time: _timePicked,
-                    date: _datePicked,
-                    seats: _seatsPicked,
-                    snacks: _snacks.values.toList(),
-                    totalCost: _totalCost,
-                  ),
-                ),
-              );
-            },
+            onTap: this._seatsPicked.length == 0
+                ? null
+                : () {
+                    Navigator.push(
+                      context,
+                      SlideLeftRoute(
+                        page: Checkout(
+                          film: widget.film,
+                          shotTypology:
+                              _shotTypologies[_shotTyplogyPicked.index],
+                          time: _timePicked,
+                          date: formatDate(
+                              _datePicked, 'Errore, data non selezionata!'),
+                          seats: _seatsPicked,
+                          snacks: _snacks.values.toList(),
+                          totalCost: _totalCost,
+                        ),
+                      ),
+                    );
+                  },
           ),
         ),
       ],
     );
   }
+}
+
+/// Just a placeholder to show that some days can't be selected
+List<DateTime> getDaysForShot(Film film, String shot) {
+  final x = List<DateTime>.generate(Random().nextInt(4),
+      (int i) => DateTime.now().add(Duration(days: 1 + Random().nextInt(8))));
+  return x;
+}
+
+/// Just a placeholder to show that, depending on day and shot, hours could change
+List<DateTime> getHoursForDate(Film film, String shot, DateTime date) {
+  final DateTime _now = DateTime.now();
+  return List<DateTime>.generate(
+    Random().nextInt(5),
+    (int i) => DateTime(
+      _now.year,
+      _now.month,
+      _now.day,
+      16 + Random().nextInt(8),
+      [0, 15, 30, 45][Random().nextInt(4)],
+    ),
+  );
+}
+
+/// Just a placeholder to show that some seats can't be selected depending on date and time
+List<List<bool>> getSeatsStatus(DateTime date, DateTime time) {
+  List<int> _roomDim = [6, 8]; // Rows, columns
+
+  List<List<bool>> _out = [];
+  for (int i = 0; i < _roomDim[0]; i++)
+    for (int j = 0; j < _roomDim[1]; j++) _out[i][j] = Random().nextBool();
+  return _out;
 }
 
 class ScreenPainter extends CustomPainter {
@@ -593,3 +669,4 @@ class ScreenPainter extends CustomPainter {
     return false;
   }
 }
+*/

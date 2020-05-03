@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ButtonWithIcon extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final double width;
   final double height;
   final String text;
   final IconData icon;
   final Function onTap;
 
-  ButtonWithIcon({
+  CustomButton({
     this.width,
     this.height = 50,
     this.text,
@@ -41,10 +41,11 @@ class ButtonWithIcon extends StatelessWidget {
                 letterSpacing: 1,
               ),
             ),
-            Icon(
-              this.icon,
-              size: 22,
-            ),
+            if (icon != null)
+              Icon(
+                this.icon,
+                size: 22,
+              ),
           ],
         ),
         onPressed: onTap,

@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:barcode_flutter/barcode_flutter.dart';
 
-import 'package:cinema_app/data/tickets.dart';
+import 'package:cinema_app/services/tickets.dart';
 
 class TicketBack extends StatefulWidget {
   final TicketData ticketData;

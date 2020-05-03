@@ -4,7 +4,7 @@ import 'package:cinema_app/transitions/slide_top_route.dart';
 import 'package:flutter/material.dart';
 
 // Widget
-import 'package:cinema_app/widgets/buttons/button_icon.dart';
+import 'package:cinema_app/widgets/buttons/custom_button.dart';
 
 import 'package:cinema_app/screens/info/about.dart';
 
@@ -153,7 +153,7 @@ class InfoCinema extends StatelessWidget {
   }
 
   Widget _directions(context, text, func) {
-    return ButtonWithIcon(
+    return CustomButton(
       width: MediaQuery.of(context).size.width / 1.7,
       text: text,
       icon: Icons.navigation,
@@ -164,7 +164,7 @@ class InfoCinema extends StatelessWidget {
   Widget _about(context, text) {
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
-      child: ButtonWithIcon(
+      child: CustomButton(
         width: MediaQuery.of(context).size.width / 2.6,
         text: text,
         icon: Icons.help_outline,

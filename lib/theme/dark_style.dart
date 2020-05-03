@@ -10,6 +10,10 @@ ThemeData appDarkTheme() {
     scaffoldBackgroundColor: Colors.black,
     bottomAppBarColor: Colors.black,
     canvasColor: Colors.grey[900],
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: Colors.grey[900],
+      contentTextStyle: TextStyle(color: Colors.white),
+    ),
     // Splashs colors
     highlightColor: Colors.deepOrange[500].withOpacity(0.5),
     splashColor: Colors.deepOrange[900],

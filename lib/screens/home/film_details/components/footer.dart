@@ -1,10 +1,10 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/services/films.dart';
 
 // Widget
-import 'package:cinema_app/widgets/buttons/button_icon.dart';
+import 'package:cinema_app/widgets/buttons/custom_button.dart';
 
 // Next page
 import 'package:cinema_app/transitions/slide_top_route.dart';
@@ -46,18 +46,20 @@ class FilmDetailsFooter extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(bottom: this.bottomPadding),
-          child: ButtonWithIcon(
+          child: CustomButton(
             width: 150,
             height: this.height,
             text: "Prenota",
             icon: Icons.arrow_forward_ios,
             onTap: () {
+              /*
               Navigator.push(
                 context,
                 SlideTopRoute(
                   page: BuyTicket(film: this.film),
                 ),
               );
+              */
             },
           ),
         ),

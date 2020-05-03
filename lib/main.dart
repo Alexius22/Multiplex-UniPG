@@ -17,12 +17,12 @@ import 'package:cinema_app/tabbar.dart';
 // Import initial screens
 import 'screens/home/home.dart';
 import 'screens/tickets/tickets.dart';
-import 'screens/profile/profile.dart';
+import 'screens/profile/root.dart';
 import 'screens/settings/settings.dart';
 import 'screens/info/info_cinema.dart';
 
 // Import cities data
-import 'package:cinema_app/data/cities.dart';
+import 'package:cinema_app/services/cities.dart';
 
 void main() => runApp(CinemaApp());
 

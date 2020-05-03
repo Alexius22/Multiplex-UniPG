@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
-import 'package:cinema_app/widgets/buttons/button_icon.dart';
+import 'package:cinema_app/widgets/buttons/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutCinema extends StatelessWidget {
@@ -73,7 +73,7 @@ class AboutCinema extends StatelessWidget {
   Widget _buttonSiteweb(context, text) {
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
-      child: ButtonWithIcon(
+      child: CustomButton(
         width: MediaQuery.of(context).size.width / 2.8,
         text: text,
         icon: Icons.language,

@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 
 // Import data structures
-import 'package:cinema_app/data/films.dart';
-import 'package:cinema_app/data/snacks.dart';
+import 'package:cinema_app/services/films.dart';
+import 'package:cinema_app/services/snacks.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
-import 'package:cinema_app/widgets/buttons/button_icon.dart';
+import 'package:cinema_app/widgets/buttons/custom_button.dart';
 
 class Checkout extends StatelessWidget {
   final Film film;
@@ -120,7 +120,7 @@ class Checkout extends StatelessWidget {
       children: <Widget>[
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         Center(
-          child: ButtonWithIcon(
+          child: CustomButton(
             width: 160,
             text: "Acquista",
             icon: Icons.shopping_cart,

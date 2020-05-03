@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:cinema_app/data/tickets.dart';
-import 'package:cinema_app/data/films.dart';
-import 'package:cinema_app/data/cities.dart';
+import 'package:cinema_app/services/tickets.dart';
+import 'package:cinema_app/services/films.dart';
+import 'package:cinema_app/services/cities.dart';
 
 class TicketFront extends StatefulWidget {
   final TicketData ticketData;

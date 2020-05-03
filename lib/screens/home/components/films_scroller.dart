@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/services/films.dart';
 
 import 'package:cinema_app/widgets/films/film_banner.dart';
 import 'package:cinema_app/transitions/blank_page_route.dart';
@@ -35,9 +35,9 @@ class FilmScroller extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 17,
-            right: MediaQuery.of(context).size.width / 17,
-            top: MediaQuery.of(context).size.height / 80),
+          left: MediaQuery.of(context).size.width / 17,
+          right: MediaQuery.of(context).size.width / 17,
+        ),
         itemCount: this.films.length,
         itemBuilder: (BuildContext context, int index) {
           return FilmBanner(

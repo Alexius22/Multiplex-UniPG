@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 
-import 'package:cinema_app/data/tickets.dart';
+import 'package:cinema_app/services/tickets.dart';
 import 'components/ticket_front.dart';
 import 'components/ticket_back.dart';
 

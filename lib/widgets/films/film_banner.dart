@@ -1,7 +1,7 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/services/films.dart';
 
 class FilmBanner extends StatelessWidget {
   final Film film;

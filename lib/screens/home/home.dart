@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:cinema_app/data/films.dart';
+import 'package:cinema_app/services/films.dart';
 import './components/datemenu.dart';
 import './components/films_scroller.dart';
 

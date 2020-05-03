@@ -2,25 +2,24 @@
 
 import 'package:flutter/material.dart';
 
+// Database interface
+import 'package:cinema_app/services/auth.dart';
+
 import 'package:cinema_app/transitions/slide_left_route.dart';
 import 'cards.dart';
 
 class LoggedInScreen extends StatefulWidget {
-  final ValueChanged<bool> onLogin;
-  const LoggedInScreen({this.onLogin});
+  final Auth auth = Auth();
 
   @override
-  _State createState() => new _State(onLogin: onLogin);
+  _State createState() => new _State();
 }
 
 class _State extends State<LoggedInScreen> {
-  final ValueChanged<bool> onLogin;
-  _State({this.onLogin});
-
   @override
   Widget build(BuildContext context) {
     void _onLogoutPressed() {
-      onLogin(false);
+      widget.auth.signOut();
     }
 
     void _onPaymentPressed() {
