@@ -37,14 +37,14 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height / 32),
         child: Column(
           children: <Widget>[
             Logo(
               animated: false,
               finalHeight: MediaQuery.of(context).size.height / 8,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: MediaQuery.of(context).size.height / 80),
             Form(
               key: _loginFormKey,
               child: Column(
@@ -94,8 +94,8 @@ class LoginScreenState extends State<LoginScreen> {
               ),
             ),
             CustomButton(
-              width: 100,
-              height: 40,
+              width: MediaQuery.of(context).size.width / 4.1,
+              height: MediaQuery.of(context).size.height / 20,
               text: 'Login',
               onTap: () async {
                 // Validate form
@@ -111,7 +111,7 @@ class LoginScreenState extends State<LoginScreen> {
                     content: Row(
                       children: <Widget>[
                         CircularProgressIndicator(),
-                        SizedBox(width: 20),
+                        SizedBox(width: MediaQuery.of(context).size.width / 20),
                         Text("Tentativo di login in corso...")
                       ],
                     ),
@@ -137,18 +137,16 @@ class LoginScreenState extends State<LoginScreen> {
                   Scaffold.of(context).hideCurrentSnackBar();
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
-                      content: Row(children: <Widget>[
-                        Text(
-                            "Le credenziali inserite non corrispondono a nessun utente. Riprova.")
-                      ]),
+                      content: Text(
+                          "Le credenziali inserite non corrispondono a nessun utente. Riprova."),
                     ),
                   );
                 }
               },
             ),
-            SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 52),
             _buildDivider("Oppure effettua il login con..."),
-            SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 52),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -158,12 +156,12 @@ class LoginScreenState extends State<LoginScreen> {
                 _buildSocialLogin(FontAwesomeIcons.twitter),
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 52),
             _buildDivider("Non sei registrato?"),
-            SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 52),
             CustomButton(
-              width: 150,
-              height: 40,
+              width: MediaQuery.of(context).size.width / 2.8,
+              height: MediaQuery.of(context).size.height / 20,
               text: 'Registrati',
               onTap: () => Navigator.push(
                 context,
@@ -203,7 +201,7 @@ class LoginScreenState extends State<LoginScreen> {
     return IconButton(
       icon: Opacity(
         opacity: 0.85,
-        child: FaIcon(icon, size: MediaQuery.of(context).size.height / 13 - 5),
+        child: FaIcon(icon, size: MediaQuery.of(context).size.height / 14),
       ),
       padding: EdgeInsets.all(0),
       iconSize: MediaQuery.of(context).size.height / 13,
@@ -213,7 +211,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   Widget _buildClickableText(String text, Function onTap) {
     return FlatButton(
-      padding: EdgeInsets.only(left: 4.0, right: 4.0),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width / 115,
+          right: MediaQuery.of(context).size.width / 115),
       highlightColor: Colors.deepOrange[400].withOpacity(0.2),
       splashColor: Colors.deepOrange[400].withOpacity(0.4),
       shape: RoundedRectangleBorder(

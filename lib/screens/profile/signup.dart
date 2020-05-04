@@ -36,7 +36,7 @@ class _State extends State<SignUpScreen> {
       key: _scaffoldKey,
       appBar: GoBackAppBar("Registrazione").build(context),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height / 32),
         child: Column(
           children: <Widget>[
             _infoBox(context,
@@ -69,7 +69,7 @@ class _State extends State<SignUpScreen> {
                     },
                     onSaved: (String surname) => _surname = surname.trim(),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   CustomFormField(
                     icon: Icons.alternate_email,
                     label: "E-mail",
@@ -84,7 +84,7 @@ class _State extends State<SignUpScreen> {
                     },
                     onSaved: (String email) => _email = email.trim(),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   CustomFormField(
                     icon: Icons.lock_open,
                     label: "Password",
@@ -121,10 +121,10 @@ class _State extends State<SignUpScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: MediaQuery.of(context).size.height / 27),
             CustomButton(
-              width: 150,
-              height: 45,
+              width: MediaQuery.of(context).size.width / 2.8,
+              height: MediaQuery.of(context).size.height / 18,
               text: 'Registrati',
               onTap: () async {
                 // Validate form
@@ -138,7 +138,7 @@ class _State extends State<SignUpScreen> {
                     content: Row(
                       children: <Widget>[
                         CircularProgressIndicator(),
-                        SizedBox(width: 20),
+                        SizedBox(width: MediaQuery.of(context).size.width / 20),
                         Text("Registrazione in corso...")
                       ],
                     ),
