@@ -9,14 +9,26 @@ class Auth {
       email: email,
       password: password,
     );
-    return result.user?.uid;
+    if (result.user.isEmailVerified)
+      return result.user?.uid;
+    await signOut();
+    return null;
   }
 
-  Future<String> signUp(String email, String password) async {
+  Future<String> signUp(String email, String password, String _name, String _surname) async {
     AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    
+    // Set name and surname of the users
+    final info = UserUpdateInfo();
+    info.displayName = '$_name|$_surname';
+    result.user.updateProfile(info);
+
+    // Send email verification
+    await result.user.sendEmailVerification();
+    await signOut();
     return result.user?.uid;
   }
 

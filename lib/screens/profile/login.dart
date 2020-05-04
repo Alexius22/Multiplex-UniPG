@@ -98,41 +98,51 @@ class LoginScreenState extends State<LoginScreen> {
               height: 40,
               text: 'Login',
               onTap: () async {
-                if (_loginFormKey.currentState.validate()) {
-                  // Fields are valid, save them
-                  _loginFormKey.currentState.save();
+                // Validate form
+                if (!_loginFormKey.currentState.validate()) return null;
 
-                  // Show snackbar to notify user that login is going on
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                          SizedBox(width: 20),
-                          Text("Tentativo di login in corso...")
-                        ],
-                      ),
+                // Fields are valid, save them
+                _loginFormKey.currentState.save();
+
+                // Show snackbar to notify user that login is going on
+                FocusScope.of(context).requestFocus(FocusNode());
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Row(
+                      children: <Widget>[
+                        CircularProgressIndicator(),
+                        SizedBox(width: 20),
+                        Text("Tentativo di login in corso...")
+                      ],
                     ),
-                  );
+                  ),
+                );
 
-                  // Try to perform a login
-                  try {
-                    await widget.auth.signIn(_email, _password);
-                    Scaffold.of(context).hideCurrentSnackBar();
-                  } catch (e) {
-                    print(e);
-                    // Display error to the user
-                    Scaffold.of(context).hideCurrentSnackBar();
+                // Try to perform a login
+                try {
+                  final String _userID =
+                      await widget.auth.signIn(_email, _password);
+                  Scaffold.of(context).hideCurrentSnackBar();
+                  // Is email not verified?
+                  if (_userID == null)
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
-                        content: Row(children: <Widget>[
-                          Text(
-                              "Le credenziali inserite non sono valide. Riprova.")
-                        ]),
+                        content: Text(
+                            "La mail inserita non è stata verificata. Controlla la tua casella di posta."),
                       ),
                     );
-                  }
+                } catch (e) {
+                  print(e);
+                  // Display error to the user
+                  Scaffold.of(context).hideCurrentSnackBar();
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(children: <Widget>[
+                        Text(
+                            "Le credenziali inserite non corrispondono a nessun utente. Riprova.")
+                      ]),
+                    ),
+                  );
                 }
               },
             ),
@@ -158,7 +168,7 @@ class LoginScreenState extends State<LoginScreen> {
               onTap: () => Navigator.push(
                 context,
                 SlideTopRoute(
-                  page: SignUp(),
+                  page: SignUpScreen(),
                 ),
               ),
             ),

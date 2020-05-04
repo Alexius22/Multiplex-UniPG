@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 
 // Database interface
-import 'package:cinema_app/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // Widgets
@@ -21,8 +20,8 @@ class ProfileScreen extends StatelessWidget {
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return LoadingScreen();
-        } else if (snapshot.hasData) {
-          return LoggedInScreen();
+        } else if (snapshot.hasData && snapshot.data.isEmailVerified) {
+          return LoggedInScreen(user: snapshot.data);
         } else {
           return LoginScreen();
         }

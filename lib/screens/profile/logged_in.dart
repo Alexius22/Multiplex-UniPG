@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 
 // Database interface
 import 'package:cinema_app/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cinema_app/transitions/slide_left_route.dart';
 import 'cards.dart';
 
 class LoggedInScreen extends StatefulWidget {
   final Auth auth = Auth();
+  final FirebaseUser user;
+
+  LoggedInScreen({this.user});
 
   @override
   _State createState() => new _State();
@@ -32,7 +36,7 @@ class _State extends State<LoggedInScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 40,
           ),
-          _profile(context, 'images/profile.jpg', "Oswald", "Green"),
+          _profile(context, 'images/profile.jpg'),
           SizedBox(height: MediaQuery.of(context).size.height / 80),
           _listDrop("Password", "********", null),
           _listDrop("Email", "prova@example.com", null),
@@ -44,7 +48,9 @@ class _State extends State<LoggedInScreen> {
     );
   }
 
-  Widget _profile(context, image, name, surname) {
+  Widget _profile(context, image) {
+    final String name = widget.user.displayName.split('|')[0];
+    final String surname = widget.user.displayName.split('|')[1];
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -84,7 +90,7 @@ class _State extends State<LoggedInScreen> {
                   fontSize: MediaQuery.of(context).size.height / 30,
                   height: MediaQuery.of(context).size.height / 1000,
                   letterSpacing: 1,
-                  color: Colors.grey.shade400,
+                  color: Colors.grey.shade600,
                 ),
               ),
             ],
