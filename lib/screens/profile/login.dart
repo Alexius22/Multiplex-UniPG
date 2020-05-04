@@ -11,6 +11,7 @@ import 'package:cinema_app/transitions/slide_top_route.dart';
 // Screens
 import 'package:cinema_app/screens/profile/signup.dart';
 import 'package:cinema_app/screens/profile/forgot.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Widgets
 import 'components/logo.dart';
@@ -126,7 +127,8 @@ class LoginScreenState extends State<LoginScreen> {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         content: Row(children: <Widget>[
-                          Text("Le credenziali inserite non sono valide. Riprova.")
+                          Text(
+                              "Le credenziali inserite non sono valide. Riprova.")
                         ]),
                       ),
                     );
@@ -140,10 +142,10 @@ class LoginScreenState extends State<LoginScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                _buildSocialLogin("images/social/facebook.png"),
-                _buildSocialLogin("images/social/google.png"),
-                _buildSocialLogin("images/social/linkedin.png"),
-                _buildSocialLogin("images/social/twitter.png"),
+                _buildSocialLogin(FontAwesomeIcons.facebookF),
+                _buildSocialLogin(FontAwesomeIcons.google),
+                _buildSocialLogin(FontAwesomeIcons.linkedinIn),
+                _buildSocialLogin(FontAwesomeIcons.twitter),
               ],
             ),
             SizedBox(height: 15),
@@ -187,9 +189,12 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSocialLogin(imgPath) {
+  Widget _buildSocialLogin(IconData icon) {
     return IconButton(
-      icon: Image.asset(imgPath),
+      icon: Opacity(
+        opacity: 0.85,
+        child: FaIcon(icon, size: MediaQuery.of(context).size.height / 13 - 5),
+      ),
       padding: EdgeInsets.all(0),
       iconSize: MediaQuery.of(context).size.height / 13,
       onPressed: () {},

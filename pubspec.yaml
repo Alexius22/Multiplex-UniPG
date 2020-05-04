@@ -23,6 +23,7 @@ dependencies:
   # Icons
   cupertino_icons: ^0.1.2
   outline_material_icons: ^0.1.0
+  font_awesome_flutter: ^8.8.1
 
   # Other
   email_validator: ^1.0.4
@@ -42,7 +43,6 @@ flutter:
   assets:
     - images/
     - images/posters/
-    - images/social/
 
   fonts:
     - family: OpenSans
