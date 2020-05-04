@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
           DateMenu(),
           FilmScroller(
             films: this.filmsData.sublist(1),
-            imageHeight: MediaQuery.of(context).size.height / 2.3,
+            imageHeight: MediaQuery.of(context).size.height / 2.5,
             textSize: MediaQuery.of(context).size.height / 38,
           ),
         ],

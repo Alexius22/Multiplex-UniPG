@@ -154,7 +154,7 @@ class InfoCinema extends StatelessWidget {
 
   Widget _directions(context, text, func) {
     return CustomButton(
-      width: MediaQuery.of(context).size.width / 1.7,
+      width: MediaQuery.of(context).size.width / 1.6,
       text: text,
       icon: Icons.navigation,
       onTap: func,
@@ -165,7 +165,7 @@ class InfoCinema extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
       child: CustomButton(
-        width: MediaQuery.of(context).size.width / 2.6,
+        width: MediaQuery.of(context).size.width / 2.4,
         text: text,
         icon: Icons.help_outline,
         onTap: () {

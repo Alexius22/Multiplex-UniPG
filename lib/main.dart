@@ -52,12 +52,12 @@ class CinemaApp extends StatelessWidget {
           // Configuring bottom navigation bar
           home: BubbleTabBar(
             items: [
-              NavBarItemData("Info", OMIcons.info, 100, InfoCinema()),
-              NavBarItemData("Biglietti", OMIcons.receipt, 130, TicketScreen()),
-              NavBarItemData("Home", OMIcons.home, 120, HomeScreen()),
-              NavBarItemData("Profilo", OMIcons.person, 120, ProfileScreen()),
+              NavBarItemData("Info", OMIcons.info, 90, InfoCinema()),
+              NavBarItemData("Biglietti", OMIcons.receipt, 120, TicketScreen()),
+              NavBarItemData("Home", OMIcons.home, 110, HomeScreen()),
+              NavBarItemData("Profilo", OMIcons.person, 110, ProfileScreen()),
               NavBarItemData(
-                  "Impostazioni", OMIcons.settings, 165, SettingScreen()),
+                  "Impostazioni", OMIcons.settings, 160, SettingScreen()),
             ],
             cities: CitiesData().getAllStrings(),
           ),
