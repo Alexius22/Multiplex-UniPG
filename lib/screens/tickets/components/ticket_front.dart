@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'package:cinema_app/services/tickets.dart';
 import 'package:cinema_app/services/films.dart';
-import 'package:cinema_app/services/cities.dart';
+import 'package:cinema_app/models/cinema.dart';
 
 class TicketFront extends StatefulWidget {
   final TicketData ticketData;
@@ -27,7 +27,7 @@ class _TicketFrontState extends State<TicketFront> {
   // Working variables
   final TicketData ticketData;
   final filmsData = FilmsData();
-  final citiesData = CitiesData();
+  final citiesData = Cinema();
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,8 @@ class _TicketFrontState extends State<TicketFront> {
           ),
         ),
         Text(
-          citiesData.getCity(ticketData.idCity).name.toString(),
+          //citiesData.getCity(ticketData.idCity).name.toString(),
+          "blablabla",
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.height / 52,
