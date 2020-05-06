@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cinema_app/models/cinema.dart';
 
-final CollectionReference cinemaCollection =
-    Firestore.instance.collection('cinemas');
-
 class FirestoreCinemas {
   final CollectionReference _ref = Firestore.instance.collection('cinemas');
   List<Cinema> cinemas;
@@ -14,6 +11,13 @@ class FirestoreCinemas {
         .map((doc) => Cinema.fromMap(doc.documentID, doc.data))
         .toList();
     return cinemas;
+  }
+
+  static Future<Cinema> getByRef(DocumentReference docRef) async {
+    final _cinemaDoc = await docRef.get();
+    if (_cinemaDoc == null) return null;
+
+    return Cinema.fromMap(_cinemaDoc.documentID, _cinemaDoc.data);
   }
 
   Future<List<String>> getCinemasCities() async {

@@ -68,7 +68,7 @@ class _State extends State<CinemaApp> {
         _contentView = TicketScreen();
         break;
       case 2:
-        _contentView = HomeScreen();
+        _contentView = HomeScreen(_selectedCity);
         break;
       case 3:
         _contentView = ProfileScreen();

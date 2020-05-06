@@ -1,7 +1,10 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/services/films.dart';
+
+// DB
+import 'package:cinema_app/models/film.dart';
+import 'package:cinema_app/models/schedule.dart';
 
 // Components
 import 'components/head.dart';
@@ -10,9 +13,13 @@ import 'components/info.dart';
 
 class FilmDetails extends StatelessWidget {
   final Film film;
+  final List<Schedule> schedules;
+  final DateTime dateSelected;
 
   FilmDetails({
     this.film,
+    this.schedules,
+    this.dateSelected,
   });
 
   @override
@@ -47,6 +54,7 @@ class FilmDetails extends StatelessWidget {
               ),
             ],
           ),
+          // Build buy ticket button
           FilmDetailsFooter(
             film: this.film,
             height: footerHeight,

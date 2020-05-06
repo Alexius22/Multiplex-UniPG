@@ -1,7 +1,7 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/services/films.dart';
+import 'package:cinema_app/models/film.dart';
 
 class FilmBanner extends StatelessWidget {
   final Film film;
@@ -49,8 +49,9 @@ class FilmBanner extends StatelessWidget {
             "img",
             ClipRRect(
               borderRadius: BorderRadius.circular(this.borderRadius),
-              child: Image.asset(
-                this.film.imagePath,
+              child: FadeInImage.assetNetwork(
+                placeholder: 'images/poster_default.jpg',
+                image: this.film.imageURL,
                 width: this.imageWidth,
                 height: this.imageHeight,
                 alignment: imgLargerThanHigher

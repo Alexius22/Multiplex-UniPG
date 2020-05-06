@@ -5,21 +5,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:barcode_flutter/barcode_flutter.dart';
 
-import 'package:cinema_app/services/tickets.dart';
+import 'package:cinema_app/models/ticket.dart';
 
 class TicketBack extends StatefulWidget {
-  final TicketData ticketData;
-  const TicketBack({@required this.ticketData});
+  final Ticket ticket;
+  const TicketBack({@required this.ticket});
 
   @override
-  State<StatefulWidget> createState() =>
-      _TicketBackState(ticketData: ticketData);
+  State<StatefulWidget> createState() => _TicketBackState();
 }
 
 class _TicketBackState extends State<TicketBack> {
-  final TicketData ticketData;
-  _TicketBackState({@required this.ticketData});
-
   // Configuration
   final double height = 210.0;
   final borderColor = Colors.grey[850];
@@ -40,10 +36,7 @@ class _TicketBackState extends State<TicketBack> {
   @override
   void initState() {
     // Prepare bar code
-    barCode = ticketData.idFilm.toString() +
-        ticketData.idCity.toString() +
-        ticketData.row.toString() +
-        ticketData.seat.toString();
+    barCode = "FALSO";
 
     // Prepare timer
     String _durationToString(Duration duration) {
@@ -146,7 +139,9 @@ class _TicketBackState extends State<TicketBack> {
   }
 
   Widget _buildFoodSection() {
-    if (ticketData.snacks.length > 0)
+    final _snacks = widget.ticket.snacks;
+
+    if (_snacks.length > 0)
       return Center(
         child: ListView.separated(
           shrinkWrap: true,
@@ -154,12 +149,12 @@ class _TicketBackState extends State<TicketBack> {
           padding: EdgeInsets.only(
               left: MediaQuery.of(context).size.width / 26,
               right: MediaQuery.of(context).size.width / 26),
-          itemCount: ticketData.snacks.length,
+          itemCount: _snacks.length,
           itemBuilder: (BuildContext context, int i) {
             return _buildFoodReminder(
-              label: ticketData.snacks[i].label,
-              dim: ticketData.snacks[i].dim,
-              n: ticketData.snacks[i].quantity,
+              label: _snacks[i].name,
+              dim: _snacks[i].size,
+              n: _snacks[i].quantity,
             );
           },
           separatorBuilder: (BuildContext context, int index) =>

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:cinema_app/services/films.dart';
+import 'package:cinema_app/models/film.dart';
 
 import 'package:cinema_app/widgets/films/film_banner.dart';
 import 'package:cinema_app/transitions/blank_page_route.dart';

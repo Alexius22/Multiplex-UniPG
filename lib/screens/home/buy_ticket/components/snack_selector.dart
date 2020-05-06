@@ -1,8 +1,8 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/services/snacks.dart';
 
+/*
 class SnackSelector extends StatefulWidget {
   final SnackTypology snackTypology;
   final Map<String, int> initialQuantities;
@@ -127,3 +127,4 @@ class _State extends State<SnackSelector> {
     );
   }
 }
+*/

@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 
 // Import data structures
-import 'package:cinema_app/services/films.dart';
-import 'package:cinema_app/services/snacks.dart';
+import 'package:cinema_app/models/film.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 import 'package:cinema_app/widgets/buttons/custom_button.dart';
 
+/*
 class Checkout extends StatelessWidget {
   final Film film;
   final String shotTypology;
@@ -136,3 +136,4 @@ class Checkout extends StatelessWidget {
     );
   }
 }
+*/

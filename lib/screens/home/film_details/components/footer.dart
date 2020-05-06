@@ -1,7 +1,9 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/services/films.dart';
+
+// DB
+import 'package:cinema_app/models/film.dart';
 
 // Widget
 import 'package:cinema_app/widgets/buttons/custom_button.dart';

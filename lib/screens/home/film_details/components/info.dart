@@ -1,7 +1,7 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'package:cinema_app/services/films.dart';
+import 'package:cinema_app/models/film.dart';
 import 'package:intl/intl.dart';
 
 class FilmDetailsInfo extends StatelessWidget {
@@ -30,7 +30,7 @@ class FilmDetailsInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Internal function to create a button lookalike
-    Widget _buildGenre(label) {
+    Widget _buildGenre(String label) {
       Color _color = Theme.of(context).brightness == Brightness.dark
           ? Colors.grey[500]
           : Colors.deepOrange[900];
@@ -62,7 +62,7 @@ class FilmDetailsInfo extends StatelessWidget {
 
     // Build genre widgets
     List<Widget> _genres = [];
-    for (var genre in this.film.genre) {
+    for (String genre in this.film.genres) {
       _genres.add(_buildGenre(genre));
     }
 
@@ -121,14 +121,14 @@ class FilmDetailsInfo extends StatelessWidget {
                 ),
                 SizedBox(width: 8),
                 Text(
-                  this.film.duration.inMinutes.toString() + "'",
+                  this.film.durationMins.toString() + "'",
                   style: mainStyle,
                 ),
               ],
             ),
             _buildTextSection("Trama:", this.film.plot),
-            _buildTextSection("Regia:", this.film.direction, bodyTextAlign: TextAlign.left),
-            _buildTextSection("Cast:", this.film.cast, bodyTextAlign: TextAlign.left),
+            _buildTextSection("Regia:", this.film.direction.join(', '), bodyTextAlign: TextAlign.left),
+            _buildTextSection("Cast:", this.film.cast.join(', '), bodyTextAlign: TextAlign.left),
             SizedBox(height: this.bottomPadding),
           ],
         ),

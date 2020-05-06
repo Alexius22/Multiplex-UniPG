@@ -3,31 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:cinema_app/services/tickets.dart';
-import 'package:cinema_app/services/films.dart';
-import 'package:cinema_app/models/cinema.dart';
+import 'package:cinema_app/models/ticket.dart';
 
-class TicketFront extends StatefulWidget {
-  final TicketData ticketData;
-  const TicketFront({@required this.ticketData});
-
-  @override
-  State<StatefulWidget> createState() =>
-      _TicketFrontState(ticketData: ticketData);
-}
-
-class _TicketFrontState extends State<TicketFront> {
-  _TicketFrontState({@required this.ticketData});
+class TicketFront extends StatelessWidget {
+  final Ticket ticket;
+  TicketFront({@required this.ticket});
 
   // Configuration
   final double height = 210.0;
   final borderColor = Colors.grey[850];
   final secondaryTextColor = Colors.deepOrange[800];
-
-  // Working variables
-  final TicketData ticketData;
-  final filmsData = FilmsData();
-  final citiesData = Cinema();
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +26,13 @@ class _TicketFrontState extends State<TicketFront> {
       ),
       child: Stack(
         children: <Widget>[
+          // Film image
           Align(
             alignment: Alignment.centerRight,
             child: Container(
               width: MediaQuery.of(context).size.width / 2.15,
-              child: Image.asset(
-                filmsData.getFilm(ticketData.idFilm).imagePath,
+              child: Image.network(
+                ticket.schedule.film.imageURL,
                 scale: 1.5,
                 fit: BoxFit.fitWidth,
               ),
@@ -74,9 +60,9 @@ class _TicketFrontState extends State<TicketFront> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                _buildTitleCity(),
-                _buildDate(),
-                _buildPosition(),
+                _buildTitleCity(context),
+                _buildDate(context),
+                _buildPosition(context),
               ],
             ),
           ),
@@ -85,14 +71,14 @@ class _TicketFrontState extends State<TicketFront> {
     );
   }
 
-  _buildTitleCity() {
+  _buildTitleCity(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width / 1.9,
           child: Text(
-            filmsData.getFilm(ticketData.idFilm).title.toString().toUpperCase(),
+            ticket.schedule.film.title.toUpperCase(),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.height / 40,
@@ -102,8 +88,7 @@ class _TicketFrontState extends State<TicketFront> {
           ),
         ),
         Text(
-          //citiesData.getCity(ticketData.idCity).name.toString(),
-          "blablabla",
+          ticket.schedule.room.cinema.city,
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.height / 52,
@@ -115,20 +100,22 @@ class _TicketFrontState extends State<TicketFront> {
     );
   }
 
-  _buildDate() {
-    final ticketDate = ticketData.filmDateTime;
+  _buildDate(BuildContext context) {
+    // Save datetime of the schedule for double use
+    final ticketDateTime = ticket.schedule.dateTime;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          DateFormat('dd / MM / yyyy').format(ticketDate),
+          DateFormat('dd / MM / yyyy').format(ticketDateTime),
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.height / 52,
           ),
         ),
         Text(
-          DateFormat('HH : mm').format(ticketDate),
+          DateFormat('HH : mm').format(ticketDateTime),
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.height / 45,
@@ -141,7 +128,7 @@ class _TicketFrontState extends State<TicketFront> {
     );
   }
 
-  _buildPositionInfo() {
+  _buildPositionInfo(BuildContext context) {
     return Stack(
       children: <Widget>[
         Text(
@@ -164,7 +151,7 @@ class _TicketFrontState extends State<TicketFront> {
     );
   }
 
-  _buildPosition() {
+  _buildPosition(BuildContext context) {
     final textStyle = TextStyle(
       fontSize: MediaQuery.of(context).size.height / 45,
       fontFamily: 'Oswald',
@@ -173,18 +160,18 @@ class _TicketFrontState extends State<TicketFront> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildPositionInfo(),
+        _buildPositionInfo(context),
         Stack(
           children: <Widget>[
             Text(
-              ticketData.room.toString(),
+              ticket.schedule.room.name.toString(),
               style: textStyle,
             ),
             Padding(
               padding:
                   EdgeInsets.only(left: MediaQuery.of(context).size.width / 7),
               child: Text(
-                ticketData.row,
+                ticket.row.toString(),
                 style: textStyle,
               ),
             ),
@@ -192,7 +179,7 @@ class _TicketFrontState extends State<TicketFront> {
               padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width / 3.4),
               child: Text(
-                ticketData.seat.toString(),
+                ticket.seat.toString(),
                 style: textStyle,
               ),
             )

@@ -39,78 +39,119 @@ class CinemaInfo extends StatelessWidget {
         padding: EdgeInsets.all(15.0),
         child: Column(
           children: <Widget>[
-            FutureBuilder<Cinema>(
-              future: FirestoreCinemas().getCinemaByCity(_city),
-              builder: (BuildContext context, AsyncSnapshot<Cinema> snapshot) {
-                if (snapshot.hasData)
-                  return Column(
-                    children: <Widget>[
-                      Text(
-                        "Posizione della nostra sede di",
-                        style: _titleStyle.copyWith(height: 0.4),
-                      ),
-                      Text(
-                        snapshot.data.city,
-                        style: _titleStyle.copyWith(
-                          fontSize: MediaQuery.of(context).size.height / 30,
-                          height: 1.2,
+            if (_city == null)
+              Column(
+                children: <Widget>[
+                  Text(
+                    "Non hai selezionato alcuna città...",
+                    style: _infoStyle.copyWith(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  Text(
+                    "Selezionala per visualizzare\nPOSIZIONE e CONTATTI\ndel cinema desiderato!",
+                    style: _titleStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            else
+              FutureBuilder<Cinema>(
+                future: FirestoreCinemas().getCinemaByCity(_city),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Cinema> snapshot) {
+                  if (snapshot.hasData)
+                    return Column(
+                      children: <Widget>[
+                        Text(
+                          "Posizione della nostra sede di",
+                          style: _titleStyle.copyWith(height: 0.4),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height / 4,
-                        child: Stack(
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(5.0),
-                              child: Image.asset("images/map.png"),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Padding(
-                                padding: EdgeInsets.all(10),
-                                child: CustomButton(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.4,
-                                  height:
-                                      MediaQuery.of(context).size.height / 18,
-                                  text: "Indicazioni",
-                                  icon: Icons.navigation,
-                                  onTap: () async {
-                                    String googleUrl =
-                                        'https://www.google.com/maps/search/?api=1&query=${snapshot.data.position.latitude},${snapshot.data.position.longitude}';
-                                    if (await canLaunch(googleUrl))
-                                      await launch(googleUrl);
-                                  },
+                        Text(
+                          snapshot.data.city,
+                          style: _titleStyle.copyWith(
+                            fontSize: MediaQuery.of(context).size.height / 30,
+                            height: 1.2,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height / 4,
+                          child: Stack(
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(5.0),
+                                child: Image.asset("images/map.png"),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: CustomButton(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.4,
+                                    height:
+                                        MediaQuery.of(context).size.height / 18,
+                                    text: "Indicazioni",
+                                    icon: Icons.navigation,
+                                    onTap: () async {
+                                      String googleUrl =
+                                          'https://www.google.com/maps/search/?api=1&query=${snapshot.data.position.latitude},${snapshot.data.position.longitude}';
+                                      if (await canLaunch(googleUrl))
+                                        await launch(googleUrl);
+                                    },
+                                  ),
                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Indirizzo:",
+                              style: _titleStyle,
+                            ),
+                            SizedBox(width: 15),
+                            Expanded(
+                              child: Text(
+                                snapshot.data.getAddress(),
+                                style: _infoStyle,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Indirizzo:",
-                            style: _titleStyle,
-                          ),
-                          SizedBox(width: 15),
-                          Expanded(
-                            child: Text(
-                              snapshot.data.getAddress(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Telefono:",
+                              style: _titleStyle,
+                            ),
+                            SizedBox(width: 15),
+                            Text(
+                              snapshot.data.phone,
                               style: _infoStyle,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                return CircularProgressIndicator();
-              },
-            ),
+                            IconButton(
+                              padding: EdgeInsets.all(0.0),
+                              icon: Icon(Icons.phone),
+                              onPressed: () async {
+                                final _url = "tel:" + snapshot.data.phone;
+                                print(_url);
+                                if (await canLaunch(_url)) await launch(_url);
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    );
+                  return CircularProgressIndicator();
+                },
+              ),
             Divider(thickness: 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,17 +172,18 @@ class CinemaInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  "GIORNI FERIALI:\n16:00 ~ 00:00\n\nGIORNI FESTIVI:\n15:00 ~ 01:00",
+                  "\nGIORNI FERIALI:\n16:00 ~ 00:00\n\nGIORNI FESTIVI:\n15:00 ~ 01:00",
                   style: _infoStyle,
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  "2D:\nIntero: €7.00\nRidotto: €5.00\n3D:\nIntero: €10.00\nRidotto: €7.00\n",
+                  "2D:\nIntero: €7.00\nRidotto: €5.00\n3D:\nIntero: €10.00\nRidotto: €7.00",
                   style: _infoStyle,
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
+            SizedBox(height: 10),
             CustomButton(
               width: MediaQuery.of(context).size.width / 2.4,
               text: "Chi siamo",
