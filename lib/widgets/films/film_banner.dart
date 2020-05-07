@@ -50,7 +50,7 @@ class FilmBanner extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(this.borderRadius),
               child: FadeInImage.assetNetwork(
-                placeholder: 'images/poster_default.jpg',
+                placeholder: 'images/loading.gif',
                 image: this.film.imageURL,
                 width: this.imageWidth,
                 height: this.imageHeight,

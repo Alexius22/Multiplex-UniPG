@@ -54,6 +54,8 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.film);
+    print(widget.schedules);
     return Scaffold();
   }
 }
