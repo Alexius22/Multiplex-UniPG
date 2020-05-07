@@ -8,10 +8,12 @@ import 'package:cinema_app/widgets/films/film_banner.dart';
 class FilmDetailsHead extends StatelessWidget {
   final Film film;
   final double height;
+  final bool featured;
 
   FilmDetailsHead({
     this.film,
     this.height,
+    this.featured,
   });
 
   void _openTrailer() async {
@@ -27,6 +29,7 @@ class FilmDetailsHead extends StatelessWidget {
           this.film,
           imageWidth: MediaQuery.of(context).size.width,
           imageHeight: this.height,
+          featured: featured,
           trailer: true,
           onTap: _openTrailer,
         ),

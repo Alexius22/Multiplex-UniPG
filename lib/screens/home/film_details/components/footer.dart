@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // DB
 import 'package:cinema_app/models/film.dart';
+import 'package:cinema_app/models/schedule.dart';
 
 // Widget
 import 'package:cinema_app/widgets/buttons/custom_button.dart';
@@ -14,12 +15,14 @@ import 'package:cinema_app/screens/home/buy_ticket/buy_ticket.dart';
 
 class FilmDetailsFooter extends StatelessWidget {
   final Film film;
+  final List<Schedule> schedules;
   final double height;
   final double gradientHeight;
   final double bottomPadding;
 
   FilmDetailsFooter({
     this.film,
+    this.schedules,
     this.height,
     this.gradientHeight,
     this.bottomPadding,
@@ -54,14 +57,15 @@ class FilmDetailsFooter extends StatelessWidget {
             text: "Prenota",
             icon: Icons.arrow_forward_ios,
             onTap: () {
-              /*
               Navigator.push(
                 context,
                 SlideTopRoute(
-                  page: BuyTicket(film: this.film),
+                  page: BuyTicket(
+                    film: this.film,
+                    schedules: this.schedules,
+                  ),
                 ),
               );
-              */
             },
           ),
         ),

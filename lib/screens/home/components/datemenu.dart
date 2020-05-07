@@ -9,18 +9,20 @@ import 'package:cinema_app/utils/format.dart';
 class DateMenu extends StatefulWidget {
   final DateTime minDate = DateTime.now();
   final DateTime maxDate = DateTime.now().add(Duration(days: 14));
+  final Function onDateChange;
+  DateMenu({this.onDateChange});
 
   @override
   _State createState() => new _State();
 }
 
 class _State extends State<DateMenu> {
-  List<bool> pressedButtons = <bool>[
+  List<bool> buttonsStatus = <bool>[
     true,
     false,
     false,
   ];
-  DateTime _selectedDate;
+  DateTime _calendarDate;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class _State extends State<DateMenu> {
       children: <Widget>[
         _dateButton(0, "Oggi"),
         _dateButton(1, "Domani"),
-        _dateButton(2, formatDate(_selectedDate, 'Altra data')),
+        _dateButton(2, formatDate(_calendarDate, 'Altra data')),
       ],
     );
   }
@@ -40,7 +42,7 @@ class _State extends State<DateMenu> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      color: pressedButtons[id]
+      color: buttonsStatus[id]
           ? Theme.of(context).buttonColor
           : Theme.of(context).backgroundColor,
       highlightColor: Theme.of(context).highlightColor,
@@ -50,7 +52,7 @@ class _State extends State<DateMenu> {
         style: TextStyle(
           fontSize: MediaQuery.of(context).size.height / 38,
           fontWeight: FontWeight.bold,
-          color: pressedButtons[id]
+          color: buttonsStatus[id]
               ? Theme.of(context).textTheme.button.color
               : Theme.of(context).textTheme.title.color,
         ),
@@ -61,33 +63,34 @@ class _State extends State<DateMenu> {
     );
   }
 
-  void _pressButton(int i) {
+  void _pressButton(int i) async {
     if (i != 2) {
       setState(() {
         // Select active button & resetting defaults
-        // Resetting defaults
-        pressedButtons = List.filled(3, false);
-        pressedButtons[i] = true;
-        _selectedDate = null;
+        buttonsStatus = List.filled(3, false);
+        _calendarDate = null;
+        buttonsStatus[i] = true;
+        if (i == 0)
+          widget.onDateChange(DateTime.now());
+        else
+          widget.onDateChange(DateTime.now().add(Duration(days: 1)));
       });
-    } else
-      _selectDate();
-  }
-
-  void _selectDate() async {
-    DateTime _picked = await selectDate(
-      context: context,
-      currentDate: _selectedDate,
-      firstDate: widget.minDate,
-      lastDate: widget.maxDate,
-      unselectableDays: [],
-    );
-    if (_picked != null) {
-      setState(() {
-        pressedButtons = List.filled(3, false);
-        pressedButtons[2] = true;
-        _selectedDate = _picked;
-      });
+    } else {
+      DateTime _picked = await selectDate(
+        context: context,
+        currentDate: _calendarDate,
+        firstDate: widget.minDate,
+        lastDate: widget.maxDate,
+        unselectableDays: [],
+      );
+      if (_picked != null) {
+        setState(() {
+          buttonsStatus = List.filled(3, false);
+          buttonsStatus[2] = true;
+          _calendarDate = _picked;
+          widget.onDateChange(_picked);
+        });
+      }
     }
   }
 }

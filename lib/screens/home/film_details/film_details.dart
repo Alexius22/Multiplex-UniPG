@@ -14,12 +14,14 @@ import 'components/info.dart';
 class FilmDetails extends StatelessWidget {
   final Film film;
   final List<Schedule> schedules;
-  final DateTime dateSelected;
+  final DateTime datePicked;
+  final bool featured;
 
   FilmDetails({
     this.film,
     this.schedules,
-    this.dateSelected,
+    this.datePicked,
+    this.featured,
   });
 
   @override
@@ -40,6 +42,7 @@ class FilmDetails extends StatelessWidget {
               FilmDetailsHead(
                 film: this.film,
                 height: headHeight,
+                featured: featured,
               ),
               // Build film's info (genres, plot, cast...)
               FilmDetailsInfo(
@@ -57,6 +60,7 @@ class FilmDetails extends StatelessWidget {
           // Build buy ticket button
           FilmDetailsFooter(
             film: this.film,
+            schedules: this.schedules,
             height: footerHeight,
             gradientHeight: 45.0,
             bottomPadding: footerBottomPadding,
