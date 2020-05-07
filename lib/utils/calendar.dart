@@ -34,6 +34,12 @@ Future<DateTime> selectDate({
           data: ThemeData.light().copyWith(
             accentColor: Colors.deepOrange[600],
             primaryColor: Colors.deepOrange[900],
+            buttonTheme: ButtonThemeData(
+              textTheme: ButtonTextTheme.accent,
+              colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: Colors.deepOrange[900],
+              ),
+            ),
           ),
           child: child,
         );
