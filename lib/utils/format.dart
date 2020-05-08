@@ -1,8 +1,11 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
+import 'package:intl/intl.dart';
 
-String formatDate(DateTime date, String onNull) {
-  if (date != null) return "${date.day}/${date.month}";
-  return onNull;
+String formatDate(DateTime date, {extended: false}) {
+  if (extended)
+    return DateFormat('EEEE dd/MM', 'it').format(date);
+  else
+    return DateFormat('dd/MM', 'it').format(date);
 }
 
 String formatTime(DateTime time) {

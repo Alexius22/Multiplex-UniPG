@@ -1,16 +1,26 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
-import 'package:cinema_app/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+// DB
+import 'package:cinema_app/services/auth.dart';
+import 'package:cinema_app/services/tickets.dart';
+import 'package:cinema_app/services/schedules.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // Import data structures
 import 'package:cinema_app/models/schedule.dart';
+import 'package:cinema_app/models/ticket.dart';
 import 'package:cinema_app/models/ticket_snack.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 import 'package:cinema_app/widgets/buttons/custom_button.dart';
+import 'package:toast/toast.dart';
+
+// Utils
+import 'package:cinema_app/utils/format.dart';
 
 class Checkout extends StatelessWidget {
   final Schedule schedule;
@@ -27,107 +37,248 @@ class Checkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle _primaryTextStyle = TextStyle(
+      fontFamily: 'OpenSans',
+      fontSize: MediaQuery.of(context).size.height / 45,
+    );
+
+    final TextStyle _secondaryTextStyle = TextStyle(
+      fontFamily: 'OpenSans',
+      fontSize: MediaQuery.of(context).size.height / 36,
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrange[800],
+    );
+
     return Scaffold(
       appBar: GoBackAppBar("Riepilogo ordine").build(context),
       body: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 5,
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  child: Column(
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 70, left: 15, right: 15),
+              child: Divider(
+                thickness: 2,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Totale:",
+                    style: TextStyle(
+                      fontFamily: 'OpenSans',
+                      fontSize: MediaQuery.of(context).size.height / 45,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "€ $totalCost",
+                    style: TextStyle(
+                      fontFamily: 'OpenSans',
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.height / 31,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  CustomButton(
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: MediaQuery.of(context).size.height / 16,
+                    text: "Acquista",
+                    icon: Icons.attach_money,
+                    onTap: () => _buyTicket(context),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 3 / 4 * MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      _buildCheckout(context, "Film: ", schedule.film.title),
-                      _buildCheckout(
-                          context, "Tipologia: ", schedule.shotTypology),
-                      _buildCheckout(context, "Giorno: ",
-                          formatDate(schedule.dateTime, '')),
-                      _buildCheckout(
-                          context, "Orario: ", formatTime(schedule.dateTime)),
-                      _buildCheckout(
-                          context, "Posti selezionati: ", seats.join(', ')),
-                      _buildCheckout(
-                        context,
-                        "Snack scelti: ",
-                        snacks.join(', '),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          schedule.film.imageURL,
+                          width: MediaQuery.of(context).size.width / 2.8,
+                        ),
                       ),
-                      _buildCheckout(context, "Totale: ", "€ $totalCost"),
+                      SizedBox(width: 15),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              schedule.film.title,
+                              style: TextStyle(
+                                fontFamily: 'Oswald',
+                                fontSize:
+                                    MediaQuery.of(context).size.height / 30,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(height: 15),
+                            _buildInfo(
+                              'Data:',
+                              formatDate(schedule.dateTime, extended: true),
+                              _primaryTextStyle,
+                              _secondaryTextStyle,
+                            ),
+                            SizedBox(height: 15),
+                            _buildInfo(
+                              'Orario:',
+                              formatTime(schedule.dateTime),
+                              _primaryTextStyle,
+                              _secondaryTextStyle,
+                            ),
+                            SizedBox(height: 15),
+                            _buildInfo(
+                              'Tipologia:',
+                              schedule.shotTypology,
+                              _primaryTextStyle,
+                              _secondaryTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: _buildInfo(
+                      'Posti:',
+                      seats
+                          .map((Point<int> p) => formatSeat(p.x, p.y))
+                          .toList()
+                          .join(', '),
+                      _primaryTextStyle,
+                      _secondaryTextStyle,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: Text("Snacks:", style: _primaryTextStyle),
+                      ),
+                      SizedBox(width: 15),
+                      snacks.length > 0
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: snacks
+                                  .map(
+                                    (TicketSnack s) => Text(
+                                      s.toString(),
+                                      style: _secondaryTextStyle,
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.only(top: 4.5),
+                              child: Opacity(
+                                opacity: 0.8,
+                                child: Text(
+                                  "Nessuno...",
+                                  style: _primaryTextStyle.copyWith(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-          _buyButton(context),
         ],
       ),
     );
   }
 
-  Widget _buildCheckout(context, title, choice) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: MediaQuery.of(context).size.height / 45,
-                    letterSpacing: 1,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+  Widget _buildInfo(String title, String content, TextStyle primaryTextStyle,
+      TextStyle secondaryTextStyle) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: <Widget>[
+          Text(
+            title,
+            style: primaryTextStyle,
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              content,
+              style: secondaryTextStyle,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  choice,
-                  style: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).size.height / 40,
-                    letterSpacing: 1,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buyButton(context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        SizedBox(height: MediaQuery.of(context).size.height / 50),
-        Center(
-          child: CustomButton(
-            width: 160,
-            text: "Acquista",
-            icon: Icons.shopping_cart,
-            onTap: () {
-              Navigator.popUntil(
-                context,
-                (Route<dynamic> route) => route.isFirst,
-              );
-            },
-          ),
-        ),
-      ],
+  void _buyTicket(context) async {
+    // Prepare tickets
+    final _user = await Auth().getCurrentUser();
+    List<Map<String, dynamic>> _ticketsBought = [];
+
+    for (Point<int> seat in seats)
+      _ticketsBought.add({
+        'schedule':
+            Firestore.instance.collection('schedules').document(schedule.id),
+        'row': seat.x,
+        'seat': seat.y,
+        'snacks': Map<String, dynamic>(),
+        'user': _user.uid,
+      });
+
+    // Add food just to the first ticket
+    _ticketsBought[0]['snacks'] = Map<String, Map<String, int>>.fromIterable(
+      snacks,
+      key: (s) => s.name,
+      value: (s) => {s.size: s.quantity},
+    );
+
+    // Data are prepared: let's contact the server to buy the tickets
+    String _reportMSG =
+        "L'operazione è stata\ncompletata con SUCCESSO!\n\nControlla la sezione dei biglietti!";
+
+    for (Map<String, dynamic> ticket in _ticketsBought)
+      if (await FirestoreTickets().buyTicket(ticket) == false)
+        _reportMSG =
+            "Si è verificato un errore.\n\nControlla la tua connessione e riprova...";
+    
+    FirestoreSchedules().updateSeatsOccupied(schedule, seats);
+
+    // Go back and show report message
+    Navigator.popUntil(
+      context,
+      (Route<dynamic> route) => route.isFirst,
+    );
+
+    Toast.show(
+      _reportMSG,
+      context,
+      duration: 6,
+      gravity: Toast.CENTER,
+      backgroundColor: Colors.grey[800].withOpacity(0.9),
     );
   }
 }

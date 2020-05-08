@@ -297,7 +297,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
         child: Row(
           children: <Widget>[
             Text(
-              formatDate(_dateTimePicked, 'G/M'),
+              _dateTimePicked != null ? formatDate(_dateTimePicked) : 'G/M',
               style: _secondaryStyle,
             ),
             Icon(Icons.keyboard_arrow_left),

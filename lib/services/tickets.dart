@@ -29,4 +29,11 @@ class FirestoreTickets {
     );
     return tickets;
   }
+
+  Future<bool> buyTicket(Map<String, dynamic> data) async {
+    DocumentReference _newTicket = _ref.document();
+    await _newTicket.setData(data);
+    if (await _newTicket.get() != null) return true;
+    return false;
+  }
 }

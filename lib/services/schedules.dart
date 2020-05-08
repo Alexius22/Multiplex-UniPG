@@ -1,15 +1,16 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cinema_app/services/films.dart';
 import 'package:cinema_app/services/rooms.dart';
 import 'package:cinema_app/models/schedule.dart';
 
 class FirestoreSchedules {
-  final Query _ref =
-      Firestore.instance.collection('schedules').orderBy('dateTime');
+  final CollectionReference _ref = Firestore.instance.collection('schedules');
   List<Schedule> schedules;
 
   Future<List<Schedule>> fetchSchedules(String city) async {
-    final res = await _ref.getDocuments();
+    final res = await _ref.orderBy('dateTime').getDocuments();
     this.schedules = await Future.wait(
       res.documents
           .map(
@@ -39,5 +40,21 @@ class FirestoreSchedules {
     if (_scheduleDoc == null) return null;
     return Schedule.fromMap(
         _scheduleDoc.documentID, await _solveDataRefs(_scheduleDoc.data));
+  }
+
+  Future<void> updateSeatsOccupied(Schedule s, List<Point<int>> newSeats) async {
+    // Convert seats to firestore form
+    List<GeoPoint> firestoreSeats = newSeats
+        .map(
+            (Point<int> seat) => GeoPoint(seat.x.toDouble(), seat.y.toDouble()))
+        .toList();
+
+    // Update firestore DB
+    Firestore.instance.runTransaction((Transaction tx) async {
+      DocumentSnapshot snapshot = await tx.get(_ref.document(s.id));
+      await tx.update(snapshot.reference, <String, dynamic>{
+        'seatsOccupied': FieldValue.arrayUnion(firestoreSeats)
+      });
+    });
   }
 }
