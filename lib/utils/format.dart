@@ -15,5 +15,5 @@ DateTime formatTimeReverse(String s) {
 }
 
 String formatSeat(int x, int y) {
-  return "${String.fromCharCode(64 + x)}$y";
+  return "${String.fromCharCode(65 + y)}${x + 1}";
 }

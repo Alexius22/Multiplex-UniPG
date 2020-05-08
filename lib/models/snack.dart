@@ -1,6 +1,6 @@
 class Snack {
   final String name;
-  final Map<String, int> priceList;
+  final Map<String, double> priceList;
 
   Snack({
     this.name,
@@ -9,5 +9,5 @@ class Snack {
 
   Snack.fromMap(String id, Map snapshot)
       : name = id,
-        priceList = snapshot['priceList'];
+        priceList = Map<String, double>.from(snapshot['priceList']);
 }

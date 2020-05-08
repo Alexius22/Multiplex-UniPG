@@ -22,7 +22,8 @@ class Schedule {
 
   Schedule.fromMap(String id, Map snapshot)
       : id = id ?? '',
-        dateTime = snapshot['dateTime'].toDate(),
+        // Dirty to fix to accomodate firebase datetime storage format
+        dateTime = snapshot['dateTime'].toDate().add(Duration(hours: 2)),
         film = snapshot['film'],
         room = snapshot['room'],
         seatsOccupied = List<GeoPoint>.from(snapshot['seatsOccupied'])
