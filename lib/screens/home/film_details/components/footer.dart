@@ -85,17 +85,22 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
               ),
             ),
           ),
+          // Divider
           Padding(
             padding: EdgeInsets.only(
-                left: 10,
-                right: 10,
-                bottom: widget.height + widget.bottomPadding - 5),
+              left: 10,
+              right: 10,
+              bottom: widget.height + widget.bottomPadding - 5,
+            ),
             child: Divider(color: Theme.of(context).textTheme.title.color),
           ),
           // Selections
           Padding(
             padding: EdgeInsets.only(
-                left: 10, right: 10, bottom: 60 + widget.bottomPadding),
+              left: 10,
+              right: 10,
+              bottom: 60 + widget.bottomPadding,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
