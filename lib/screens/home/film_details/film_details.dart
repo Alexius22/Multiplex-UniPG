@@ -14,23 +14,23 @@ import 'components/info.dart';
 class FilmDetails extends StatelessWidget {
   final Film film;
   final List<Schedule> schedules;
-  final DateTime datePicked;
-  final bool featured;
 
   FilmDetails({
     this.film,
     this.schedules,
-    this.datePicked,
-    this.featured,
   });
 
   @override
   Widget build(BuildContext context) {
     // Configuration
-    final headHeight = MediaQuery.of(context).size.height / 4 +
+    final headHeight = (MediaQuery.of(context).size.height -
+                AppBar().preferredSize.height -
+                MediaQuery.of(context).padding.top -
+                65) /
+            3 +
         AppBar().preferredSize.height +
         MediaQuery.of(context).padding.top;
-    final footerHeight = 50.0;
+    final footerHeight = MediaQuery.of(context).size.height / 6;
     final footerBottomPadding = 15.0;
 
     return Scaffold(
@@ -42,7 +42,6 @@ class FilmDetails extends StatelessWidget {
               FilmDetailsHead(
                 film: this.film,
                 height: headHeight,
-                featured: featured,
               ),
               // Build film's info (genres, plot, cast...)
               FilmDetailsInfo(

@@ -17,6 +17,7 @@ import 'package:cinema_app/theme/light_style.dart';
 import 'package:cinema_app/widgets/appbars/default_appbar.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar_item_data.dart';
 import 'package:cinema_app/widgets/bubble_tab_bar/navbar.dart';
+import 'package:cinema_app/widgets/loading/loading_screen.dart';
 
 // Import initial screens
 import 'screens/home/home.dart';
@@ -39,45 +40,30 @@ class CinemaApp extends StatefulWidget {
   _State createState() => _State();
 }
 
-class _State extends State<CinemaApp> {
-  // Shared preference to get city name
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+Widget _buildContentView(int navIndex, String city) {
+  switch (navIndex) {
+    case 0:
+      return CinemaInfo(city);
+    case 1:
+      return TicketScreen();
+    case 2:
+      return HomeScreen(city);
+    case 3:
+      return ProfileScreen();
+    case 4:
+      return SettingScreen();
+    default:
+      break;
+  }
+  return Placeholder();
+}
 
+class _State extends State<CinemaApp> {
   // Working variable for bottom appbar
   int _selectedNavIndex = 2;
-  String _selectedCity;
-
-  @override
-  void initState() {
-    super.initState();
-    // Get last selected city, if any
-    _prefs.then((SharedPreferences prefs) {
-      _selectedCity = prefs.getString('CitySelected');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // Choose current widget to visualize
-    Widget _contentView;
-    switch (_selectedNavIndex) {
-      case 0:
-        _contentView = CinemaInfo(_selectedCity);
-        break;
-      case 1:
-        _contentView = TicketScreen();
-        break;
-      case 2:
-        _contentView = HomeScreen(_selectedCity);
-        break;
-      case 3:
-        _contentView = ProfileScreen();
-        break;
-      case 4:
-        _contentView = SettingScreen();
-        break;
-    }
-
     // Configuring theme changer
     return DynamicTheme(
       defaultBrightness: Brightness.dark,
@@ -102,25 +88,36 @@ class _State extends State<CinemaApp> {
             const Locale('it'),
           ],
           // Displaying main container, appbar and bottom navbar
-          home: Scaffold(
-            appBar: DefaultAppBar(
-              initialSelectedCity: _selectedCity,
-              onCityChange: (String city) =>
-                  setState(() => _selectedCity = city),
-            ),
-            body: Container(
-              width: double.infinity,
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 350),
-                child: _contentView,
-              ),
-            ),
-            bottomNavigationBar: NavBar(
-              items: widget.bottomNavbarItems,
-              itemTapped: (int index) =>
-                  setState(() => _selectedNavIndex = index),
-              currentIndex: _selectedNavIndex,
-            ),
+          home: FutureBuilder<SharedPreferences>(
+            future: SharedPreferences.getInstance(),
+            builder: (BuildContext context,
+                AsyncSnapshot<SharedPreferences> snapshot) {
+              // Loading
+              if (!snapshot.hasData) return LoadingScreen();
+
+              // Get selected city
+              final String _cityPicked = snapshot.data.getString('City');
+
+              return Scaffold(
+                appBar: DefaultAppBar(
+                  initialSelectedCity: _cityPicked,
+                  onCityChange: (String city) => setState(() {}),
+                ),
+                body: Container(
+                  width: double.infinity,
+                  child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 350),
+                    child: _buildContentView(_selectedNavIndex, _cityPicked),
+                  ),
+                ),
+                bottomNavigationBar: NavBar(
+                  items: widget.bottomNavbarItems,
+                  itemTapped: (int index) =>
+                      setState(() => _selectedNavIndex = index),
+                  currentIndex: _selectedNavIndex,
+                ),
+              );
+            },
           ),
         );
       },

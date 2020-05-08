@@ -7,17 +7,21 @@ Future<DateTime> selectDate({
   @required DateTime currentDate,
   @required DateTime firstDate,
   @required DateTime lastDate,
-  List<DateTime> unselectableDays,
+  List<DateTime> selectableDays,
 }) async {
+  // Sort and remove invalid selectable days
+  selectableDays.sort();
+
+  // Show calendar
   return await showDatePicker(
     context: context,
-    initialDate: currentDate != null ? currentDate : firstDate,
-    firstDate: firstDate.subtract(new Duration(days: 1)),
+    initialDate: currentDate != null ? currentDate : selectableDays[0],
+    firstDate: firstDate,
     lastDate: lastDate,
     selectableDayPredicate: (DateTime datetime) {
-      for (DateTime un in unselectableDays)
-        if (un.day == datetime.day && un.month == datetime.month) return false;
-      return true;
+      for (DateTime sel in selectableDays)
+        if (sel.day == datetime.day && sel.month == datetime.month) return true;
+      return false;
     },
     builder: (BuildContext context, Widget child) {
       if (Theme.of(context).brightness == Brightness.dark)
@@ -37,8 +41,8 @@ Future<DateTime> selectDate({
             buttonTheme: ButtonThemeData(
               textTheme: ButtonTextTheme.accent,
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: Colors.deepOrange[900],
-              ),
+                    primary: Colors.deepOrange[900],
+                  ),
             ),
           ),
           child: child,

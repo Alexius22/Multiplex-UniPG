@@ -21,15 +21,13 @@ class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class DefaultAppBarState extends State<DefaultAppBar> {
-  String _citySelected;
+  String _cityPicked;
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {
     super.initState();
-    _prefs.then((SharedPreferences prefs) {
-      _citySelected = prefs.getString('CitySelected');
-    });
+    _cityPicked = widget.initialSelectedCity;
   }
 
   @override
@@ -70,7 +68,7 @@ class DefaultAppBarState extends State<DefaultAppBar> {
         if (snapshot.hasData) {
           return DropdownButton<String>(
             hint: Text("La tua città..."),
-            value: _citySelected,
+            value: _cityPicked,
             icon: Icon(Icons.arrow_drop_down),
             iconSize: MediaQuery.of(context).size.height / 26,
             underline: Container(
@@ -79,13 +77,13 @@ class DefaultAppBarState extends State<DefaultAppBar> {
             onChanged: (String newValue) async {
               final SharedPreferences prefs = await _prefs;
               setState(() {
-                _citySelected = newValue;
+                _cityPicked = newValue;
                 // Save preference
-                prefs.setString("CitySelected", newValue).then((bool success) {
+                prefs.setString("City", newValue).then((bool success) {
                   return newValue;
                 });
                 // Callback to update children values
-                widget.onCityChange(_citySelected);
+                widget.onCityChange(_cityPicked);
               });
             },
             items: snapshot.data.map<DropdownMenuItem<String>>((String value) {

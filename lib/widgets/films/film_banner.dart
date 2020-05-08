@@ -31,7 +31,7 @@ class FilmBanner extends StatelessWidget {
 
     Widget _heroCustom(String widgetTag, Widget widget) {
       return Hero(
-        tag: "$widgetTag-${this.film.id}-${this.featured}",
+        tag: "$widgetTag-${this.film.id}",
         transitionOnUserGestures: true,
         child: Material(
           type: MaterialType.transparency,

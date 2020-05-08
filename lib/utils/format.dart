@@ -5,9 +5,13 @@ String formatDate(DateTime date, String onNull) {
   return onNull;
 }
 
-String formatTime(DateTime time, String onNull) {
-  if (time != null) return "${time.hour}:${time.minute}";
-  return onNull;
+String formatTime(DateTime time) {
+  return "${time.hour.toString().padLeft(2, "0")}:${time.minute.toString().padLeft(2, "0")}";
+}
+
+DateTime formatTimeReverse(String s) {
+  List<String> _tmp = s.split(':');
+  return DateTime(2020, 1, 1, int.parse(_tmp[0]), int.parse(_tmp[1]));
 }
 
 String formatSeat(int x, int y) {
