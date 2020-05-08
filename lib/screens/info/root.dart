@@ -36,7 +36,7 @@ class CinemaInfo extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height / 52),
         child: Column(
           children: <Widget>[
             if (_city == null)
@@ -107,7 +107,7 @@ class CinemaInfo extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 5),
+                        SizedBox(height: MediaQuery.of(context).size.height / 160),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -115,7 +115,7 @@ class CinemaInfo extends StatelessWidget {
                               "Indirizzo:",
                               style: _titleStyle,
                             ),
-                            SizedBox(width: 15),
+                            SizedBox(width: MediaQuery.of(context).size.width / 26),
                             Expanded(
                               child: Text(
                                 snapshot.data.getAddress(),
@@ -131,7 +131,7 @@ class CinemaInfo extends StatelessWidget {
                               "Telefono:",
                               style: _titleStyle,
                             ),
-                            SizedBox(width: 15),
+                            SizedBox(width: MediaQuery.of(context).size.width / 26),
                             Text(
                               snapshot.data.phone,
                               style: _infoStyle,
@@ -183,7 +183,7 @@ class CinemaInfo extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: MediaQuery.of(context).size.height / 80),
             CustomButton(
               width: MediaQuery.of(context).size.width / 2.4,
               text: "Chi siamo",

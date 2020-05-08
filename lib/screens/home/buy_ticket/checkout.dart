@@ -56,7 +56,10 @@ class Checkout extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 70, left: 15, right: 15),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height / 11,
+                  left: MediaQuery.of(context).size.width / 26,
+                  right: MediaQuery.of(context).size.width / 26),
               child: Divider(
                 thickness: 2,
               ),
@@ -65,7 +68,8 @@ class Checkout extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height / 52),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -77,7 +81,7 @@ class Checkout extends StatelessWidget {
                       letterSpacing: 1,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: MediaQuery.of(context).size.width / 40),
                   Text(
                     "€ $totalCost",
                     style: TextStyle(
@@ -87,12 +91,12 @@ class Checkout extends StatelessWidget {
                       letterSpacing: 1,
                     ),
                   ),
-                  SizedBox(width: 15),
+                  SizedBox(width: MediaQuery.of(context).size.width / 26),
                   CustomButton(
                     width: MediaQuery.of(context).size.width / 2,
                     height: MediaQuery.of(context).size.height / 16,
                     text: "Acquista",
-                    icon: Icons.attach_money,
+                    icon: Icons.shopping_cart,
                     onTap: () => _buyTicket(context),
                   ),
                 ],
@@ -102,7 +106,7 @@ class Checkout extends StatelessWidget {
           Container(
             height: 3 / 4 * MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.height / 40),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -116,7 +120,7 @@ class Checkout extends StatelessWidget {
                           width: MediaQuery.of(context).size.width / 2.8,
                         ),
                       ),
-                      SizedBox(width: 15),
+                      SizedBox(width: MediaQuery.of(context).size.width / 26),
                       Expanded(
                         child: Column(
                           children: <Widget>[
@@ -129,22 +133,31 @@ class Checkout extends StatelessWidget {
                               ),
                               textAlign: TextAlign.left,
                             ),
-                            SizedBox(height: 15),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 52),
                             _buildInfo(
+                              context,
                               'Data:',
                               formatDate(schedule.dateTime, extended: true),
                               _primaryTextStyle,
                               _secondaryTextStyle,
                             ),
-                            SizedBox(height: 15),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 52),
                             _buildInfo(
+                              context,
                               'Orario:',
                               formatTime(schedule.dateTime),
                               _primaryTextStyle,
                               _secondaryTextStyle,
                             ),
-                            SizedBox(height: 15),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 52),
                             _buildInfo(
+                              context,
                               'Tipologia:',
                               schedule.shotTypology,
                               _primaryTextStyle,
@@ -155,10 +168,11 @@ class Checkout extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: _buildInfo(
+                      context,
                       'Posti:',
                       seats
                           .map((Point<int> p) => formatSeat(p.x, p.y))
@@ -168,15 +182,15 @@ class Checkout extends StatelessWidget {
                       _secondaryTextStyle,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top: 4),
+                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 200),
                         child: Text("Snacks:", style: _primaryTextStyle),
                       ),
-                      SizedBox(width: 15),
+                      SizedBox(width: MediaQuery.of(context).size.width / 26),
                       snacks.length > 0
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +204,8 @@ class Checkout extends StatelessWidget {
                                   .toList(),
                             )
                           : Padding(
-                              padding: EdgeInsets.only(top: 4.5),
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.width / 180),
                               child: Opacity(
                                 opacity: 0.8,
                                 child: Text(
@@ -212,8 +227,8 @@ class Checkout extends StatelessWidget {
     );
   }
 
-  Widget _buildInfo(String title, String content, TextStyle primaryTextStyle,
-      TextStyle secondaryTextStyle) {
+  Widget _buildInfo(context, String title, String content,
+      TextStyle primaryTextStyle, TextStyle secondaryTextStyle) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -222,7 +237,7 @@ class Checkout extends StatelessWidget {
             title,
             style: primaryTextStyle,
           ),
-          SizedBox(width: 10),
+          SizedBox(width: MediaQuery.of(context).size.width / 40),
           Expanded(
             child: Text(
               content,
@@ -264,7 +279,7 @@ class Checkout extends StatelessWidget {
       if (await FirestoreTickets().buyTicket(ticket) == false)
         _reportMSG =
             "Si è verificato un errore.\n\nControlla la tua connessione e riprova...";
-    
+
     FirestoreSchedules().updateSeatsOccupied(schedule, seats);
 
     // Go back and show report message

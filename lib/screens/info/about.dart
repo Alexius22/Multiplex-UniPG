@@ -18,12 +18,12 @@ class CinemaAbout extends StatelessWidget {
     return Scaffold(
       appBar: GoBackAppBar("Chi siamo?").build(context),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height / 32),
         scrollDirection: Axis.vertical,
         child: Column(
           children: <Widget>[
             Image(image: AssetImage('images/cinema.jpg')),
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height / 40),
             Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam laoreet ultrices quam. Suspendisse interdum enim vitae odio laoreet, pulvinar vulputate eros tempor. Nulla dignissim venenatis quam a auctor. Etiam mauris nisl, consectetur varius est vitae, vulputate tincidunt sem. Sed dolor neque, tincidunt nec velit sit amet, varius ornare felis. Aenean scelerisque nunc quis quam ornare, in vestibulum dolor volutpat. Quisque sed nunc ut est varius convallis vel ut magna. Ut a convallis velit. In dapibus mi ac elit dictum, in ornare purus finibus. Vestibulum ac urna nec odio congue tincidunt. Curabitur mauris mauris, eleifend vel ex molestie, viverra venenatis augue. Nam eget sollicitudin orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac mi tincidunt, cursus enim quis, dignissim erat. In viverra auctor sagittis. Curabitur ornare congue felis.",
               style: TextStyle(
@@ -33,7 +33,7 @@ class CinemaAbout extends StatelessWidget {
               ),
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 52),
             CustomButton(
               width: MediaQuery.of(context).size.width / 2.8,
               text: "Sito Web",

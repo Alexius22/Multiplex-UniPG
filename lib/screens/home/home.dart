@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
     // Calculate vertical space not considering appbar and bottom navbar
     final verticalSpaceAvailable = MediaQuery.of(context).size.height -
         Scaffold.of(context).appBarMaxHeight -
-        65;
+        MediaQuery.of(context).size.height / 12;
 
     // No city selected (first time user?)
     if (city == null)
@@ -94,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                         color: Colors.deepOrange[800],
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: MediaQuery.of(context).size.width / 40),
                     Icon(
                       Icons.query_builder,
                       size: MediaQuery.of(context).size.height / 28,
@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                       return FilmBanner(
                         _films[index],
                         textSize: MediaQuery.of(context).size.height / 38,
-                        imageWidth: 150,
+                        imageWidth: MediaQuery.of(context).size.width / 2.75,
                         imageHeight: verticalSpaceAvailable * 5 / 9,
                         onTap: () => _onFilmBannerTap(
                             context, _films[index], _schedules),

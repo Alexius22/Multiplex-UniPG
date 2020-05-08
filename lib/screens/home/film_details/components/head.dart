@@ -32,7 +32,9 @@ class FilmDetailsHead extends StatelessWidget {
         ),
         SafeArea(
           minimum: EdgeInsets.only(
-              left: 4, top: MediaQuery.of(context).padding.top + 4),
+              left: MediaQuery.of(context).size.width / 115,
+              top: MediaQuery.of(context).padding.top +
+                  MediaQuery.of(context).size.height / 200),
           child: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,

@@ -50,7 +50,7 @@ class BuyTicketFooter extends StatelessWidget {
       children: <Widget>[
         Container(
           alignment: Alignment.bottomLeft,
-          padding: EdgeInsets.all(28.0),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 28.5),
           child: Row(
             children: <Widget>[
               Text(
@@ -61,7 +61,7 @@ class BuyTicketFooter extends StatelessWidget {
                   letterSpacing: 1,
                 ),
               ),
-              SizedBox(width: 20),
+              SizedBox(width: MediaQuery.of(context).size.width / 20),
               Text(
                 "€ $_totalCost",
                 style: TextStyle(
@@ -76,9 +76,9 @@ class BuyTicketFooter extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.bottomRight,
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 40),
           child: CustomButton(
-            width: 160,
+            width: MediaQuery.of(context).size.width / 2.55,
             text: "Riepilogo",
             icon: Icons.arrow_forward_ios,
             onTap: this.seatsPicked.length == 0

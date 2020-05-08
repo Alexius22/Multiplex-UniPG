@@ -26,12 +26,12 @@ class FilmDetails extends StatelessWidget {
     final headHeight = (MediaQuery.of(context).size.height -
                 AppBar().preferredSize.height -
                 MediaQuery.of(context).padding.top -
-                65) /
+                MediaQuery.of(context).size.height / 12) /
             3 +
         AppBar().preferredSize.height +
         MediaQuery.of(context).padding.top;
     final footerHeight = MediaQuery.of(context).size.height / 6;
-    final footerBottomPadding = 15.0;
+    final footerBottomPadding = MediaQuery.of(context).size.height / 53;
 
     return Scaffold(
       body: Stack(
@@ -52,7 +52,7 @@ class FilmDetails extends StatelessWidget {
                     footerHeight -
                     footerBottomPadding,
                 // Provide a bottom padding to avoid gradient
-                bottomPadding: 45.0,
+                bottomPadding: MediaQuery.of(context).size.height / 27,
               ),
             ],
           ),
@@ -61,7 +61,7 @@ class FilmDetails extends StatelessWidget {
             film: this.film,
             schedules: this.schedules,
             height: footerHeight,
-            gradientHeight: 45.0,
+            gradientHeight: MediaQuery.of(context).size.height / 18,
             bottomPadding: footerBottomPadding,
           ),
         ],

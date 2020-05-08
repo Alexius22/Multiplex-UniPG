@@ -15,20 +15,19 @@ class FilmDetailsInfo extends StatelessWidget {
     this.bottomPadding,
   });
 
-  // Configuration
-  final TextStyle mainStyle = TextStyle(
-    fontFamily: 'OpenSans',
-    fontSize: 17,
-  );
-  final TextStyle secondaryStyle = TextStyle(
-    fontFamily: 'OpenSans',
-    fontSize: 15,
-    fontWeight: FontWeight.bold,
-    color: Colors.deepOrange[800],
-  );
-
   @override
   Widget build(BuildContext context) {
+    // Configuration
+    final TextStyle mainStyle = TextStyle(
+      fontFamily: 'OpenSans',
+      fontSize: MediaQuery.of(context).size.height / 47,
+    );
+    final TextStyle secondaryStyle = TextStyle(
+      fontFamily: 'OpenSans',
+      fontSize: MediaQuery.of(context).size.height / 52,
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrange[800],
+    );
     // Internal function to create a button lookalike
     Widget _buildGenre(String label) {
       Color _color = Theme.of(context).brightness == Brightness.dark
@@ -46,7 +45,7 @@ class FilmDetailsInfo extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height / 160),
           child: Text(
             label,
             style: TextStyle(
@@ -66,17 +65,18 @@ class FilmDetailsInfo extends StatelessWidget {
       _genres.add(_buildGenre(genre));
     }
 
-    Widget _buildTextSection(String title, String body, {TextAlign bodyTextAlign=TextAlign.justify}) {
+    Widget _buildTextSection(String title, String body,
+        {TextAlign bodyTextAlign = TextAlign.justify}) {
       // Creation
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 10.0),
+          SizedBox(height: MediaQuery.of(context).size.height / 80),
           Text(
             title,
             style: secondaryStyle,
           ),
-          SizedBox(height: 3),
+          SizedBox(height: MediaQuery.of(context).size.height / 300),
           Text(
             body,
             textAlign: bodyTextAlign,
@@ -89,18 +89,20 @@ class FilmDetailsInfo extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: this.height - 1,
-      padding: EdgeInsets.only(left: 25, right: 25),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width / 17,
+          right: MediaQuery.of(context).size.width / 17),
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 52),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: _genres,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: MediaQuery.of(context).size.height / 80),
             Row(
               children: <Widget>[
                 // Uscita
@@ -108,18 +110,18 @@ class FilmDetailsInfo extends StatelessWidget {
                   "Uscita:",
                   style: secondaryStyle,
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: MediaQuery.of(context).size.width / 50),
                 Text(
                   DateFormat('dd/MM/yyyy').format(this.film.releaseDate),
                   style: mainStyle,
                 ),
-                SizedBox(width: 30),
+                SizedBox(width: MediaQuery.of(context).size.width / 14),
                 // Durata
                 Text(
                   "Durata:",
                   style: secondaryStyle,
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: MediaQuery.of(context).size.width / 50),
                 Text(
                   this.film.durationMins.toString() + "'",
                   style: mainStyle,
@@ -127,8 +129,10 @@ class FilmDetailsInfo extends StatelessWidget {
               ],
             ),
             _buildTextSection("Trama:", this.film.plot),
-            _buildTextSection("Regia:", this.film.direction.join(', '), bodyTextAlign: TextAlign.left),
-            _buildTextSection("Cast:", this.film.cast.join(', '), bodyTextAlign: TextAlign.left),
+            _buildTextSection("Regia:", this.film.direction.join(', '),
+                bodyTextAlign: TextAlign.left),
+            _buildTextSection("Cast:", this.film.cast.join(', '),
+                bodyTextAlign: TextAlign.left),
             SizedBox(height: this.bottomPadding),
           ],
         ),

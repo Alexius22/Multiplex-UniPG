@@ -111,20 +111,20 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                 child: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 15),
+                      SizedBox(height: MediaQuery.of(context).size.height / 52),
                       _buildScreen(
                         height: MediaQuery.of(context).size.height / 15,
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: MediaQuery.of(context).size.height / 160),
                       _buildSeats(
                         schedule: widget.schedule,
                         height: MediaQuery.of(context).size.height / 2.2,
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height / 80),
                       _buildLegend(),
-                      SizedBox(height: 15),
+                      SizedBox(height: MediaQuery.of(context).size.height / 52),
                       _buildSeatsSummary(_secondaryStyle),
-                      SizedBox(height: 20),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
                       _buildOptionalSnacks(
                         snackSelectors: _snackSelectors,
                       ),

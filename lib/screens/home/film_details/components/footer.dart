@@ -19,6 +19,7 @@ import 'package:cinema_app/utils/format.dart';
 // Next page
 import 'package:cinema_app/transitions/slide_top_route.dart';
 import 'package:cinema_app/screens/home/buy_ticket/buy_ticket.dart';
+import 'package:cinema_app/screens/profile/login.dart';
 
 class FilmDetailsFooter extends StatefulWidget {
   final Film film;
@@ -86,18 +87,21 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
           // Divider
           Padding(
             padding: EdgeInsets.only(
-              left: 10,
-              right: 10,
-              bottom: widget.height + widget.bottomPadding - 5,
+              left: MediaQuery.of(context).size.width / 40,
+              right: MediaQuery.of(context).size.width / 40,
+              bottom: widget.height +
+                  widget.bottomPadding -
+                  MediaQuery.of(context).size.height / 160,
             ),
             child: Divider(color: Theme.of(context).textTheme.title.color),
           ),
           // Selections
           Padding(
             padding: EdgeInsets.only(
-              left: 10,
-              right: 10,
-              bottom: 60 + widget.bottomPadding,
+              left: MediaQuery.of(context).size.width / 40,
+              right: MediaQuery.of(context).size.width / 40,
+              bottom: MediaQuery.of(context).size.height / 13 +
+                  widget.bottomPadding,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -113,8 +117,8 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
           Padding(
             padding: EdgeInsets.only(bottom: widget.bottomPadding),
             child: CustomButton(
-              width: 150,
-              height: 45,
+              width: MediaQuery.of(context).size.width / 2.75,
+              height: MediaQuery.of(context).size.height / 18,
               text: "Prenota",
               icon: Icons.arrow_forward_ios,
               onTap: _dateTimePicked != null
@@ -150,16 +154,27 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
                                       "Per poter prenotare\ndevi autenticarti.",
                                       style: TextStyle(
                                         fontFamily: 'OpenSans',
-                                        fontSize: 16,
+                                        fontSize:
+                                            MediaQuery.of(context).size.height /
+                                                50,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                     CustomButton(
-                                      width: 150,
-                                      height: 40,
+                                      width: MediaQuery.of(context).size.width /
+                                          2.75,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              20,
                                       text: "Autenticati",
                                       onTap: () {
-                                        Navigator.pop(context);
+                                        //TODO Fix the navbar and appbar
+                                        Navigator.push(
+                                          context,
+                                          SlideTopRoute(
+                                            page: LoginScreen(),
+                                          ),
+                                        );
                                       },
                                     ),
                                   ],
@@ -185,7 +200,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
           Row(
             children: [
               Icon(icon),
-              SizedBox(width: 5),
+              SizedBox(width: MediaQuery.of(context).size.width / 110),
               Text(
                 title,
                 style: TextStyle(
@@ -289,7 +304,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
       "Giorno",
       Icons.calendar_today,
       FlatButton(
-        padding: EdgeInsets.only(left: 8.0),
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 50),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         highlightColor:
             Theme.of(context).textTheme.title.color.withOpacity(0.1),
@@ -315,8 +330,8 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
       Column(
         children: <Widget>[
           Container(
-            width: 120,
-            height: 32,
+            width: MediaQuery.of(context).size.width / 3.4,
+            height: MediaQuery.of(context).size.height / 25,
             child: _shotTypologyController != null
                 ? TabBar(
                     controller: _shotTypologyController,
@@ -352,7 +367,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
         "Orario",
         Icons.schedule,
         Container(
-          height: 32,
+          height: MediaQuery.of(context).size.height / 25,
           child: Text(
             "H:M",
             style: _secondaryStyle.copyWith(
@@ -367,14 +382,15 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
       "Orario",
       Icons.schedule,
       Padding(
-        padding: EdgeInsets.only(bottom: 9.0),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 100),
         child: ButtonTheme(
           alignedDropdown: true,
           child: DropdownButton<String>(
             isDense: true,
             value: _hours != null ? formatTime(_dateTimePicked) : null,
             icon: Icon(Icons.arrow_drop_down),
-            iconSize: 22,
+            iconSize: MediaQuery.of(context).size.height / 37,
             underline: Container(
               padding: EdgeInsets.all(0.0),
               height: 0,
