@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cinema_app/models/snack.dart';
 
 class FirestoreSnacks {
-  final CollectionReference _ref = Firestore.instance.collection('snacks');
+  final Query _ref =
+      Firestore.instance.collection('snacks').orderBy('priceList');
   List<Snack> snacks;
 
   Future<List<Snack>> fetchSnacks() async {

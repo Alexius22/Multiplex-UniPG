@@ -3,9 +3,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-// DB
-import 'package:cinema_app/services/general.dart';
-
 // Import models
 import 'package:cinema_app/models/general.dart';
 import 'package:cinema_app/models/schedule.dart';

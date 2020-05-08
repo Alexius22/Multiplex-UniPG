@@ -42,6 +42,9 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
   List<Point<int>> _seatsPicked = [];
   Map<String, TicketSnack> _snacksPicked = {};
 
+  // Working variables
+  List<Widget> _snackSelectors = [];
+
   @override
   Widget build(BuildContext context) {
     // Config
@@ -63,6 +66,32 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
         // Extract datas
         final GeneralInfo _general = snapshot.data[0];
         final List<Snack> _snacks = snapshot.data[1];
+
+        // Build selectors individually
+        if (_snackSelectors.length == 0)
+          for (final Snack _snack in _snacks) {
+            // Create selector
+            _snackSelectors.add(
+              Padding(
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width / 14,
+                ),
+                child: SnackSelector(
+                  snackTypology: _snack,
+                  onSnackChanged: (TicketSnack ticketSnack) {
+                    setState(() {
+                      if (ticketSnack.quantity > 0)
+                        _snacksPicked[ticketSnack.name + ticketSnack.size] =
+                            ticketSnack;
+                      else
+                        _snacksPicked
+                            .remove(ticketSnack.name + ticketSnack.size);
+                    });
+                  },
+                ),
+              ),
+            );
+          }
 
         return Scaffold(
           appBar: GoBackAppBar("Il tuo ordine").build(context),
@@ -97,8 +126,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                       _buildSeatsSummary(_secondaryStyle),
                       SizedBox(height: 20),
                       _buildOptionalSnacks(
-                        snacks: _snacks,
-                        leftPadding: MediaQuery.of(context).size.width / 14,
+                        snackSelectors: _snackSelectors,
                       ),
                     ],
                   ),
@@ -171,8 +199,6 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
     }
 
     return Container(
-      // TODO: Va cambiata?
-      key: ValueKey<Schedule>(widget.schedule),
       padding: EdgeInsets.only(
         left: MediaQuery.of(context).size.width / 10,
         right: MediaQuery.of(context).size.width / 10,
@@ -265,32 +291,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildOptionalSnacks({List<Snack> snacks, double leftPadding}) {
-    // Build selectors individually
-    List<Widget> _snackSelectors = [];
-    for (final Snack _snack in snacks) {
-      // Create selector
-      _snackSelectors.add(
-        Padding(
-          padding: EdgeInsets.only(
-            left: leftPadding,
-          ),
-          child: SnackSelector(
-            snackTypology: _snack,
-            onSnackChanged: (TicketSnack ticketSnack) {
-              setState(() {
-                if (ticketSnack.quantity > 0)
-                  _snacksPicked[ticketSnack.name + ticketSnack.size] =
-                      ticketSnack;
-                else
-                  _snacksPicked.remove(ticketSnack.name + ticketSnack.size);
-              });
-            },
-          ),
-        ),
-      );
-    }
-
+  Widget _buildOptionalSnacks({List<Widget> snackSelectors}) {
     return ExpansionTile(
       title: Text(
         "Vuoi includere uno snack?",
@@ -300,7 +301,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
           fontSize: MediaQuery.of(context).size.height / 40,
         ),
       ),
-      children: _snackSelectors,
+      children: snackSelectors,
     );
   }
 }
