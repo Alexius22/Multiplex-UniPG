@@ -26,11 +26,9 @@ import 'components/checkout.dart';
 
 class BuyTicket extends StatefulWidget {
   final Film film;
-  final List<Schedule> schedules;
-  final Set<String> shotTypologies;
+  final Schedule schedule;
 
-  BuyTicket({this.film, this.schedules})
-      : shotTypologies = schedules.map((Schedule s) => s.shotTypology).toSet();
+  BuyTicket({this.film, this.schedule});
 
   @override
   _State createState() => new _State();
@@ -38,24 +36,14 @@ class BuyTicket extends StatefulWidget {
 
 class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
   // User choices
-  // Note: if hour still have to be picked,
-  // _dateTimePicked's hour will be set to 00:01, to avoid conflicts
-  Schedule _schedulePicked;
-  String _shotTyplogyPicked;
-  DateTime _dateTimePicked;
-  List<Point> _seatsPicked = [];
+  List<Point<int>> _seatsPicked = [];
   List<TicketSnack> _snacksPicked = [];
-
-  // Working variables
-  // Note: _dateTimes will be updated
-  // every time _shotTyplogyPicked will change
-  List<DateTime> _dateTimes;
-  List<String> _hours;
 
   @override
   Widget build(BuildContext context) {
-    print(widget.film);
-    print(widget.schedules);
+    print(widget.film.title);
+    print(widget.schedule.dateTime);
+    print(widget.schedule.shotTypology);
     return Scaffold();
   }
 }

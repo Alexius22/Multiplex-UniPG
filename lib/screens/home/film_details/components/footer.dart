@@ -47,11 +47,6 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print(_dateTimePicked);
-    print(_shotTypologyController != null
-        ? _shotTypologies[_shotTypologyController.index]
-        : "nope");
-
     // Style config
     final TextStyle _secondaryStyle = TextStyle(
       fontFamily: 'OpenSans',
@@ -119,18 +114,28 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
               height: 45,
               text: "Prenota",
               icon: Icons.arrow_forward_ios,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  SlideTopRoute(
-                    page: BuyTicket(
-                      film: widget.film,
-                      schedules: widget.schedules,
-                      // TODO: Passa i valori a buy ticket!
-                    ),
-                  ),
-                );
-              },
+              onTap: _dateTimePicked != null
+                  ? () {
+                      Navigator.push(
+                        context,
+                        SlideTopRoute(
+                          page: BuyTicket(
+                            film: widget.film,
+                            // This is a little unsafe, could check 'where' output length
+                            schedule: widget.schedules
+                                .where(
+                                  (Schedule s) =>
+                                      s.dateTime == _dateTimePicked &&
+                                      s.shotTypology ==
+                                          _shotTypologies[
+                                              _shotTypologyController.index],
+                                )
+                                .elementAt(0),
+                          ),
+                        ),
+                      );
+                    }
+                  : null,
             ),
           ),
         ],
