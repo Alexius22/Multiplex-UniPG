@@ -103,7 +103,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                 generalInfo: _general,
                 snackTypologies: _snacks,
                 seatsPicked: this._seatsPicked,
-                snacksPicked: this._snacksPicked,
+                snacksPicked: this._snacksPicked.values.toList(),
               ),
               // Seats selection, snacks selection
               Container(

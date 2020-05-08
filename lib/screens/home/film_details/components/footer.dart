@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 
 // DB
+import 'package:cinema_app/services/auth.dart';
+
+// Models
 import 'package:cinema_app/models/film.dart';
 import 'package:cinema_app/models/schedule.dart';
 
@@ -115,25 +118,54 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
               text: "Prenota",
               icon: Icons.arrow_forward_ios,
               onTap: _dateTimePicked != null
-                  ? () {
-                      Navigator.push(
-                        context,
-                        SlideTopRoute(
-                          page: BuyTicket(
-                            film: widget.film,
-                            // This is a little unsafe, could check 'where' output length
-                            schedule: widget.schedules
-                                .where(
-                                  (Schedule s) =>
-                                      s.dateTime == _dateTimePicked &&
-                                      s.shotTypology ==
-                                          _shotTypologies[
-                                              _shotTypologyController.index],
-                                )
-                                .elementAt(0),
-                          ),
-                        ),
-                      );
+                  ? () async {
+                      return await Auth().getCurrentUser() != null
+                          ? Navigator.push(
+                              context,
+                              SlideTopRoute(
+                                page: BuyTicket(
+                                  film: widget.film,
+                                  // This is a little unsafe, could check 'where' output length
+                                  schedule: widget.schedules
+                                      .where(
+                                        (Schedule s) =>
+                                            s.dateTime == _dateTimePicked &&
+                                            s.shotTypology ==
+                                                _shotTypologies[
+                                                    _shotTypologyController
+                                                        .index],
+                                      )
+                                      .elementAt(0),
+                                ),
+                              ),
+                            )
+                          : Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Per poter prenotare\ndevi autenticarti.",
+                                      style: TextStyle(
+                                        fontFamily: 'OpenSans',
+                                        fontSize: 16,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    CustomButton(
+                                      width: 150,
+                                      height: 40,
+                                      text: "Autenticati",
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
                     }
                   : null,
             ),

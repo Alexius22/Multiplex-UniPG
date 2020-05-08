@@ -1,40 +1,29 @@
 // Copyright 2020 Amatucci & Strippoli. All rights reserved.
 
+import 'package:cinema_app/utils/format.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 // Import data structures
-import 'package:cinema_app/models/film.dart';
+import 'package:cinema_app/models/schedule.dart';
+import 'package:cinema_app/models/ticket_snack.dart';
 
 // Widget
 import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 import 'package:cinema_app/widgets/buttons/custom_button.dart';
 
-/*
 class Checkout extends StatelessWidget {
-  final Film film;
-  final String shotTypology;
-  final String time;
-  final String date;
-  final List<String> seats;
-  final List<Snack> snacks;
+  final Schedule schedule;
+  final List<Point<int>> seats;
+  final List<TicketSnack> snacks;
   final double totalCost;
 
   Checkout({
-    this.film,
-    this.shotTypology,
-    this.time,
-    this.date,
+    this.schedule,
     this.seats,
     this.snacks,
     this.totalCost,
   });
-
-  String _formatSnacks() {
-    String _out = "";
-    for (Snack snack in this.snacks)
-      _out += "${snack.label} (${snack.dim}): ${snack.quantity}\n";
-    return _out.substring(0, _out.length - 1);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +41,20 @@ class Checkout extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: <Widget>[
-                      _buildCheckout(context, "Film: ", film.title),
-                      _buildCheckout(context, "Tipologia: ", shotTypology),
-                      _buildCheckout(context, "Giorno: ", date),
-                      _buildCheckout(context, "Orario: ", time),
+                      _buildCheckout(context, "Film: ", schedule.film.title),
+                      _buildCheckout(
+                          context, "Tipologia: ", schedule.shotTypology),
+                      _buildCheckout(context, "Giorno: ",
+                          formatDate(schedule.dateTime, '')),
+                      _buildCheckout(
+                          context, "Orario: ", formatTime(schedule.dateTime)),
                       _buildCheckout(
                           context, "Posti selezionati: ", seats.join(', ')),
                       _buildCheckout(
-                          context, "Snack scelti: ", _formatSnacks()),
+                        context,
+                        "Snack scelti: ",
+                        snacks.join(', '),
+                      ),
                       _buildCheckout(context, "Totale: ", "€ $totalCost"),
                     ],
                   ),
@@ -136,4 +131,3 @@ class Checkout extends StatelessWidget {
     );
   }
 }
-*/

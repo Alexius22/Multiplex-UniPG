@@ -14,14 +14,14 @@ import 'package:cinema_app/widgets/buttons/custom_button.dart';
 
 // Next page
 import 'package:cinema_app/transitions/slide_left_route.dart';
-import 'checkout.dart';
+import '../checkout.dart';
 
 class BuyTicketFooter extends StatelessWidget {
   final Schedule schedule;
   final GeneralInfo generalInfo;
   final List<Snack> snackTypologies;
   final List<Point<int>> seatsPicked;
-  final Map<String, TicketSnack> snacksPicked;
+  final List<TicketSnack> snacksPicked;
 
   BuyTicketFooter({
     this.schedule,
@@ -39,7 +39,7 @@ class BuyTicketFooter extends StatelessWidget {
             seatsPicked.length;
 
     // Calculate snacks cost
-    for (var snack in snacksPicked.values)
+    for (TicketSnack snack in snacksPicked)
       _totalCost += snackTypologies
               .where((Snack s) => s.name == snack.name)
               .toList()[0]
@@ -84,24 +84,17 @@ class BuyTicketFooter extends StatelessWidget {
             onTap: this.seatsPicked.length == 0
                 ? null
                 : () {
-                    /*
-                        Navigator.push(
-                          context,
-                          SlideLeftRoute(
-                            page: Checkout(
-                              film: widget.film,
-                              shotTypology:
-                                  _shotTypologies[_shotTyplogyPicked.index],
-                              time: _timePicked,
-                              date: formatDate(
-                                  _datePicked, 'Errore, data non selezionata!'),
-                              seats: _seatsPicked,
-                              snacks: _snacks.values.toList(),
-                              totalCost: _totalCost,
-                            ),
-                          ),
-                        );
-                      */
+                    Navigator.push(
+                      context,
+                      SlideLeftRoute(
+                        page: Checkout(
+                          schedule: schedule,
+                          seats: seatsPicked,
+                          snacks: snacksPicked,
+                          totalCost: _totalCost,
+                        ),
+                      ),
+                    );
                   },
           ),
         ),
