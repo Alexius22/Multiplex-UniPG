@@ -19,7 +19,7 @@ import 'package:cinema_app/utils/format.dart';
 // Next page
 import 'package:cinema_app/transitions/slide_top_route.dart';
 import 'package:cinema_app/screens/home/buy_ticket/buy_ticket.dart';
-import 'package:cinema_app/screens/profile/login.dart';
+import 'package:cinema_app/screens/profile/root.dart';
 
 class FilmDetailsFooter extends StatefulWidget {
   final Film film;
@@ -124,25 +124,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
               onTap: _dateTimePicked != null
                   ? () async {
                       return await Auth().getCurrentUser() != null
-                          ? Navigator.push(
-                              context,
-                              SlideTopRoute(
-                                page: BuyTicket(
-                                  film: widget.film,
-                                  // This is a little unsafe, could check 'where' output length
-                                  schedule: widget.schedules
-                                      .where(
-                                        (Schedule s) =>
-                                            s.dateTime == _dateTimePicked &&
-                                            s.shotTypology ==
-                                                _shotTypologies[
-                                                    _shotTypologyController
-                                                        .index],
-                                      )
-                                      .elementAt(0),
-                                ),
-                              ),
-                            )
+                          ? _navigatorBuyTicketPage()
                           : Scaffold.of(context).showSnackBar(
                               SnackBar(
                                 content: Row(
@@ -167,14 +149,21 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
                                           MediaQuery.of(context).size.height /
                                               20,
                                       text: "Autenticati",
-                                      onTap: () {
-                                        //TODO Fix the navbar and appbar
-                                        Navigator.push(
+                                      onTap: () async {
+                                        // Wait for user to authenticate
+                                        final _loggedIn = await Navigator.push(
                                           context,
                                           SlideTopRoute(
-                                            page: LoginScreen(),
+                                            page: ProfileScreen(
+                                              standalone: true,
+                                            ),
                                           ),
                                         );
+                                        if (_loggedIn != null) {
+                                          Scaffold.of(context)
+                                              .hideCurrentSnackBar();
+                                          _navigatorBuyTicketPage();
+                                        }
                                       },
                                     ),
                                   ],
@@ -186,6 +175,26 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _navigatorBuyTicketPage() {
+    return Navigator.push(
+      context,
+      SlideTopRoute(
+        page: BuyTicket(
+          film: widget.film,
+          // This is a little unsafe, could check 'where' output length
+          schedule: widget.schedules
+              .where(
+                (Schedule s) =>
+                    s.dateTime == _dateTimePicked &&
+                    s.shotTypology ==
+                        _shotTypologies[_shotTypologyController.index],
+              )
+              .elementAt(0),
+        ),
       ),
     );
   }

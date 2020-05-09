@@ -7,12 +7,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // Widgets
 import 'package:cinema_app/widgets/loading/loading_screen.dart';
+import 'package:cinema_app/widgets/appbars/go_back_appbar.dart';
 
 // Screens
 import 'login.dart';
 import 'logged_in.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final bool standalone;
+  ProfileScreen({this.standalone = false});
+
   @override
   Widget build(BuildContext context) {
     return new StreamBuilder<FirebaseUser>(
@@ -21,9 +25,15 @@ class ProfileScreen extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return LoadingScreen();
         } else if (snapshot.hasData && snapshot.data.isEmailVerified) {
-          return LoggedInScreen(user: snapshot.data);
+          if (!standalone) return LoggedInScreen(user: snapshot.data);
+          Navigator.pop(context, true);
+          return Scaffold();
         } else {
-          return LoginScreen();
+          if (!standalone) return LoginScreen();
+          return Scaffold(
+            appBar: GoBackAppBar('').build(context),
+            body: LoginScreen(),
+          );
         }
       },
     );
