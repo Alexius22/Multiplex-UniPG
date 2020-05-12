@@ -30,7 +30,14 @@ class HomeScreen extends StatelessWidget {
 
     // No city selected (first time user?)
     if (city == null)
-      return Scaffold(body: Center(child: Text("Seleziona una città...")));
+      return Scaffold(
+        body: Center(
+          child: Text(
+            "Nessuna città selezionata...\nSelezionane una in alto a destra!",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
 
     return FutureBuilder<List<Schedule>>(
       future: schedulesDB.fetchSchedules(city),

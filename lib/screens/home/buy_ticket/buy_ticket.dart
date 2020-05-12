@@ -111,6 +111,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
                 child: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
+                      _infoBox(context, "Seleziona il posto che preferisci"),
                       SizedBox(height: MediaQuery.of(context).size.height / 52),
                       _buildScreen(
                         height: MediaQuery.of(context).size.height / 15,
@@ -287,6 +288,25 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+   Widget _infoBox(context, text) {
+    return Container(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: MediaQuery.of(context).size.height / 47,
+                color: Theme.of(context).textTheme.title.color,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
