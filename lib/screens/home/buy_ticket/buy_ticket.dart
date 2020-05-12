@@ -232,11 +232,12 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
 
   Widget _buildLegendLabel(icon, color, text) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Icon(
           icon,
           color: color,
-          size: MediaQuery.of(context).size.height / 40,
+          size: MediaQuery.of(context).size.width / 22,
         ),
         SizedBox(width: 3),
         Text(
@@ -244,7 +245,7 @@ class _State extends State<BuyTicket> with SingleTickerProviderStateMixin {
           style: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.w600,
-            fontSize: MediaQuery.of(context).size.height / 52,
+            fontSize: MediaQuery.of(context).size.width / 28,
             letterSpacing: 1,
           ),
         ),
