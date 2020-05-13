@@ -354,7 +354,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
                     labelStyle: _secondaryStyle,
                   )
                 : Text(
-                    "?",
+                    "2D - 3D",
                     style: _secondaryStyle.copyWith(
                       color: Theme.of(context)
                           .textTheme
