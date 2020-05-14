@@ -31,10 +31,33 @@ class HomeScreen extends StatelessWidget {
     // No city selected (first time user?)
     if (city == null)
       return Scaffold(
-        body: Center(
-          child: Text(
-            "Nessuna città selezionata...\nSelezionane una in alto a destra!",
-            textAlign: TextAlign.center,
+        body: Container(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Opacity(
+                opacity: 0.6,
+                child: Text(
+                  "Nessuna città selezionata...",
+                  style: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontStyle: FontStyle.italic,
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Text(
+                "Selezionane una in alto a destra!",
+                style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 22,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       );

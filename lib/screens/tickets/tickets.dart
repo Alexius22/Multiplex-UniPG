@@ -35,7 +35,7 @@ class TicketScreen extends StatelessWidget {
                 "Devi autenticarti prima di\npoter vedere i tuoi biglietti.",
                 style: TextStyle(
                   fontFamily: 'OpenSans',
-                  fontSize: 24,
+                  fontSize: 22,
                 ),
                 textAlign: TextAlign.center,
               ),

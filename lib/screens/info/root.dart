@@ -42,10 +42,13 @@ class CinemaInfo extends StatelessWidget {
             if (_city == null)
               Column(
                 children: <Widget>[
-                  Text(
-                    "Non hai selezionato alcuna città...",
-                    style: _infoStyle.copyWith(
-                      fontStyle: FontStyle.italic,
+                  Opacity(
+                    opacity: 0.6,
+                    child: Text(
+                      "Non hai selezionato alcuna città...",
+                      style: _infoStyle.copyWith(
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                   Text(
@@ -107,7 +110,8 @@ class CinemaInfo extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height / 160),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 160),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -115,7 +119,8 @@ class CinemaInfo extends StatelessWidget {
                               "Indirizzo:",
                               style: _titleStyle,
                             ),
-                            SizedBox(width: MediaQuery.of(context).size.width / 26),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width / 26),
                             Expanded(
                               child: Text(
                                 snapshot.data.getAddress(),
@@ -131,7 +136,8 @@ class CinemaInfo extends StatelessWidget {
                               "Telefono:",
                               style: _titleStyle,
                             ),
-                            SizedBox(width: MediaQuery.of(context).size.width / 26),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width / 26),
                             Text(
                               snapshot.data.phone,
                               style: _infoStyle,
