@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:cinema_app/models/ticket.dart';
+import 'package:cinema_app/utils/format.dart';
 
 class TicketFront extends StatelessWidget {
   final Ticket ticket;
@@ -171,7 +172,7 @@ class TicketFront extends StatelessWidget {
               padding:
                   EdgeInsets.only(left: MediaQuery.of(context).size.width / 7),
               child: Text(
-                ticket.row.toString(),
+                formatSeat(0, ticket.row).toString()[0],
                 style: textStyle,
               ),
             ),
