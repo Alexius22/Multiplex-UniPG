@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // Import widgets
 import 'package:cinema_app/widgets/loading/loading_screen.dart';
-import 'package:cinema_app/widgets/buttons/custom_button.dart';
 import 'package:flip_card/flip_card.dart';
 import 'components/ticket_front.dart';
 import 'components/ticket_back.dart';
@@ -54,16 +53,16 @@ class TicketScreen extends StatelessWidget {
                 t1.schedule.dateTime.compareTo(t2.schedule.dateTime));
 
             // Separate tickets: "to watch" and "archive"
-            var _tickets_to_watch = [];
-            var _tickets_archive = [];
+            var _ticketsToWatch = [];
+            var _ticketsArchive = [];
             final DateTime _now =
-                DateTime.now().add(Duration(hours: 3));
+                DateTime.now().subtract(Duration(hours: 3));
 
             _tickets.forEach((Ticket t) {
               if (t.schedule.dateTime.isAfter(_now))
-                _tickets_to_watch.add(t);
+                _ticketsToWatch.add(t);
               else
-                _tickets_archive.add(t);
+                _ticketsArchive.add(t);
             });
 
             return DefaultTabController(
@@ -84,14 +83,14 @@ class TicketScreen extends StatelessWidget {
                 ),
                 body: TabBarView(
                   children: [
-                    _tickets_to_watch.length > 0
+                    _ticketsToWatch.length > 0
                         ? ListView.separated(
                             physics: BouncingScrollPhysics(),
                             padding: EdgeInsets.all(padding),
-                            itemCount: _tickets_to_watch.length,
+                            itemCount: _ticketsToWatch.length,
                             itemBuilder: (BuildContext context, int index) {
                               return _buildTicket(
-                                ticket: _tickets_to_watch[index],
+                                ticket: _ticketsToWatch[index],
                               );
                             },
                             separatorBuilder:
@@ -124,14 +123,14 @@ class TicketScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                    _tickets_archive.length > 0
+                    _ticketsArchive.length > 0
                         ? ListView.separated(
                             physics: BouncingScrollPhysics(),
                             padding: EdgeInsets.all(padding),
-                            itemCount: _tickets_archive.length,
+                            itemCount: _ticketsArchive.length,
                             itemBuilder: (BuildContext context, int index) {
                               return _buildTicket(
-                                ticket: _tickets_archive[index],
+                                ticket: _ticketsArchive[index],
                                 onlyFront: true,
                               );
                             },

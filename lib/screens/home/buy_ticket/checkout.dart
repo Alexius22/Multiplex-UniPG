@@ -11,7 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Import data structures
 import 'package:cinema_app/models/schedule.dart';
-import 'package:cinema_app/models/ticket.dart';
 import 'package:cinema_app/models/ticket_snack.dart';
 
 // Widget
