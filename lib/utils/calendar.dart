@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 Future<DateTime> selectDate({
   @required BuildContext context,
   @required DateTime currentDate,
-  @required DateTime firstDate,
-  @required DateTime lastDate,
   List<DateTime> selectableDays,
 }) async {
   // Sort and remove invalid selectable days
@@ -16,8 +14,8 @@ Future<DateTime> selectDate({
   return await showDatePicker(
     context: context,
     initialDate: currentDate != null ? currentDate : selectableDays[0],
-    firstDate: firstDate,
-    lastDate: lastDate,
+    firstDate: DateTime.now(),
+    lastDate: selectableDays.last,
     selectableDayPredicate: (DateTime datetime) {
       for (DateTime sel in selectableDays)
         if (sel.day == datetime.day && sel.month == datetime.month) return true;

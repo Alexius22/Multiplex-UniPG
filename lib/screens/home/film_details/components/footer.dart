@@ -236,15 +236,19 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
 
     // Check for errors (this should never happen)
     if (_selectableDays.length == 0)
-      return Text("Errore!\nNon disponibile...", textAlign: TextAlign.center);
+      return Opacity(
+        opacity: 0.7,
+        child: Text(
+          "Il film non è\npiù disponibile...",
+          textAlign: TextAlign.center,
+        ),
+      );
 
     // Internal function for calendar
     Future _selectDate() async {
       DateTime _picked = await selectDate(
         context: context,
         currentDate: this._dateTimePicked,
-        firstDate: _now,
-        lastDate: _now.add(Duration(days: 30)),
         selectableDays: _selectableDays,
       );
       if (_picked != null) {
