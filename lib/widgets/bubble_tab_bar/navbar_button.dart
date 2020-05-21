@@ -52,7 +52,7 @@ class _NavbarButtonState extends State<NavbarButton>
           rotationY: 180 * _iconAnimController.value,
           child: Icon(
             widget.data.icon,
-            size: MediaQuery.of(context).size.height / 34,
+            size: MediaQuery.of(context).size.width / 18,
             color: widget.isSelected
                 ? Theme.of(context).textTheme.button.color
                 : Theme.of(context).textTheme.button.backgroundColor,
@@ -64,7 +64,7 @@ class _NavbarButtonState extends State<NavbarButton>
         Text(
           widget.data.title,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.height / 44,
+            fontSize: MediaQuery.of(context).size.width / 22,
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.button.color,
           ),
@@ -82,7 +82,7 @@ class _NavbarButtonState extends State<NavbarButton>
         child: AnimatedContainer(
           alignment: Alignment.center,
           //Determine target width, selected item is wider
-          width: widget.isSelected ? widget.data.width : MediaQuery.of(context).size.width / 7.5,
+          width: widget.isSelected ? widget.data.width : MediaQuery.of(context).size.width / 8,
           curve: Curves.easeOutCubic,
           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 36, right: MediaQuery.of(context).size.width / 36),
           duration: Duration(milliseconds: (600 / _animScale).round()),

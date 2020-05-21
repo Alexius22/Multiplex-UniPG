@@ -17,39 +17,57 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: this.width,
-      height: this.height,
-      child: FlatButton(
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        color: Colors.deepOrange[900],
-        highlightColor: Colors.white24,
-        splashColor: Colors.white38,
-        textColor: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              this.text,
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.height / 40,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1,
-              ),
-            ),
+    return FlatButton(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      color: Colors.deepOrange[900],
+      highlightColor: Colors.white24,
+      splashColor: Colors.white38,
+      textColor: Colors.white,
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.width / 22,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+          ),
+          children: [
+            TextSpan(text: this.text),
             if (icon != null)
-              Icon(
-                this.icon,
-                size: 22,
+              WidgetSpan(
+                child: Icon(
+                  this.icon,
+                  size: MediaQuery.of(context).size.width / 18,
+                ),
               ),
           ],
         ),
-        onPressed: onTap,
       ),
+      /*
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            this.text,
+            style: TextStyle(
+              fontSize: width / 10,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1,
+            ),
+          ),
+          if (icon != null)
+            Icon(
+              this.icon,
+              size: 22,
+            ),
+        ],
+      ),
+      */
+      onPressed: onTap,
     );
   }
 }

@@ -343,7 +343,7 @@ class _State extends State<FilmDetailsFooter> with TickerProviderStateMixin {
       Column(
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width / 3.4,
+            width: MediaQuery.of(context).size.width / 3.2,
             height: MediaQuery.of(context).size.height / 25,
             child: _shotTypologyController != null
                 ? TabBar(

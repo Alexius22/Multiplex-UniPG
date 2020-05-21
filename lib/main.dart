@@ -34,7 +34,7 @@ class CinemaApp extends StatefulWidget {
     NavBarItemData("Biglietti", OMIcons.receipt, 120),
     NavBarItemData("Home", OMIcons.home, 110),
     NavBarItemData("Profilo", OMIcons.person, 110),
-    NavBarItemData("Impostazioni", OMIcons.settings, 160),
+    NavBarItemData("Impostazioni", OMIcons.settings, 170),
   ];
   @override
   _State createState() => _State();
