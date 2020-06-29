@@ -6,15 +6,6 @@
   <i>Multiplex UniPG è un applicativo mobile con l’obiettivo di fornire un’esperienza innovativa per l’acquisto e la gestione dei biglietti per il cinema.</i>
 </div>
 
-## Developers
-
-Project architecture, UI Design & initial implementation in Flutter:
-- [Alessio Amatucci](https://github.com/Alexius22)
-- [Antonio Strippoli](https://github.com/CoffeeStraw)
-
-UI statefull widgets implementations, Code optimizations, Firebase services integrations, Back-end:
-- [Antonio Strippoli](https://github.com/CoffeeStraw)
-
 ## Descrizione progetto
 
 L’applicazione, attraverso un sistema ben studiato, intende apportare una semplificazione oggettiva all’utente, fornendo le seguenti funzionalità:
@@ -28,3 +19,12 @@ L’applicazione, attraverso un sistema ben studiato, intende apportare una semp
 - Consultazione di contatti e informazioni specifiche della catena di cinema;
 - Registrazione e Login per gli utenti, visualizzazione del proprio profilo;
 - Supporto a due temi per migliorare l’esperienza: Light Mode, Dark Mode;
+
+## Developers
+
+Project architecture, UI Design & initial implementation in Flutter:
+- [Alessio Amatucci](https://github.com/Alexius22)
+- [Antonio Strippoli](https://github.com/CoffeeStraw)
+
+UI statefull widgets implementations, Code optimizations, Firebase services integrations, Back-end:
+- [Antonio Strippoli](https://github.com/CoffeeStraw)
