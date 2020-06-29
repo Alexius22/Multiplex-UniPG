@@ -1,6 +1,9 @@
 # App Cinema
 
-Progetto esame Human Computer Interaction A.A. 2019/2020 dell'Università di Perugia.
+<div align="center">
+  <img src="./images/Logo-Complete.png" style="width: 300px; height: 300px;">
+  <i>Multiplex UniPG è un applicativo mobile con l’obiettivo di fornire un’esperienza innovativa per l’acquisto e la gestione dei biglietti per il cinema.</i>
+</div>
 
 [![Made with Flutter](https://img.shields.io/badge/MADE%20WITH-FLUTTER-blue.svg?color=01579b&labelColor=29b6f6&logo=flutter&style=for-the-badge)](https://flutter.dev/)
 
@@ -14,8 +17,6 @@ UI statefull widgets implementations, Code optimizations, Firebase services inte
 - [Antonio Strippoli](https://github.com/CoffeeStraw)
 
 ## Descrizione progetto
-
-_Multiplex UniPG è un applicativo mobile con l’obiettivo di fornire un’esperienza innovativa per l’acquisto e la gestione dei biglietti per il cinema._
 
 L’applicazione, attraverso un sistema ben studiato, intende apportare una semplificazione oggettiva all’utente, fornendo le seguenti funzionalità:
 - Consultazione dei film in programmazione;
