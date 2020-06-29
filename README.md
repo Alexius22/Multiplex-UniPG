@@ -2,11 +2,9 @@
 
 <div align="center">
   <img src="./images/Logo-Complete.png" width="300px" height="300px"><br/>
+  <img src="https://img.shields.io/badge/MADE%20WITH-FLUTTER-blue.svg?color=01579b&labelColor=29b6f6&logo=flutter&style=for-the-badge" alt="https://flutter.dev/"><br/>
   <i>Multiplex UniPG è un applicativo mobile con l’obiettivo di fornire un’esperienza innovativa per l’acquisto e la gestione dei biglietti per il cinema.</i>
-  <br/>
 </div>
-
-[![Made with Flutter](https://img.shields.io/badge/MADE%20WITH-FLUTTER-blue.svg?color=01579b&labelColor=29b6f6&logo=flutter&style=for-the-badge)](https://flutter.dev/)
 
 ## Developers
 
