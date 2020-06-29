@@ -1,4 +1,4 @@
-# App Cinema
+# Multiplex UniPG
 
 <div align="center">
   <img src="./images/Logo-Complete.png" width="300px" height="300px"><br/>
